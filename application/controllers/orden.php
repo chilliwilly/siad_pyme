@@ -15,7 +15,14 @@ class orden extends CI_Controller {
 	    $this->load->view('constant');
 	    $this->load->view('view_header');
 
+	    /*if($this->session->userdata("TIPOUSUARIO") <> 3){
+	    	$ordenes = $this->orden_model->ListarOrdenesAliado();//OBTIENE LAS ORDENES DEL ALIADO QUE SE INGRESO
+	    }else{
+	    	$ordenes = $this->orden_model->ListarOrdenesAdmin();//OBTIENE TODAS LAS ORDENES SI ES ADMIN EL USUARIO QUE SE LOGEA
+	    }*/
+	    
 	    $ordenes = $this->orden_model->ListarOrdenesAdmin();
+
 	    $RegistroOrden = array();
 
 	    foreach ($ordenes as $value) {
@@ -56,5 +63,46 @@ class orden extends CI_Controller {
 		//echo json_encode($data);
 		$this->load->view('ingreso/view_ingreso',$data);
 		$this->load->view('view_footer');
+	}
+
+	//RETORNA LA LISTA DE TRABAJOS DE ACUERDO A LA EMPRESA DEL USUARIO LOGEADO A EXCEPCION DE LOS ADMIN
+	public function aliado(){
+		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	    $this->seguridad_model->SessionActivo($url);
+	    /**/
+	    $this->load->view('constant');
+	    $this->load->view('view_header');
+
+	    $siad_aliadoid = $this->session->userdata('ALIADORUT');
+	    $ordenes = $this->orden_model->ListarOrdenesAdmin();
+	    $NomEmpresa = $this->orden_model->GetNombreAliadoById($siad_aliadoid);
+
+	    $RegistroOrden = array();
+
+	    foreach ($ordenes as $value) {
+	    	# code...
+	    	$NomAliado = $this->orden_model->GetNombreAliadoByComuna($value->in_comuna);
+	    	$NomTipoTrabajo = $this->orden_model->GetNombreTipoTrabajo($value->in_tipo_trabajo);
+	    	$NomEstadoOrden = $this->orden_model->GetNombreEstadoOrden($value->in_estado);
+	    	$NomComuna = $this->orden_model->GetIdComunaByNomComuna($value->in_comuna);	    	
+
+	    	if($NomAliado == $NomEmpresa){
+	    		$RegistroOrden[] = array(
+		    		'folio'         => $value->in_proyecto,
+		    		'fecha_ingreso'	=> $value->in_ingreso,
+		    		'cliente'	    => $value->in_cliente,
+		    		'fono_cli'	    => $value->in_fono,
+		    		'reg_comu'	    => sprintf("%02d",$value->in_region).' - '.$NomComuna->descripcion,
+		    		'aliado'        => $NomAliado->aliado_nombre,
+		    		'tipo_trabajo'	=> $NomTipoTrabajo->tt_nombre,
+		    		'estado'        => $NomEstadoOrden->est_descripcion
+		    	);
+	    	}	    	
+	    }
+
+	    $data['regordenes'] = json_encode($RegistroOrden);
+
+	    $this->load->view('ordenes/view_ordenes', $data);
+	    $this->load->view('view_footer');
 	}
 }

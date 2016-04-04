@@ -1,33 +1,8 @@
 $(document).ready(function(){
 
 	//$('#in_comuna').prop('disabled', true);
-	$('#in_region').prop('disabled', true);
+	//$('#in_region').prop('disabled', true);
 	$('#in_comuna').append("<option value='0'>Elige Comuna...</option>");
-
-	/*var region = $("#in_region");
-	region.append("<option value='0'>Cargando Regiones...</option>");
-	$.getJSON(baseurl + "ingreso/regiones",function(objetosretorna){
-		region.empty();
-		region.append("<option value='0'>---Eliga Region---</option>");
-		$.each(objetosretorna, function(i,ObjetoReturn){
-			var seleccion = "";
-			if(id_categoria==ObjetoReturn.id){
-				seleccion = "selected='selected'";
-			}
-			var nuevaFila = "<option value='"+ObjetoReturn.id+"' "+seleccion+">" + ObjetoReturn.descripcion+"</option>";
-			region.append(nuevaFila);
-		});
-	});*/
-
-	/* no estaba antes esta cosa
-	$("#in_comuna").append("<option value='0'>Cargando Comunas...</option>");
-	$.getJSON(baseurl + "ingreso/comunas",{filtro: $("#in_region").val()},function(objetosretorna){
-		$("#in_comuna").empty();
-		$("#in_comuna").append("<option value='0'>Elige Comuna...</option>");
-		$.each(objetosretorna, function(i,comuna){
-			$("#in_comuna").append("<option value='"+comuna.descripcion+"'>" + comuna.descripcion+"</option>");
-		});
-	});*/
 
 	//LOAD DE COMUNAS
 	var comuna = $("#in_comuna");
@@ -37,7 +12,7 @@ $(document).ready(function(){
 		comuna.append("<option value='0'>Elige Comuna...</option>");
 		$.each(objetosretorna, function(i,ObjetoReturn){
 			var seleccion = "";
-			if(id_categoria==ObjetoReturn.id){
+			if(num_comuna==ObjetoReturn.id){
 				seleccion = "selected='selected'";
 			}
 			var nuevaFila = "<option value='"+ObjetoReturn.id_comuna+"' "+seleccion+">" + ObjetoReturn.comuna+"</option>";
@@ -45,9 +20,9 @@ $(document).ready(function(){
 		});
 	});
 
-	$("#in_comuna").change(function(){
+	/*$("#in_comuna").change(function(){
 		var comuna = $("#in_comuna").val();
-	});
+	});*/
 
 	//LOAD DE TIPOS DE TRABAJO
 	var ttrabajo = $("#in_tipo_trabajo");
@@ -57,7 +32,7 @@ $(document).ready(function(){
 		ttrabajo.append("<option value='0'>Elige Trabajo...</option>");
 		$.each(objetosretorna, function(i,ObjetoReturn){
 			var seleccion = "";
-			if(id_categoria==ObjetoReturn.id){
+			if(num_trabajo==ObjetoReturn.id){
 				seleccion = "selected='selected'";
 			}
 			var nuevaFila = "<option value='"+ObjetoReturn.tt_id+"' "+seleccion+">" + ObjetoReturn.tt_nombre+"</option>";
@@ -65,9 +40,9 @@ $(document).ready(function(){
 		});
 	});
 
-	$("#in_tipo_trabajo").change(function(){
+	/*$("#in_tipo_trabajo").change(function(){
 		var ttrabajo = $("#in_tipo_trabajo").val();
-	});
+	});*/
 
 	//LOAD ESTADO ACTIVIDADES
 	var testado = $("#in_estado");
@@ -77,7 +52,7 @@ $(document).ready(function(){
 		testado.append("<option value='0'>Elige Estado...</option>");
 		$.each(objetosretorna, function(i,ObjetoReturn){
 			var seleccion = "";
-			if(id_categoria==ObjetoReturn.id){
+			if(num_estado==ObjetoReturn.id){
 				seleccion = "selected='selected'";
 			}
 			var nuevaFila = "<option value='"+ObjetoReturn.est_id+"' "+seleccion+">" + ObjetoReturn.est_descripcion+"</option>";
@@ -85,28 +60,8 @@ $(document).ready(function(){
 		});
 	});
 
-	$("#in_estado").change(function(){
+	/*$("#in_estado").change(function(){
 		var testado = $("#in_estado").val();
-	});
-
-	/*$("#in_region").change(function(){
-		var region = $("#in_region").val();
-		$('#in_comuna').empty();
-		if(region==0){
-			$('#in_comuna').append("<option value='0'>Elige Comuna...</option>");
-			$('#in_comuna').prop('disabled', true);
-		}else{
-			$("#in_comuna").append("<option value='0'>Cargando Comunas...</option>");
-			$.getJSON(baseurl + "ingreso/comunas",{filtro: $("#in_region").val()},function(objetosretorna){
-				$("#in_comuna").empty();
-				$("#in_comuna").append("<option value='0'>Elige Comuna...</option>");
-				$.each(objetosretorna, function(i,comuna){
-					$("#in_comuna").append("<option value='"+comuna.descripcion+"'>" + comuna.descripcion+"</option>");
-				});
-			});
-			$('#in_comuna').prop('disabled', false);
-		}
-		
 	});*/
 
 	$("form#formularioData").submit(function()
@@ -166,20 +121,4 @@ $(document).ready(function(){
 			);
 			return false;
 	});
-
-	//CARGA VALORES GUARDADOS DE FOLIO PARA LOS DROPDOWN
-	$(window).load(function(){
-		if($("#id_trabajo").val()!=null && $("#id_comuna").val()!=null && $("#id_estado").val()!=null){
-	  		//alert($("#id_trabajo").val()+' '+$("#id_comuna").val()+' '+$("#id_estado").val());
-		  	var idt = $("#id_trabajo").val();
-		  	var idc = $("#id_comuna").val();
-		  	var ide = $("#id_estado").val();
-
-		  	//$('#in_tipo_trabajo option[value="'+idt+'"]').prop('selected',true);
-		  	$('#in_tipo_trabajo').val(idt);
-		  	$('#in_comuna').val(idc);
-		  	$('#in_estado').val(ide);
-		}   
-	});
-
 });

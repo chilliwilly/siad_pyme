@@ -56,6 +56,14 @@ class orden_model extends CI_Model {
       	return $query->row();
     }
 
+    public function GetNombreAliadoById($idaliado){
+    	$this->db->select('inf_despacho_nacional.tbl_aliado.aliado_nombre');
+      	$this->db->from('inf_despacho_nacional.tbl_aliado');      	
+      	$this->db->where('inf_despacho_nacional.tbl_aliado.aliado_id in (select siad_pyme.tbl_sp_empresa_aliado.aliado_id from siad_pyme.tbl_sp_empresa_aliado where siad_pyme.tbl_sp_empresa_aliado.empresa_id = '.$idaliado.')');
+      	$query = $this->db->get();
+      	return $query->row();	
+    }
+
 	//obtiene comuna de acuerdo al id
 	public function GetIdComunaByNomComuna($comu){
 		$this->db_siad->where('id',$comu);

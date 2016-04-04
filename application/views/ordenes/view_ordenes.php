@@ -44,10 +44,16 @@
                     echo '<td>'.$orden->aliado.'</td>';
                     echo '<td>'.$orden->tipo_trabajo.'</td>';
                     echo '<td>'.$orden->estado.'</td>';
+
+                    if($this->session->userdata('TIPOUSUARIO') == 1){
+                      $p_row = '<a href="orden/editarIngreso/'.$nrofolio.'"><button type="button" title="Editar Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button></a>';
+                    }else{
+                      $p_row = '<a href="editarIngreso/'.$nrofolio.'"><button type="button" title="Editar Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button></a>'; 
+                    }
+
                     echo '<td>'.                          
                           '<a href="productos/editarProducto/'.$nrofolio.'"><button type="button" title="Ver Orden" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></a>'.
-                          
-                          '<a href="orden/editarIngreso/'.$nrofolio.'"><button type="button" title="Editar Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button></a>'. 
+                          $p_row.                          
                           '</td>';
                     echo '</tr>';
                   }

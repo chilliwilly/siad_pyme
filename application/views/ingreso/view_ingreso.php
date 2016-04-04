@@ -1,12 +1,26 @@
-<script type="text/javascript">
-  var id_categoria  = 0;
-  var id_subcat     = 0;
-  var baseurl = "<?php echo base_url(); ?>";
-</script>
-
 <input type="hidden" name="id_trabajo" id="id_trabajo" value="<?php echo @$data_folio->in_tipo_trabajo; ?>"> 
 <input type="hidden" name="id_comuna" id="id_comuna" value="<?php echo @$data_folio->in_comuna; ?>"> 
 <input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">
+
+<script type="text/javascript">
+  var num_trabajo = 0;
+  var num_comuna = 0;
+  var num_estado = 0;
+  var baseurl = "<?php echo base_url(); ?>";
+  var numtrab = document.getElementById("id_trabajo").value;
+
+  if(numtrab == 0){
+    num_trabajo = 0;
+    num_comuna = 0;
+    num_estado = 0;
+  }else{
+    num_trabajo = document.getElementById("id_trabajo").value;
+    num_comuna = document.getElementById("id_comuna").value;
+    num_estado = document.getElementById("id_estado").value;
+  }
+
+  //alert(num_trabajo+' '+num_comuna+' '+num_estado);
+</script>
 
 <?php
   //in_proyecto
@@ -784,10 +798,9 @@
     $("#datemask").inputmask("dd/mm/yyyy", { "placeholder": "dd/mm/yyyy" });
     //Money Euro
     $("[data-mask]").inputmask();
-  });
 
   //$(window).bind('load',function(){
       
-  //});
+  });
 
 </script>

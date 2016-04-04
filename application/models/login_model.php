@@ -45,7 +45,7 @@ class login_model extends CI_Model {
 
 	 function GetAliadoNombre($idaliado){
 	 	$this->db_siad->where('id',$idaliado);
-	 	return $this->db_siad->get('empresas')->row();	
+	 	return $this->db_siad->get('empresas')->row();
 	 }
 
 	 function GetRolUsrNombre($idrol){
