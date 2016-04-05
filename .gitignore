@@ -24,6 +24,11 @@ plugins/*
 system/*
 user_guide/*
 php/*
+less/*
+sass/*
+js/i18n/*
+js/bootstrap-select*
+js/.jshi*
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
