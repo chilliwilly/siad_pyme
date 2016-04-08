@@ -29,6 +29,7 @@ sass/*
 js/i18n/*
 js/bootstrap-select*
 js/.jshi*
+docs/*
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
