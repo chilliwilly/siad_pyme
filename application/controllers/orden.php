@@ -4,7 +4,8 @@ class orden extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('seguridad_model');
-		$this->load->model('orden_model');		
+		$this->load->model('orden_model');
+		$this->load->model('login_model');
 		$this->load->helper('date');
 	}
 
@@ -59,8 +60,28 @@ class orden extends CI_Controller {
 		$this->load->view('view_header');
 		$data['titulo']    = "Modificacion Datos";
 		$data["data_folio"] = $this->orden_model->GetOrdenByFolio($nrofolio);
-		$data["data_folio_det"] = $this->orden_model->GetOrdenByFolioDet($nrofolio);
-		//echo json_encode($data);
+		
+		//$data["data_folio_det"] = $this->orden_model->GetOrdenByFolioDet($nrofolio);
+		//insertar loop que devuelva info del detalle de observaciones		
+		/*$orden_det = $this->orden_model->GetOrdenByFolioDet($nrofolio);
+		$RegistroOrdenDet = array();
+
+		foreach ($orden_det as $value) {
+			# code...
+			$NomEstadoOrden = $this->orden_model->GetNombreEstadoOrden($value->in_estado);
+			$DatosUsuario = $this->orden_model->GetOrderDetUserName($value->indet_usr_registro);
+
+			$RegistroOrdenDet[] = array(
+				'fecha_registro' => $value->indet_fecha_registro,
+				'user_ingresa'   => $DatosUsuario->nombres.' '.$DatosUsuario->paterno,
+				'estado'         => $NomEstadoOrden->est_descripcion,
+				'observacion'    => $value->indet_observacion
+			);
+		}*/
+
+		$data['data_folio_det'] = json_encode($this->getOrdenDetalleFolio($nrofolio));
+
+		//echo json_encode($data['data_folio_det']);
 		$this->load->view('ingreso/view_ingreso',$data);
 		$this->load->view('view_footer');
 	}
@@ -104,5 +125,74 @@ class orden extends CI_Controller {
 
 	    $this->load->view('ordenes/view_ordenes', $data);
 	    $this->load->view('view_footer');
+	}
+
+	public function previewFolio(){
+		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	    $this->seguridad_model->SessionActivo($url);
+	    
+	    $folio = base64_decode($this->input->post('n_folio'));
+
+	    $orden = $this->orden_model->GetOrdenByFolio($folio);
+	    $NomAliado = $this->orden_model->GetNombreAliadoByComuna($orden->in_comuna);
+    	$NomTipoTrabajo = $this->orden_model->GetNombreTipoTrabajo($orden->in_tipo_trabajo);
+    	//$NomEstadoOrden = $this->orden_model->GetNombreEstadoOrden($orden->in_estado);
+    	$NomComuna = $this->orden_model->GetIdComunaByNomComuna($orden->in_comuna);
+
+    	$RegistroOrden = array();
+    	$RegistroOrden[] = array(
+    		'p_in_proyecto'         => $orden->in_proyecto,
+			'p_in_sga'              => $orden->in_sga,
+			'p_in_ingreso'          => $orden->in_ingreso,
+			'p_in_entrega'          => $orden->in_entrega,
+			'p_in_cliente'          => $orden->in_cliente,
+			'p_in_rut'              => substr_replace($orden->in_rut,"-",-1,0),
+			'p_in_direccion'        => $orden->in_direccion,			
+			'p_in_comuna'           => sprintf("%02d",$orden->in_region).' - '.$NomComuna->descripcion,//$orden->in_comuna,
+			'p_in_nombre'           => $orden->in_nombre,
+			'p_in_fono'             => $orden->in_fono,
+			'p_in_plan_net'         => $orden->in_plan_net,
+			'p_in_plan_net_adic'    => $orden->in_plan_net_adic,
+			'p_in_plan_fono'        => $orden->in_plan_fono,
+			'p_in_plan_fono_adic'   => $orden->in_plan_fono_adic,
+			'p_in_plan_fono_adict'  => $orden->in_plan_fono_adict,
+			'p_in_plan_tv'          => $orden->in_plan_tv,
+			'p_in_deco_basico'      => $orden->in_deco_basico,
+			'p_in_plan_tv_adic'     => $orden->in_plan_tv_adic,
+			'p_in_plan_tv_adict'    => $orden->in_plan_tv_adict,
+			'p_in_deco_hd_basico'   => $orden->in_deco_hd_basico,
+			'p_in_deco_hd_full'     => $orden->in_deco_hd_full,
+			'p_in_plan_tv_pack'     => $orden->in_plan_tv_pack,
+			'p_in_central_tf'       => $orden->in_central_tf,
+			'p_in_lineas_asignadas' => $orden->in_lineas_asignadas,
+			'p_in_fecha_operacion'  => $orden->in_fecha_operacion,
+			'p_in_vende'            => $orden->in_vende,
+			'p_in_tipo_trabajo'     => $NomTipoTrabajo->tt_nombre
+    	);		
+
+	    $data['preview_folio'] = $RegistroOrden;
+	    $data['data_folio_det'] = $this->getOrdenDetalleFolio($folio);
+
+		echo json_encode($data);
+	}
+
+	function getOrdenDetalleFolio($folio){
+		$orden_det = $this->orden_model->GetOrdenByFolioDet($folio);
+		$RegistroOrdenDet = array();
+
+		foreach ($orden_det as $value) {
+			# code...
+			$NomEstadoOrden = $this->orden_model->GetNombreEstadoOrden($value->in_estado);
+			$DatosUsuario = $this->orden_model->GetOrderDetUserName($value->indet_usr_registro);
+
+			$RegistroOrdenDet[] = array(
+				'fecha_registro' => $value->indet_fecha_registro,
+				'user_ingresa'   => $DatosUsuario->nombres.' '.$DatosUsuario->paterno,
+				'estado'         => $NomEstadoOrden->est_descripcion,
+				'observacion'    => $value->indet_observacion
+			);
+		}
+
+		return $RegistroOrdenDet;	
 	}
 }
