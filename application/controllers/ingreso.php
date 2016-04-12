@@ -26,13 +26,12 @@ class ingreso extends CI_Controller {
 	}
 
 	public function comunas(){
-		//$idCategoria   = $this->input->get("filtro");
-		$subcategorias = $this->regcomu_model->GetListComuna();//($idCategoria);
+		$subcategorias = $this->regcomu_model->GetListComuna();
 		echo json_encode($subcategorias);
 	}
 
 	public function ttrabajos(){
-		$trabajos = $this->regcomu_model->GetListTrabajo();//($idCategoria);
+		$trabajos = $this->regcomu_model->GetListTrabajo();
 		echo json_encode($trabajos);
 	}
 
