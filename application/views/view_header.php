@@ -18,7 +18,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url()?>dist/css/skins/_all-skins.min.css">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>css/Tablas.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>css/Tablas.css">  
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,10 +31,12 @@
     
     <script src="<?php echo base_url()?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
+    <script src="<?php echo base_url()?>plugins/jQueryUI/jQuery-ui.min.js"></script>
+
     <script src="<?php echo base_url()?>js/jquery.ajaxfileupload.js"></script>
   </head>
-  <!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
-  <body class="hold-transition skin-red layout-boxed sidebar-mini">
+  <!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT hold-transition layout-boxed-->
+  <body class="skin-red fixed sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
 
@@ -143,12 +145,13 @@
                     if($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') == 3 && $valued->menu_id == 3){
                       //MUESTRA EL SUBMENU ORDENES PARA EL ALIADO
                       echo '<li><a href="'.base_url().$valued->menu_url.'/aliado"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
+                    }elseif ($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') == 4 && $valued->menu_id == 3) {
+                      //MUESTRA EL SUBMENU ORDENES PARA PLATAFORMA T2
+                      echo '<li><a href="'.base_url().$valued->menu_url.'/plataforma"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
                     }elseif ($valued->menu_grupo == $LineaTemp && $valued->menu_id != 3) {
-                      # code...
                       //MUESTRA EL RESTO DE SUBMENU PARA <>Admin EXCLUYENDO LISTAR ORDENES
                       echo '<li><a href="'.base_url().$valued->menu_url.'"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
                     }elseif ($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') != 3) {
-                      # code...
                       //MUESTRA SUBMENU PARA ADMIN
                       echo '<li><a href="'.base_url().$valued->menu_url.'"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
                     }

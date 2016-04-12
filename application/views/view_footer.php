@@ -1,9 +1,9 @@
 </div><!-- /.content-wrapper -->
 <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 1.6
+          <b>Version</b> 1.0
         </div>
-        <strong>Claro - Operaciones</a>.</strong> 2015
+        <strong>Claro - Despacho Nacional</a>.</strong> 2015-2016
       </footer>
 
       <!-- Control Sidebar -->
