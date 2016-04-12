@@ -2,67 +2,67 @@ $(document).ready(function(){
 
 	//$('#in_comuna').prop('disabled', true);
 	//$('#in_region').prop('disabled', true);
-	$('#in_comuna').append("<option value='0'>Elige Comuna...</option>");
+	//$('#in_comuna').append("<option value='0'>Elige Comuna...</option>");
 
 	//LOAD DE COMUNAS
 	var comuna = $("#in_comuna");
 	comuna.append("<option value='0'>Cargando Comunas...</option>");
-	$.getJSON(baseurl + "ingreso/comunas",function(objetosretorna){
+	$.getJSON(baseurl + "ingreso/comunas",function(objetosretorna1){
 		comuna.empty();
 		comuna.append("<option value='0'>Elige Comuna...</option>");
-		$.each(objetosretorna, function(i,ObjetoReturn){
-			var seleccion = "";
-			if(num_comuna==ObjetoReturn.id){
-				seleccion = "selected='selected'";
+		$.each(objetosretorna1, function(i,ObjetoReturn1){
+			var seleccion1 = "";
+			if(num_comuna==ObjetoReturn1.id_comuna){
+				seleccion1 = "selected='selected'";
 			}
-			var nuevaFila = "<option value='"+ObjetoReturn.id_comuna+"' "+seleccion+">" + ObjetoReturn.comuna+"</option>";
+			var nuevaFila = "<option value='"+ObjetoReturn1.id_comuna+"' "+seleccion1+">" + ObjetoReturn1.comuna+"</option>";
 			comuna.append(nuevaFila);
 		});
 	});
 
-	/*$("#in_comuna").change(function(){
+	$("#in_comuna").change(function(){
 		var comuna = $("#in_comuna").val();
-	});*/
+	});
 
 	//LOAD DE TIPOS DE TRABAJO
 	var ttrabajo = $("#in_tipo_trabajo");
 	ttrabajo.append("<option value='0'>Cargando Trabajos...</option>");
-	$.getJSON(baseurl + "ingreso/ttrabajos",function(objetosretorna){
+	$.getJSON(baseurl + "ingreso/ttrabajos",function(objetosretorna2){
 		ttrabajo.empty();
 		ttrabajo.append("<option value='0'>Elige Trabajo...</option>");
-		$.each(objetosretorna, function(i,ObjetoReturn){
-			var seleccion = "";
-			if(num_trabajo==ObjetoReturn.id){
-				seleccion = "selected='selected'";
+		$.each(objetosretorna2, function(i,ObjetoReturn2){
+			var seleccion2 = "";
+			if(num_trabajo==ObjetoReturn2.tt_id){
+				seleccion2 = "selected='selected'";
 			}
-			var nuevaFila = "<option value='"+ObjetoReturn.tt_id+"' "+seleccion+">" + ObjetoReturn.tt_nombre+"</option>";
+			var nuevaFila = "<option value='"+ObjetoReturn2.tt_id+"' "+seleccion2+">" + ObjetoReturn2.tt_nombre+"</option>";
 			ttrabajo.append(nuevaFila);
 		});
 	});
 
-	/*$("#in_tipo_trabajo").change(function(){
+	$("#in_tipo_trabajo").change(function(){
 		var ttrabajo = $("#in_tipo_trabajo").val();
-	});*/
+	});
 
 	//LOAD ESTADO ACTIVIDADES
 	var testado = $("#in_estado");
 	testado.append("<option value='0'>Cargando Estados...</option>");
-	$.getJSON(baseurl + "ingreso/testados",function(objetosretorna){
+	$.getJSON(baseurl + "ingreso/testados",function(objetosretorna3){
 		testado.empty();
 		testado.append("<option value='0'>Elige Estado...</option>");
-		$.each(objetosretorna, function(i,ObjetoReturn){
-			var seleccion = "";
-			if(num_estado==ObjetoReturn.id){
-				seleccion = "selected='selected'";
+		$.each(objetosretorna3, function(i,ObjetoReturn3){
+			var seleccion3 = "";
+			if(num_estado==ObjetoReturn3.est_id){
+				seleccion3 = "selected='selected'";
 			}
-			var nuevaFila = "<option value='"+ObjetoReturn.est_id+"' "+seleccion+">" + ObjetoReturn.est_descripcion+"</option>";
+			var nuevaFila = "<option value='"+ObjetoReturn3.est_id+"' "+seleccion3+">" + ObjetoReturn3.est_descripcion+"</option>";
 			testado.append(nuevaFila);
 		});
 	});
 
-	/*$("#in_estado").change(function(){
+	$("#in_estado").change(function(){
 		var testado = $("#in_estado").val();
-	});*/
+	});
 
 	$("form#formularioData").submit(function()
 	{
