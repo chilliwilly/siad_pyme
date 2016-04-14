@@ -4,73 +4,14 @@ $(document).ready(function(){
 	//$('#in_region').prop('disabled', true);
 	//$('#in_comuna').append("<option value='0'>Elige Comuna...</option>");
 
-	//LOAD DE COMUNAS
-	var comuna = $("#in_comuna");
-	comuna.append("<option value='0'>Cargando Comunas...</option>");
-	$.getJSON(baseurl + "ingreso/comunas",function(objetosretorna1){
-		comuna.empty();
-		comuna.append("<option value='0'>Elige Comuna...</option>");
-		$.each(objetosretorna1, function(i,ObjetoReturn1){
-			var seleccion1 = "";
-			if(num_comuna==ObjetoReturn1.id_comuna){
-				seleccion1 = "selected='selected'";
-			}
-			var nuevaFila = "<option value='"+ObjetoReturn1.id_comuna+"' "+seleccion1+">" + ObjetoReturn1.comuna+"</option>";
-			comuna.append(nuevaFila);
-		});
-	});
-
-	$("#in_comuna").change(function(){
-		var comuna = $("#in_comuna").val();
-	});
-
-	//LOAD DE TIPOS DE TRABAJO
-	var ttrabajo = $("#in_tipo_trabajo");
-	ttrabajo.append("<option value='0'>Cargando Trabajos...</option>");
-	$.getJSON(baseurl + "ingreso/ttrabajos",function(objetosretorna2){
-		ttrabajo.empty();
-		ttrabajo.append("<option value='0'>Elige Trabajo...</option>");
-		$.each(objetosretorna2, function(i,ObjetoReturn2){
-			var seleccion2 = "";
-			if(num_trabajo==ObjetoReturn2.tt_id){
-				seleccion2 = "selected='selected'";
-			}
-			var nuevaFila = "<option value='"+ObjetoReturn2.tt_id+"' "+seleccion2+">" + ObjetoReturn2.tt_nombre+"</option>";
-			ttrabajo.append(nuevaFila);
-		});
-	});
-
-	$("#in_tipo_trabajo").change(function(){
-		var ttrabajo = $("#in_tipo_trabajo").val();
-	});
-
-	//LOAD ESTADO ACTIVIDADES
-	var testado = $("#in_estado");
-	testado.append("<option value='0'>Cargando Estados...</option>");
-	$.getJSON(baseurl + "ingreso/testados",function(objetosretorna3){
-		testado.empty();
-		testado.append("<option value='0'>Elige Estado...</option>");
-		$.each(objetosretorna3, function(i,ObjetoReturn3){
-			var seleccion3 = "";
-			if(num_estado==ObjetoReturn3.est_id){
-				seleccion3 = "selected='selected'";
-			}
-			var nuevaFila = "<option value='"+ObjetoReturn3.est_id+"' "+seleccion3+">" + ObjetoReturn3.est_descripcion+"</option>";
-			testado.append(nuevaFila);
-		});
-	});
-
-	$("#in_estado").change(function(){
-		var testado = $("#in_estado").val();
-	});
-
 	$("form#formularioData").submit(function()
 	{
 			var IngresoRegistro 		       = new Object();
 			IngresoRegistro.p_proyecto 	       = $('input#in_proyecto').val();
-			IngresoRegistro.p_sga              = $('input#in_sga').val();//date
-			IngresoRegistro.p_ingreso          = $('input#in_ingreso').val();//date
-			IngresoRegistro.p_entrega          = $('input#in_entrega').val();//date
+			//IngresoRegistro.p_sga              = $('input#in_sga').val();//date			
+			IngresoRegistro.p_ingreso          = $('input#in_ingreso').val();//date fecha ingreso registro
+			IngresoRegistro.p_entrega          = $('input#in_entrega').val();//date fecha agenda
+			IngresoRegistro.p_bloque           = $('select#in_bloque_agenda :selected').val();//bloque agenda entra en posicion de SGA
 			IngresoRegistro.p_cliente          = $('input#in_cliente').val();
 			IngresoRegistro.p_rut              = $('input#in_rut').val();
 			IngresoRegistro.p_direccion        = $('input#in_direccion').val();
@@ -97,6 +38,7 @@ $(document).ready(function(){
 			IngresoRegistro.p_estado           = $('select#in_estado').val();
 			IngresoRegistro.p_observacion      = $('textarea#indet_observacion').val();
 			IngresoRegistro.p_ttrabajo         = $('select#in_tipo_trabajo').val();
+			IngresoRegistro.es_update          = $('input#id_update').val();
 			
 			$('html,body').animate({
 	            scrollTop: 0
