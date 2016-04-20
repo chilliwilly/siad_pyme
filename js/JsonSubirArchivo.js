@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$("form#uploadform").submit(function(e){
 		e.preventDefault();
 		$.ajaxFileUpload({
-			url 			:'./subir_data_sga/SubirArchivo', 
+			url 			:'./Subir_data_sga/SubirArchivo', 
 			secureuri		:false,
 			fileElementId	:'userfile',
 			dataType		: 'json',

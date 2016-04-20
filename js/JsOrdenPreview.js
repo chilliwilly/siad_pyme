@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	window.verPreview = function (nroOrden){
 		//alert(nroOrden);
-		$.post(baseurl + 'orden/previewFolio',
+		$.post(baseurl + 'Orden/previewFolio',
 		{
 			n_folio: nroOrden
 		},
@@ -15,9 +15,10 @@ $(document).ready(function(){
 				//$("#txtTipoTrabajo").val(data_json.preview_folio["p_in_rut"]);
 				$("#txt_tipo_trabajo").val(data_json.preview_folio[0].p_in_tipo_trabajo);
 				$("#txt_proyecto").val(data_json.preview_folio[0].p_in_proyecto);
-				$("#txt_sga").val(data_json.preview_folio[0].p_in_sga);
+				//$("#txt_sga").val(data_json.preview_folio[0].p_in_sga);
 				$("#txt_ingreso").val(data_json.preview_folio[0].p_in_ingreso);
 				$("#txt_entrega").val(data_json.preview_folio[0].p_in_entrega);
+				$("#txt_bloque_agenda").val(data_json.preview_folio[0].p_in_bloque);
 				$("#txt_cliente").val(data_json.preview_folio[0].p_in_cliente);
 				$("#txt_rut").val(data_json.preview_folio[0].p_in_rut);
 				$("#txt_comuna").val(data_json.preview_folio[0].p_in_comuna);
@@ -69,6 +70,7 @@ $(document).ready(function(){
 
 	window.cerrarOrden = function(){		
 		var nroFolio = $("#txtNroFolioHide").val();
+		//var nroFolio = nroOrden;
 		//alert(nroOrden);
 		//var InputNroOrden = new Object();
 		//InputNroOrden.nroOrden = nroFolio;
@@ -93,7 +95,7 @@ $(document).ready(function(){
 			 	if (isConfirm) {
 					swal("Hecho!", "El registro ha sido cerrado, este mensaje se cerrara automaticamente en 3 segundos", "success");
 
-					$.post(baseurl + 'orden/CierraAdmin',
+					$.post(baseurl + 'Orden/CierraAdmin',
 					{ 
 						DatoFolio: nroFolio
 					},

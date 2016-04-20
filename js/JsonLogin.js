@@ -13,7 +13,7 @@ $(document).ready(function(){
 			Login.UserName   = $('input#txtUsuario').val();
 			Login.Password   = Codificar($('input#txtPassword').val());			
 			var DatosJson = JSON.stringify(Login);
-			$.post(baseurl + 'login/ValidaAcceso',
+			$.post(baseurl + 'Login/ValidaAcceso',
 			{ 
 				LoginPost: DatosJson
 			},

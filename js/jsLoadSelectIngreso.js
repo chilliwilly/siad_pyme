@@ -2,7 +2,7 @@ $(document).ready(function(){
 	//LOAD DE COMUNAS
 	var comuna = $("#in_comuna");
 	comuna.append("<option value='0'>Cargando Comunas...</option>");
-	$.getJSON(baseurl + "ingreso/comunas",function(objetosretorna1){
+	$.getJSON(baseurl + "Ingreso/comunas",function(objetosretorna1){
 		comuna.empty();
 		comuna.append("<option value='0'>Elige Comuna...</option>");
 		$.each(objetosretorna1, function(i,ObjetoReturn1){
@@ -23,7 +23,7 @@ $(document).ready(function(){
 	//LOAD DE TIPOS DE TRABAJO
 	var ttrabajo = $("#in_tipo_trabajo");
 	ttrabajo.append("<option value='0'>Cargando Trabajos...</option>");
-	$.getJSON(baseurl + "ingreso/ttrabajos",function(objetosretorna2){
+	$.getJSON(baseurl + "Ingreso/ttrabajos",function(objetosretorna2){
 		ttrabajo.empty();
 		ttrabajo.append("<option value='0'>Elige Trabajo...</option>");
 		$.each(objetosretorna2, function(i,ObjetoReturn2){
@@ -44,7 +44,7 @@ $(document).ready(function(){
 	//LOAD ESTADO ACTIVIDADES
 	var testado = $("#in_estado");
 	testado.append("<option value='0'>Cargando Estados...</option>");
-	$.getJSON(baseurl + "ingreso/testados",function(objetosretorna3){
+	$.getJSON(baseurl + "Ingreso/testados",function(objetosretorna3){
 		testado.empty();
 		testado.append("<option value='0'>Elige Estado...</option>");
 		$.each(objetosretorna3, function(i,ObjetoReturn3){
@@ -65,7 +65,7 @@ $(document).ready(function(){
 	//LOAD BLOQUES
 	var tbloque = $("#in_bloque_agenda");
 	tbloque.append("<option value='0'>Cargando Bloques...</option>");
-	$.getJSON(baseurl + "ingreso/bloques",function(objetosretorna4){
+	$.getJSON(baseurl + "Ingreso/bloques",function(objetosretorna4){
 		tbloque.empty();
 		tbloque.append("<option value='0'>Elige Bloque...</option>");
 		$.each(objetosretorna4, function(i,ObjetoReturn4){
