@@ -48,16 +48,21 @@ $(document).ready(function(){
 			
 			var DatosJson = JSON.stringify(IngresoRegistro);
 			
-			$.post(baseurl + 'ingreso/GuardaRegistro',
+			$.post(baseurl + 'Ingreso/GuardaRegistro',
 				{ 
 					InsRegistro: DatosJson
 				},
 				function(data, textStatus) {
-					$("#"+data.campo+"").focus();
-					$("#mensaje").html(data.error_msg);
+					if(data.campo==null){
+						$("#"+data.campo+"").focus();
+						$("#mensaje").html(data.error_msg);
 
-					var delay = 2000; //delay en milisegundos
-					setTimeout(function(){ window.location.href = baseurl + "ingreso/nuevo"; }, delay);
+						var delay = 2000; //delay en milisegundos
+						setTimeout(function(){ window.location.href = baseurl + "Ingreso/nuevo"; }, delay);	
+					}else{						
+						$("#"+data.campo+"").focus();
+						$("#mensaje").html(data.error_msg);
+					}					
 				}, 
 				"json"		
 			);
