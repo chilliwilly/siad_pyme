@@ -15,12 +15,6 @@ class Orden extends CI_Controller {
 	    /**/
 	    $this->load->view('constant');
 	    $this->load->view('view_header');
-
-	    /*if($this->session->userdata("TIPOUSUARIO") <> 3){
-	    	$ordenes = $this->Orden_model->ListarOrdenesAliado();//OBTIENE LAS ORDENES DEL ALIADO QUE SE INGRESO
-	    }else{
-	    	$ordenes = $this->Orden_model->ListarOrdenesAdmin();//OBTIENE TODAS LAS ORDENES SI ES ADMIN EL USUARIO QUE SE LOGEA
-	    }*/
 	    
 	    $ordenes = $this->Orden_model->ListarOrdenesAdmin();
 
