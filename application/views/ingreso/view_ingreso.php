@@ -1,35 +1,58 @@
 <input type="hidden" name="id_trabajo" id="id_trabajo" value="<?php echo @$data_folio->in_tipo_trabajo; ?>"> 
-<input type="hidden" name="id_comuna" id="id_comuna" value="<?php echo @$data_folio->in_comuna; ?>"> 
-<input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">
+<input type="hidden" name="id_comuna" id="id_comuna" value="<?php echo @$data_folio->in_comuna; ?>">
+<input type="hidden" name="id_bloque" id="id_bloque" value="<?php echo @$data_folio->reagenda_bloque; ?>">
+<input type="hidden" name="id_admin" id="id_admin" value="<?php echo @$data_folio->in_estado_admin; ?>">
+<input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->session->userdata('TIPOUSUARIO'); ?>">
+<!--<input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">-->
 
 <script type="text/javascript">
+  var baseurl = "<?php echo base_url(); ?>";
   var num_trabajo = 0;
   var num_comuna = 0;
   var num_estado = 0;
-  var baseurl = "<?php echo base_url(); ?>";
+  var num_bloque = 0;
   var numtrab = document.getElementById("id_trabajo").value;
+  numtrab = parseInt(numtrab.length);
 
   if(numtrab == 0){
     num_trabajo = 0;
     num_comuna = 0;
-    num_estado = 0;
+    //num_estado = 0;
+    num_bloque = 0;
   }else{
     num_trabajo = document.getElementById("id_trabajo").value;
     num_comuna = document.getElementById("id_comuna").value;
-    num_estado = document.getElementById("id_estado").value;
+    //num_estado = document.getElementById("id_estado").value;
+    num_bloque = document.getElementById("id_bloque").value;
   }
 
-  //alert(num_trabajo+' '+num_comuna+' '+num_estado);
+  function volverAdmin(){
+    window.location="<?php echo base_url()?>orden";
+  }
+
+  function volverAliado(){
+    window.location="<?php echo base_url()?>orden/aliado";
+  }
 </script>
 
 <?php
   //in_proyecto
+  $nproy = "";
+
+  if(@$n_folio != null){
+    $nproy = @$n_folio;
+  }elseif(@$data_folio->in_proyecto != null){
+    $nproy = @$data_folio->in_proyecto;
+  }else{
+    $nproy = "";
+  }
+  
   $in_proyecto = array(
   'name'        => 'in_proyecto',
   'id'          => 'in_proyecto',
   'size'        => 20,
   'maxlength'   => 20,
-  'value'       => set_value('in_proyecto',@$data_folio->in_proyecto),//if($n_folio != null){ set_value('in_proyecto',$n_folio); }else{ set_value('in_proyecto',''); },//set_value('in_proyecto',@$data_folio->codigo),
+  'value'       => set_value('in_proyecto',$nproy),//if($n_folio != null){ set_value('in_proyecto',$n_folio); }else{ set_value('in_proyecto',''); },//set_value('in_proyecto',@$data_folio->codigo),
   'type'        => 'number',
   'class'       => 'form-control',
   'placeholder' => 'Ingrese nro proyecto',
@@ -37,14 +60,14 @@
   );
 
   //in_sga
-  $in_sga = array(
+  /*$in_sga = array(
   'name'        => 'in_sga',
   'id'          => 'in_sga',
   'value'       => set_value('in_sga',@$data_folio->in_sga),
   'type'        => 'date',
   'class'       => 'form-control',
   //'onkeypress'  => 'return letras(event)',
-  );
+  );*/
 
   //in_ingreso
   $in_ingreso = array(
@@ -60,7 +83,7 @@
   $in_entrega = array(
   'name'        => 'in_entrega',
   'id'          => 'in_entrega',
-  'value'       => set_value('in_entrega',@$data_folio->in_entrega),
+  'value'       => set_value('in_entrega',@$data_folio->reagenda_fecha),//in_entrega
   'type'        => 'date',
   'class'       => 'form-control',
   //'onkeypress'  => 'return letras(event)',
@@ -133,7 +156,7 @@
   );
 
   //in_plan_net
-  $in_plan_net = array(
+  /*$in_plan_net = array(
   'name'        => 'in_plan_net',
   'id'          => 'in_plan_net',
   'size'        => 100,
@@ -143,7 +166,7 @@
   'class'       => 'form-control',
   'placeholder' => 'Ingrese plan internet',
   //'onkeypress'  => 'return letras(event)',
-  );
+  );*/
 
   //in_plan_net_adic
   $in_plan_net_adic = array(
@@ -211,7 +234,7 @@
   );
 
   //in_deco_basico
-  $in_deco_basico = array(
+  /*$in_deco_basico = array(
   'name'        => 'in_deco_basico',
   'id'          => 'in_deco_basico',
   'size'        => 100,
@@ -221,7 +244,7 @@
   'class'       => 'form-control',
   'placeholder' => 'Ingrese deco basico',
   //'onkeypress'  => 'return letras(event)',
-  );
+  );*/
 
   //in_plan_tv_adic
   $in_plan_tv_adic = array(
@@ -359,7 +382,7 @@
   'id'          => 'indet_observacion',
   'size'        => 100,
   //'maxlength'   => 500,
-  'value'       => set_value('indet_observacion',@$data_folio_det->indet_observacion),
+  //'value'       => set_value('indet_observacion',@$data_folio_det->indet_observacion),
   //'type'        => 'text',
   'rows'        => '3',
   'class'       => 'form-control',
@@ -369,8 +392,14 @@
 
 ?>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap-select.min.css"/>
+<link rel="stylesheet" href="<?php echo base_url()?>lib/sweet-alert.css"/>
+<!-- Latest compiled and minified JavaScript -->
+<script src="<?php echo base_url()?>js/bootstrap-select.min.js"></script>
+<script src="<?php echo base_url()?>lib/sweet-alert.js"></script>
+<script src="<?php echo base_url();?>js/jsLoadSelectIngreso.js"></script>
 <script src="<?php echo base_url();?>js/JsonIngresos.js"></script>
-<!--<script src="<?php echo base_url();?>js/jsLoadComboModificar.js"></script>-->
 <!-- Main content --><form name="formularioData" id="formularioData" role="form">  
 <section class="content">
   <!-- Default box -->
@@ -384,392 +413,450 @@
       <div id="mensaje"></div>
       <div class="row">          
               
-              <div class="col-md-9 col-md-offset-1">
-                  <div class="box box-primary">
-                      <label><?php echo $titulo; ?></label>
+              <div class="col-md-10 col-md-offset-1">
+                <div class="box box-primary">
+                    <label><?php echo $titulo; ?></label>
+                        <input type="hidden" name="id_update" id="id_update" value="<?php echo $data_flag; ?>">
+                        <table>
+                            <tr>
+                              <td>
+                                <div class="form-group has-feedback">
+                                    <label for="in_proyecto">Tipo Trabajo*</label>
+                                    <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
+                                        oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
+                                    <select name="in_tipo_trabajo" id="in_tipo_trabajo" class="form-control selectpicker show-tick" data-size="10"></select>
 
-                          <table>
-                              <tr>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
                                 <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_proyecto">Tipo Trabajo*</label>
-                                      <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
-                                          oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
-                                      <select name="in_tipo_trabajo" id="in_tipo_trabajo" class="form-control"></select>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_proyecto">Proyecto*</label>
+                                        <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
+                                            oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
+                                        <?php echo form_input($in_proyecto); ?>
 
-                                  </div>
+                                        <span class="glyphicon glyphicon-file form-control-feedback"></span>
+                                    </div>
                                 </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_proyecto">Proyecto*</label>
-                                          <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
-                                              oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
-                                          <?php echo form_input($in_proyecto); ?>
-
-                                          <span class="glyphicon glyphicon-file form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
+                                </td>
+                                <td>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_sga">SGA*</label>
-                                          <!--<input type="text" id="txtNombreD" name="txtNombreD" placeholder="Ingrese segundo nombre" required="required" class="form-control" 
-                                              oninvalid="this.setCustomValidity('Campo segundo nombre obligatorio')" title="Debe ingresar segundo nombre de la persona">-->
-                                          <?php echo form_input($in_sga); ?>
-
-                                          <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_ingreso">Fecha Ingreso*</label>
-                                          <!--<input type="text" id="txtApPat" name="txtApPat" placeholder="Ingrese apellido paterno" required="required" class="form-control" 
-                                              oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar apellido paterno de la persona" style="width:300px;">-->
-                                          <?php echo form_input($in_ingreso); ?>
-
-                                          <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_entrega">Fecha Entrega*</label>
-                                          <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control" 
-                                              oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar materno paterno de la persona" style="width:300px;">-->
-                                          <?php echo form_input($in_entrega); ?>
-
-                                          <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="3">
-                                      <div class="form-group has-feedback">
-                                          <label for="in_cliente">Cliente*</label>
-                                          <!--<input type="text" id="txtRut" name="txtRut" placeholder="RUT 12345678-9" required="required" class="form-control"
-                                              oninvalid="this.setCustomValidity('Campo Rut Obligatorio')" title="Debe ingresar rut de la persona" maxlength="10" style="width:180px; text-align:center;">-->
-                                          <?php echo form_input($in_cliente); ?>
-
-                                          <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                  <td>
-                                      <div class="form-group">
-                                          <label for="in_rut">Rut*</label>
-                                          <!--<div class="input-group">
-                                              <div class="input-group-addon">
-                                                  <i class="fa fa-calendar"></i>
-                                              </div>-->
-                                              <!--<input type="text" id="txtFechIn" name="txtFechIn" required="required" class="form-control"
-                                                  oninvalid="this.setCustomValidity('Campo Fecha Ingreso Obligatorio')" title="Debe ingresar fecha ingreso de la persona" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>-->
-                                              <?php echo form_input($in_rut); ?>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_comuna">Comuna*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <select name="in_comuna" id="in_comuna" class="form-control"></select>
-
-                                  </div>
                                 </td>
+                            </tr>
+                            <tr>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="form-group has-feedback">
+                                        <label for="in_ingreso">Fecha Ingreso*</label>
+                                        <!--<input type="text" id="txtApPat" name="txtApPat" placeholder="Ingrese apellido paterno" required="required" class="form-control" 
+                                            oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar apellido paterno de la persona" style="width:300px;">-->
+                                        <?php echo form_input($in_ingreso); ?>
+
+                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                    </div>
                                 </td>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                 <td>
-                                  <!--<div class="form-group has-feedback">
-                                      <label for="in_region">Region*</label>
-                                      
-                                      <select name="in_region" id="in_region" class="form-control"></select>
-                                      
-                                  </div>-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="form-group has-feedback">
+                                        <label for="in_entrega">Fecha Agenda* <button type="button" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>
+                                        <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control" 
+                                            oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar materno paterno de la persona" style="width:300px;">-->
+                                        <?php echo form_input($in_entrega); ?>
+
+                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>                                        
+                                    </div>
                                 </td>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="form-group has-feedback">
+                                        <label for="in_bloque_agenda">Bloque Agenda*</label><!-- ex in_sga -->
+                                        <!--<input type="text" id="txtNombreD" name="txtNombreD" placeholder="Ingrese segundo nombre" required="required" class="form-control" 
+                                            oninvalid="this.setCustomValidity('Campo segundo nombre obligatorio')" title="Debe ingresar segundo nombre de la persona">-->
+                                        <!--<?php form_input($in_sga); ?>-->
+
+                                        <!--<span class="glyphicon glyphicon-calendar form-control-feedback"></span>-->
+                                        <select name="in_bloque_agenda" id="in_bloque_agenda" class="form-control selectpicker show-tick"></select>
+                                    </div>
                                 </td>
-                                <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </td>
-                              </tr>
-                              <tr>
+                            </tr>
+                            <tr>
                                 <td colspan="3">
-                                  <div class="form-group has-feedback">
-                                      <label for="in_nombre">Nombre*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <?php echo form_input($in_nombre); ?>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_cliente">Cliente*</label>
+                                        <!--<input type="text" id="txtRut" name="txtRut" placeholder="RUT 12345678-9" required="required" class="form-control"
+                                            oninvalid="this.setCustomValidity('Campo Rut Obligatorio')" title="Debe ingresar rut de la persona" maxlength="10" style="width:180px; text-align:center;">-->
+                                        <?php echo form_input($in_cliente); ?>
 
-                                      <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                  </div>
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="in_rut">Rut*</label>
+                                        <!--<div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>-->
+                                            <!--<input type="text" id="txtFechIn" name="txtFechIn" required="required" class="form-control"
+                                                oninvalid="this.setCustomValidity('Campo Fecha Ingreso Obligatorio')" title="Debe ingresar fecha ingreso de la persona" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>-->
+                                            <?php echo form_input($in_rut); ?>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="form-group has-feedback">
+                                    <label for="in_comuna">Comuna*</label>
+                                    <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                    <select name="in_comuna" id="in_comuna" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>                                      
+
+                                </div>
+                              </td>
+                              <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </td>
+                              <td>
+                                <!--<div class="form-group has-feedback">
+                                    <label for="in_region">Region*</label>
+                                    
+                                    <select name="in_region" id="in_region" class="form-control"></select>
+                                    
+                                </div>-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </td>
+                              <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </td>
+                              <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3">
+                                <div class="form-group has-feedback">
+                                    <label for="in_nombre">Nombre*</label>
+                                    <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                    <?php echo form_input($in_nombre); ?>
+
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                              </td>
+                              <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </td>
+                              <td>
+                                <div class="form-group has-feedback">
+                                    <label for="in_fono">Fono Cliente*</label>
+                                    <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                    <?php echo form_input($in_fono); ?>
+
+                                    <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="form-group has-feedback">
+                                        <label for="in_direccion">Direccion*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_direccion); ?>
+
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3">
+                                <div class="form-group has-feedback">
+                                    <label for="in_plan_net">Plan*</label>
+                                    <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                    <!--<?php echo form_input($in_plan_net); ?>-->
+                                    <select name="in_plan_net" id="in_plan_net" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
+                                    <!--<span class="glyphicon glyphicon-globe form-control-feedback"></span>-->
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <!--<label for="in_plan_net">Plan Internet*</label>-->
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <!--<?php echo form_input($in_plan_net); ?>-->
+                                        
+                                        <!--<span class="glyphicon glyphicon-globe form-control-feedback"></span>-->
+                                    </div>
                                 </td>
                                 <td>
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </td>
                                 <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_fono">Fono*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <?php echo form_input($in_fono); ?>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_net_adic">Plan Internet Adicional*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_net_adic); ?>
 
-                                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                                  </div>
+                                        <span class="glyphicon glyphicon-globe form-control-feedback"></span>
+                                    </div>
                                 </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="5">
-                                      <div class="form-group has-feedback">
-                                          <label for="in_direccion">Direccion*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_direccion); ?>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_fono">Plan Telefonia*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_fono); ?>
 
-                                          <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_net">Plan Internet*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_net); ?>
-
-                                          <span class="glyphicon glyphicon-globe form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_net_adic">Plan Internet Adicional*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_net_adic); ?>
-
-                                          <span class="glyphicon glyphicon-globe form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_fono">Plan Telefonia*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_fono); ?>
-
-                                          <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_fono_adic">Adicional Telefonia 1*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_fono_adic); ?>
-
-                                          <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_fono_adict">Adicional Telefonia 2*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_fono_adict); ?>
-
-                                          <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_tv">Plan TV*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_tv); ?>
-
-                                          <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_tv_adic">Adicional TV 1*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_tv_adic); ?>
-
-                                          <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_tv_adict">Adicional TV 2*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_tv_adict); ?>
-
-                                          <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_deco_basico">Deco Basico*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_deco_basico); ?>
-
-                                          <span class="glyphicon glyphicon-hdd form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_deco_hd_basico">Deco Basico HD*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_deco_hd_basico); ?>
-
-                                          <span class="glyphicon glyphicon-hdd form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_deco_hd_full">Deco Full HD*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_deco_hd_full); ?>
-
-                                          <span class="glyphicon glyphicon-hdd form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="3">
-                                      <div class="form-group has-feedback">
-                                          <label for="in_plan_tv_pack">Plan Adicional TV / Plan TV Pack*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_plan_tv_pack); ?>
-
-                                          <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td colspan="3">
-                                      <div class="form-group has-feedback">
-                                          <label for="in_central_tf">Central TF*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_central_tf); ?>
-
-                                          <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_lineas_asignadas">Lineas Asignadas*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_lineas_asignadas); ?>
-
-                                          <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                              </tr>
-
-                              <tr>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_fecha_operacion">Fecha Operacion*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_fecha_operacion); ?>
-
-                                          <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_vende">Vende*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <?php echo form_input($in_vende); ?>
-
-                                          <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                      </div>
-                                  </td>
-                                  <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </td>
-                                  <td>
-                                      <div class="form-group has-feedback">
-                                          <label for="in_estado">Estado*</label>
-                                          <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                          <select name="in_estado" id="in_estado" class="form-control"></select>
-                                          <!--<?php echo form_dropdown('in_estado', $in_estado, set_value('in_estado', @$data_folio_det->in_estado),'class="form-control" id="in_estado"'); ?>-->
-
-                                      </div>
-                                  </td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">
-                                  <label for="indet_observacion">Observacion*</label>
-                                  <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                  <?php echo form_textarea($indet_observacion); ?>
-
-                                  <!--<span class="glyphicon glyphicon-user form-control-feedback"></span>-->
+                                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                                    </div>
                                 </td>
-                              </tr>                      
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_fono_adic">Adicional Telefonia 1*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_fono_adic); ?>
+
+                                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_fono_adict">Adicional Telefonia 2*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_fono_adict); ?>
+
+                                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_tv">Plan TV*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_tv); ?>
+
+                                        <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_tv_adic">Adicional TV 1*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_tv_adic); ?>
+
+                                        <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_tv_adict">Adicional TV 2*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_tv_adict); ?>
+
+                                        <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_deco_basico">Deco Basico*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <!--<?php echo form_input($in_deco_basico); ?>-->
+                                        <select name="in_deco_basico" id="in_deco_basico" class="form-control selectpicker show-tick"></select>
+
+                                        <!--<span class="glyphicon glyphicon-hdd form-control-feedback"></span>-->
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_deco_hd_basico">Deco Basico HD*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_deco_hd_basico); ?>
+
+                                        <span class="glyphicon glyphicon-hdd form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_deco_hd_full">Deco Full HD*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_deco_hd_full); ?>
+
+                                        <span class="glyphicon glyphicon-hdd form-control-feedback"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="form-group has-feedback">
+                                        <label for="in_plan_tv_pack">Plan Adicional TV / Plan TV Pack*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_plan_tv_pack); ?>
+
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="form-group has-feedback">
+                                        <label for="in_central_tf">Central TF*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_central_tf); ?>
+
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_lineas_asignadas">Fonos TF*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_lineas_asignadas); ?>
+
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_fecha_operacion">Fecha Cierre*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_fecha_operacion); ?>
+
+                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_vende">Canal de Ventas*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <?php echo form_input($in_vende); ?>
+
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <div class="form-group has-feedback">
+                                        <label for="in_estado">Estado*</label>
+                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                        <select name="in_estado" id="in_estado" class="form-control selectpicker show-tick"></select>
+                                        <!--<?php echo form_dropdown('in_estado', $in_estado, set_value('in_estado', @$data_folio_det->in_estado),'class="form-control" id="in_estado"'); ?>-->
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                              <td colspan="5">
+                                <label for="indet_observacion">Observacion*</label>
+                                <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
+                                <?php echo form_textarea($indet_observacion); ?>
+
+                                <!--<span class="glyphicon glyphicon-user form-control-feedback"></span>-->
+                              </td>
+                            </tr>                      
+                        </table>
+
+                        <br>
+
+                        <?php if($titulo == "Modificacion Datos"){ ?>
+                          <label>Detalle Observaciones</label>
+                          <table id="ordenesDet" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
+                            <thead>
+                              <tr>
+                                <th>Fecha Ingreso</th>
+                                <th>Usuario</th>
+                                <th>Estado</th>
+                                <th>Observacion</th>                                
+                              </tr>
+                            </thead>                              
+                            <tbody>
+                              <?php 
+                                if(json_decode($data_folio_det)){
+                                  foreach (json_decode($data_folio_det) as $value) {
+                                    # code...
+                                    echo '<tr>';
+                                    echo '<td>'.$value->fecha_registro.'</td>';
+                                    echo '<td>'.$value->user_ingresa.'</td>';
+                                    echo '<td>'.$value->estado.'</td>';
+                                    echo '<td>'.$value->observacion.'</td>';
+                                    echo '</tr>';
+                                  }
+                                }
+                              ?>
+                            </tbody>
                           </table>
-                  </div>
+                        <?php } ?>
+                </div>
 
-                    <?php if($titulo == "Modificacion Datos"){ ?>
+                <?php if($this->session->userdata("TIPOUSUARIO") == 1){ ?>
+                  <button type="button" onclick="volverAdmin()" class="btn btn-default">Volver</button>
+                <?php }else{ ?>
+                  <button type="button" onclick="volverAliado()" class="btn btn-default">Volver</button>
+                <?php } ?>
+                
 
-                      <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-refresh"></span>
-                        Actualizar Registro
-                      </button>
+                <?php if($titulo == "Modificacion Datos" && @$data_folio->in_estado_admin != 1){ ?>
 
-                    <?php }else{?>
+                  <button type="submit" class="btn btn-primary" id="btnUpdFolio">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                    Actualizar Registro
+                  </button>
 
-                      <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-floppy-disk"></span>
-                        Guardar Registro
-                      </button>
+                <?php }elseif(@$data_folio->in_estado_admin == 1 && $titulo == "Modificacion Datos") { ?>
 
-                    <?php }?>    
+                  <button class="btn btn-primary" disabled>
+                    <span class="glyphicon glyphicon-refresh"></span>
+                    Actualizar Registro
+                  </button>
+
+                <?php }else{?>
+
+                  <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                    Guardar Registro
+                  </button>
+
+                <?php }?>    
 
               </div>
           
@@ -798,9 +885,40 @@
     $("#datemask").inputmask("dd/mm/yyyy", { "placeholder": "dd/mm/yyyy" });
     //Money Euro
     $("[data-mask]").inputmask();
-
   //$(window).bind('load',function(){
-      
+    $('#ordenesDet').dataTable({
+        "scrollX": true,
+        //"searching": false,
+        "bSort": false,
+        "pageLength": 5,
+        "bLengthChange": false
+    });
+    //var cosa = JSON.stringify($('form').serializeArray());
+    var datos = $('#formularioData').serializeArray().reduce(function(obj, item) {
+                    obj[item.name] = item.value;
+                    return obj;
+                }, {});
+    console.log(datos);
+    //alert(coso.id_update);
+
+    if($("#in_estado").val()==2 && $("#in_tipo_trabajo").val()!=2){
+      $("#btnUpdFolio").prop('disabled',true);
+      swal("Cancelado", "Este registro ya ha sido liquidado", "warning");
+    }
+
+    if($("#id_usuario").val()==5 && $("#id_update").val()==0){
+      $("#in_entrega").prop('disabled',true);
+      $("#in_bloque_agenda").prop('disabled',true);
+    }
+  });
+
+  $("#in_estado").on('change',function(){
+    if($("#in_estado").val()==2 && $("#in_tipo_trabajo").val()==2 && $("#id_usuario").val()!=4 && $("#id_usuario").val()!=1 && $("#id_usuario").val()!=2){
+      $("#btnUpdFolio").prop('disabled',true);
+      swal("Cancelado", "Este registro solo puede ser cerrado por Plataforma T2", "warning");
+    }else{
+      $("#btnUpdFolio").prop('disabled',false);
+    }
   });
 
 </script>
