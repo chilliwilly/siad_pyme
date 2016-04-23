@@ -442,7 +442,7 @@
                             <tr>
                                 <td>
                                     <div class="form-group has-feedback">
-                                        <label for="in_proyecto">Proyecto*</label>
+                                        <label for="in_proyecto">Proyecto/Solot*</label>
                                         <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
                                             oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
                                         <?php echo form_input($in_proyecto); ?>
