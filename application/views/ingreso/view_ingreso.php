@@ -1,7 +1,9 @@
-<input type="hidden" name="id_trabajo" id="id_trabajo" value="<?php echo @$data_folio->in_tipo_trabajo; ?>"> 
-<input type="hidden" name="id_comuna" id="id_comuna" value="<?php echo @$data_folio->in_comuna; ?>">
+<input type="hidden" name="id_trabajo" id="id_trabajo" value="<?php echo @$data_folio->tt_id; ?>"> 
+<input type="hidden" name="id_comuna" id="id_comuna" value="<?php echo @$data_folio->id_comuna; ?>">
 <input type="hidden" name="id_bloque" id="id_bloque" value="<?php echo @$data_folio->reagenda_bloque; ?>">
 <input type="hidden" name="id_admin" id="id_admin" value="<?php echo @$data_folio->in_estado_admin; ?>">
+<input type="hidden" name="id_plan" id="id_plan" value="<?php echo @$data_folio->plan_id; ?>">
+<input type="hidden" name="id_deco" id="id_deco" value="<?php echo @$data_folio->deco_id; ?>">
 <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->session->userdata('TIPOUSUARIO'); ?>">
 <!--<input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">-->
 
@@ -11,6 +13,8 @@
   var num_comuna = 0;
   var num_estado = 0;
   var num_bloque = 0;
+  var num_plan = "0";
+  var num_deco = 0;
   var numtrab = document.getElementById("id_trabajo").value;
   numtrab = parseInt(numtrab.length);
 
@@ -19,11 +23,15 @@
     num_comuna = 0;
     //num_estado = 0;
     num_bloque = 0;
+    num_plan = "0";
+    num_deco = 0;
   }else{
     num_trabajo = document.getElementById("id_trabajo").value;
     num_comuna = document.getElementById("id_comuna").value;
     //num_estado = document.getElementById("id_estado").value;
     num_bloque = document.getElementById("id_bloque").value;
+    num_plan = document.getElementById("id_plan").value;
+    num_deco = document.getElementById("id_deco").value;
   }
 
   function volverAdmin(){
@@ -182,7 +190,7 @@
   );
 
   //in_plan_fono
-  $in_plan_fono = array(
+  /*$in_plan_fono = array(
   'name'        => 'in_plan_fono',
   'id'          => 'in_plan_fono',
   'size'        => 100,
@@ -192,7 +200,7 @@
   'class'       => 'form-control',
   'placeholder' => 'Ingrese plan fono',
   //'onkeypress'  => 'return letras(event)',
-  );
+  );*/
 
   //in_plan_fono_adic
   $in_plan_fono_adic = array(
@@ -200,7 +208,7 @@
   'id'          => 'in_plan_fono_adic',
   'size'        => 100,
   'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_fono_adic),
+  'value'       => set_value('codigo',@$data_folio->in_plan_fono_adicu),
   'type'        => 'text',
   'class'       => 'form-control',
   'placeholder' => 'Ingrese plan fono 1',
@@ -213,7 +221,7 @@
   'id'          => 'in_plan_fono_adict',
   'size'        => 100,
   'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_fono_adict),
+  'value'       => set_value('codigo',@$data_folio->in_plan_fono_adicd),
   'type'        => 'text',
   'class'       => 'form-control',
   'placeholder' => 'Ingrese plan fono 2',
@@ -221,7 +229,7 @@
   );
 
   //in_plan_tv
-  $in_plan_tv = array(
+  /*$in_plan_tv = array(
   'name'        => 'in_plan_tv',
   'id'          => 'in_plan_tv',
   'size'        => 100,
@@ -231,7 +239,7 @@
   'class'       => 'form-control',
   'placeholder' => 'Ingrese plan tv',
   //'onkeypress'  => 'return letras(event)',
-  );
+  );*/
 
   //in_deco_basico
   /*$in_deco_basico = array(
@@ -252,7 +260,7 @@
   'id'          => 'in_plan_tv_adic',
   'size'        => 100,
   'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_tv_adic),
+  'value'       => set_value('codigo',@$data_folio->in_plan_tv_adicu),
   'type'        => 'text',
   'class'       => 'form-control',
   'placeholder' => 'Ingrese plan tv adic',
@@ -265,7 +273,7 @@
   'id'          => 'in_plan_tv_adict',
   'size'        => 100,
   'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_tv_adict),
+  'value'       => set_value('codigo',@$data_folio->in_plan_tv_adicd),
   'type'        => 'text',
   'class'       => 'form-control',
   'placeholder' => 'Ingrese plan tv adic 2',
@@ -273,7 +281,7 @@
   );
 
   //in_deco_hd_basico
-  $in_deco_hd_basico = array(
+  /*$in_deco_hd_basico = array(
   'name'        => 'in_deco_hd_basico',
   'id'          => 'in_deco_hd_basico',
   'size'        => 100,
@@ -296,7 +304,7 @@
   'class'       => 'form-control',
   'placeholder' => 'Ingrese deco hd full',
   //'onkeypress'  => 'return letras(event)',
-  );
+  );*/
 
   //in_plan_tv_pack
   $in_plan_tv_pack = array(
@@ -304,7 +312,7 @@
   'id'          => 'in_plan_tv_pack',
   'size'        => 100,
   'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_tv_pack),
+  'value'       => set_value('codigo',@$data_folio->in_plan_pack),
   'type'        => 'text',
   'class'       => 'form-control',
   'placeholder' => 'Ingrese pack tv plan',
@@ -477,7 +485,7 @@
                                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                 <td>
                                     <div class="form-group has-feedback">
-                                        <label for="in_entrega">Fecha Agenda* <button type="button" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>
+                                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>
                                         <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control" 
                                             oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar materno paterno de la persona" style="width:300px;">-->
                                         <?php echo form_input($in_entrega); ?>
@@ -704,7 +712,7 @@
 
                                         <!--<span class="glyphicon glyphicon-hdd form-control-feedback"></span>-->
                                         <div class="btn-group">
-                                          <button type="button" class="btn btn-block btn-success"><span class="fa fa-plus-square-o"></span> Agregar</button>
+                                          <button type="button" id="btnAgregaDeco" class="btn btn-block btn-success" data-toggle="modal" data-target="#myModalDeco"><span class="fa fa-plus-square-o"></span> Agregar</button>
                                         </div>
                                         
                                     </div>
@@ -797,6 +805,65 @@
                             </tr>                      
                         </table>
 
+                        <!-- FORMULARIO INGRESO DECOS ADICIONALES -->
+                        <div class="modal fade" id="myModalDeco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                                      <h4 class="modal-title" id="myModalLabel">Decos Adicionales</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <h5 class="text-center">Seleccione los decos adicionales y su cantidad.</h5>
+                                    <table class="table table-striped">
+                                      <thead>
+                                        <th>Tipo Deco</th>
+                                        <th>Cantidad</th>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <input id="chksd" type="checkbox" name="decos[]" value="chksd" />
+                                            <label for="chksd">DTA SD</label>                                          
+                                          </td>
+                                          <td>
+                                            <input id="txtChksd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <<td>
+                                            <input id="chkhd" type="checkbox" name="decos[]" value="chkhd" />
+                                            <label for="chkhd">DTA HD</label>                                          
+                                          </td>
+                                          <td>
+                                            <input id="txtChkhd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <input id="chktvr" type="checkbox" name="decos[]" value="chktvr" />
+                                            <label for="chktvr">HD TVR</label>                                          
+                                          </td>
+                                          <td>
+                                            <input id="txtChktvr" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <input id="chkstn" type="checkbox" name="decos[]" value="chkstn" />
+                                            <label for="chkstn">Standard</label>                                          
+                                          </td>
+                                          <td>
+                                            <input id="txtChkstn" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                          </td>
+                                        </tr>
+                                      </tbody>                                      
+                                    </table>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+
                         <br>
 
                         <?php if($titulo == "Modificacion Datos"){ ?>
@@ -881,7 +948,7 @@
 
   $(document).ready(function(){
     //Titulo Pagina
-    $(".box-title").html("Datos SGA / SUR");
+    $(".box-title").html("Datos SGA / SUR PYME");
     //Datemask dd/mm/yyyy
     $("#datemask").inputmask("dd/mm/yyyy", { "placeholder": "dd/mm/yyyy" });
     //Money Euro
@@ -911,6 +978,18 @@
       $("#in_entrega").prop('disabled',true);
       $("#in_bloque_agenda").prop('disabled',true);
     }
+
+    if($("#id_update").val()==0){
+      //alert("cosa");
+      var now = new Date();
+      var day = ("0" + now.getDate()).slice(-2);
+      var month = ("0" + (now.getMonth() + 1)).slice(-2);
+      var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+      $("#in_ingreso").prop('disabled',true); 
+      $('#in_ingreso').val(today);
+      $("#btnVerAgendas").css("visibility","hidden");
+    }
   });
 
   $("#in_estado").on('change',function(){
@@ -920,6 +999,42 @@
     }else{
       $("#btnUpdFolio").prop('disabled',false);
     }
+  });
+
+  $("#chksd").on('click',function(){
+    if($(this).is(":checked")){      
+      $("#txtChksd").prop('disabled',false);
+      return;
+    }
+    $("#txtChksd").prop('disabled',true);
+    $("#txtChksd").val("0");
+  });
+
+  $("#chkhd").on('click',function(){
+    if($(this).is(":checked")){      
+      $("#txtChkhd").prop('disabled',false);
+      return;
+    }
+    $("#txtChkhd").prop('disabled',true);
+    $("#txtChkhd").val("0");
+  });
+
+  $("#chktvr").on('click',function(){
+    if($(this).is(":checked")){      
+      $("#txtChktvr").prop('disabled',false);
+      return;
+    }
+    $("#txtChktvr").prop('disabled',true);
+    $("#txtChktvr").val("0");
+  });
+
+  $("#chkstn").on('click',function(){
+    if($(this).is(":checked")){      
+      $("#txtChkstn").prop('disabled',false);
+      return;
+    }
+    $("#txtChkstn").prop('disabled',true);
+    $("#txtChkstn").val("0");
   });
 
 </script>
