@@ -67,16 +67,6 @@
   //'onkeypress'  => 'return letras(event)',
   );
 
-  //in_sga
-  /*$in_sga = array(
-  'name'        => 'in_sga',
-  'id'          => 'in_sga',
-  'value'       => set_value('in_sga',@$data_folio->in_sga),
-  'type'        => 'date',
-  'class'       => 'form-control',
-  //'onkeypress'  => 'return letras(event)',
-  );*/
-
   //in_ingreso
   $in_ingreso = array(
   'name'        => 'in_ingreso',
@@ -163,19 +153,6 @@
   //'onkeypress'  => 'return letras(event)',
   );
 
-  //in_plan_net
-  /*$in_plan_net = array(
-  'name'        => 'in_plan_net',
-  'id'          => 'in_plan_net',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_net),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan internet',
-  //'onkeypress'  => 'return letras(event)',
-  );*/
-
   //in_plan_net_adic
   $in_plan_net_adic = array(
   'name'        => 'in_plan_net_adic',
@@ -188,19 +165,6 @@
   'placeholder' => 'Ingrese plan internet adic',
   //'onkeypress'  => 'return letras(event)',
   );
-
-  //in_plan_fono
-  /*$in_plan_fono = array(
-  'name'        => 'in_plan_fono',
-  'id'          => 'in_plan_fono',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_fono),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan fono',
-  //'onkeypress'  => 'return letras(event)',
-  );*/
 
   //in_plan_fono_adic
   $in_plan_fono_adic = array(
@@ -228,32 +192,6 @@
   //'onkeypress'  => 'return letras(event)',
   );
 
-  //in_plan_tv
-  /*$in_plan_tv = array(
-  'name'        => 'in_plan_tv',
-  'id'          => 'in_plan_tv',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_tv),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan tv',
-  //'onkeypress'  => 'return letras(event)',
-  );*/
-
-  //in_deco_basico
-  /*$in_deco_basico = array(
-  'name'        => 'in_deco_basico',
-  'id'          => 'in_deco_basico',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_deco_basico),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese deco basico',
-  //'onkeypress'  => 'return letras(event)',
-  );*/
-
   //in_plan_tv_adic
   $in_plan_tv_adic = array(
   'name'        => 'in_plan_tv_adic',
@@ -279,32 +217,6 @@
   'placeholder' => 'Ingrese plan tv adic 2',
   //'onkeypress'  => 'return letras(event)',
   );
-
-  //in_deco_hd_basico
-  /*$in_deco_hd_basico = array(
-  'name'        => 'in_deco_hd_basico',
-  'id'          => 'in_deco_hd_basico',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_deco_hd_basico),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese deco hd basico',
-  //'onkeypress'  => 'return letras(event)',
-  );
-
-  //  in_deco_hd_full
-  $in_deco_hd_full = array(
-  'name'        => 'in_deco_hd_full',
-  'id'          => 'in_deco_hd_full',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_deco_hd_full),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese deco hd full',
-  //'onkeypress'  => 'return letras(event)',
-  );*/
 
   //in_plan_tv_pack
   $in_plan_tv_pack = array(
@@ -370,19 +282,6 @@
   'placeholder' => 'Ingrese nombre',
   //'onkeypress'  => 'return letras(event)',
   );
-
-  //in_estado
-  //-$in_estado = array(
-  //-'name'        => 'in_estado',
-  //-'id'          => 'in_estado',
-  //-'size'        => 100,
-  //-'maxlength'   => 200,
-  //'value'       => set_value('in_estado',@$data_folio_det->in_estado),
-  //'type'        => 'text',
-  //-'class'       => 'form-control',
-  //'placeholder' => 'Ingrese estado',
-  //'onkeypress'  => 'return letras(event)',
-  //-);
 
   //indet_observacion
   $indet_observacion = array(
