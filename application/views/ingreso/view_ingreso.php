@@ -322,575 +322,396 @@
       <div id="mensaje"></div>
       <div class="row">          
               
-              <div class="col-md-10 col-md-offset-1">
-                <div class="box box-primary">
-                    <label><?php echo $titulo; ?></label>
-                        <input type="hidden" name="id_update" id="id_update" value="<?php echo $data_flag; ?>">
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <h2 class="page-header">
-                                <i class="fa fa-user"></i> Datos Cliente
-                              </h2>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div class="col-xs-12">
-                          <div class="form-group col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_proyecto">Tipo Trabajo*</label>
-                                <select name="in_tipo_trabajo" id="in_tipo_trabajo" class="form-control selectpicker show-tick" data-size="10"></select>
-                            </div>
+        <div class="col-md-10 col-md-offset-1">
+          <div class="box box-primary">
+            <label><?php echo $titulo; ?></label>
+            <input type="hidden" name="id_update" id="id_update" value="<?php echo $data_flag; ?>">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-xs-12">
+                  <h2 class="page-header">
+                    <i class="fa fa-user"></i> Datos Cliente
+                  </h2>
+                </div>
+                <!--inicio formulario-->
+                <div class="col-xs-12">
+                  <div class="form-group col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_proyecto">Tipo Trabajo*</label>
+                        <select name="in_tipo_trabajo" id="in_tipo_trabajo" class="form-control selectpicker show-tick" data-size="10"></select>
+                    </div>
 
-                            <div class="form-group has-feedback">
-                              <label for="in_proyecto">Proyecto/Solot*</label>
-                              <?php echo form_input($in_proyecto); ?>
+                    <div class="form-group has-feedback">
+                      <label for="in_proyecto">Proyecto/Solot*</label>
+                      <?php echo form_input($in_proyecto); ?>
 
-                              <span class="glyphicon glyphicon-file form-control-feedback"></span>
-                            </div>
-                          </div>
-                        </div>                        
-                        
-                        <div class="col-xs-12">  
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_ingreso">Fecha Ingreso*</label>
+                      <span class="glyphicon glyphicon-file form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>                        
+            
+                <div class="col-xs-12">  
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_ingreso">Fecha Ingreso*</label>
 
-                                <?php echo form_input($in_ingreso); ?>
+                        <?php echo form_input($in_ingreso); ?>
 
-                                <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>                                        
-                                <?php echo form_input($in_entrega); ?>
+                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>                                        
+                        <?php echo form_input($in_entrega); ?>
 
-                                <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_bloque_agenda">Bloque Agenda*</label>
+                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_bloque_agenda">Bloque Agenda*</label>
 
-                                <select name="in_bloque_agenda" id="in_bloque_agenda" class="form-control selectpicker show-tick"></select>
-                            </div>
-                          </div>                            
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-8">
-                            <div class="form-group has-feedback">
-                                <label for="in_cliente">Cliente*</label>
-                                <?php echo form_input($in_cliente); ?>
-
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group">
-                                <label for="in_rut">Rut*</label>
-
-                                    <?php echo form_input($in_rut); ?>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-8">
-                            <div class="form-group has-feedback">
-                                <label for="in_nombre">Nombre*</label>                                
-                                <?php echo form_input($in_nombre); ?>
-
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_fono">Fono Cliente*</label>                                
-                                <?php echo form_input($in_fono); ?>
-
-                                <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="form-group col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_comuna">Comuna*</label>
-
-                                <select name="in_comuna" id="in_comuna" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="form-group col-xs-8">
-                            <div class="form-group has-feedback">
-                                <label for="in_direccion">Direccion*</label>                                
-                                <?php echo form_input($in_direccion); ?>
-
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <h2 class="page-header">
-                                <i class="fa fa-phone"></i> Datos Plan
-                              </h2>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="form-group has-feedback col-xs-8">
-                              <label for="in_plan_net">Plan*</label>
-
-                              <select name="in_plan_net" id="in_plan_net" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>                              
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_plan_net_adic">Puntos Red Adicional*</label>                                
-                                <?php echo form_input($in_plan_net_adic); ?>
-
-                                <span class="glyphicon glyphicon-globe form-control-feedback"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_plan_fono_adic">Lineas*</label>                                
-                                <?php echo form_input($in_plan_fono_adic); ?>
-
-                                <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                            </div>
-                          </div>
-                          
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="in_plan_fono_adict">Extensiones*</label>                                
-                                <?php echo form_input($in_plan_fono_adict); ?>
-
-                                <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                              <label for="in_deco_basico">Deco Inicial*</label>
-
-                              <select name="in_deco_basico" id="in_deco_basico" class="form-control selectpicker show-tick"></select>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                                <label for="btnAgregaDeco">Deco Adicional*</label>
-
-                                <div class="btn-group">
-                                  <button type="button" id="btnAgregaDeco" class="btn btn-block btn-success" data-toggle="modal" data-target="#myModalDeco"><span class="fa fa-plus-square-o"></span> Agregar</button>
-                                </div>                                
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-8">
-                            <div class="form-group has-feedback">
-                                <label for="in_plan_tv_pack">Plan Adicional TV / Plan TV Pack*</label>                                
-                                <?php echo form_input($in_plan_tv_pack); ?>
-
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                              <label for="in_central_tf">Central TF*</label>
-
-                              <select name="in_central_tf" id="in_central_tf" class="form-control selectpicker show-tick"></select>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                              <label for="in_central_tfl">Central TF Lineas*</label>
-                              <?php echo form_input($in_central_tfl); ?>
-
-                              <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                              <label for="in_central_tfa">Central TF Anexos*</label>
-                              <?php echo form_input($in_central_tfa); ?>
-
-                              <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                              <label for="in_fecha_operacion">Fecha Cierre*</label>                              
-                              <?php echo form_input($in_fecha_operacion); ?>
-
-                              <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                              <label for="in_vende">Canal de Ventas*</label>                              
-                              <?php echo form_input($in_vende); ?>
-
-                              <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            </div>
-                          </div>
-                          <div class="col-xs-4">
-                            <div class="form-group has-feedback">
-                              <label for="in_estado">Estado*</label>
-
-                              <select name="in_estado" id="in_estado" class="form-control selectpicker show-tick"></select>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <label for="indet_observacion">Observacion*</label>                          
-                          <?php echo form_textarea($indet_observacion); ?>                          
-                        </div>
-
-        
-                        <table style="width: 100%; display: table; border-collapse: collapse;">
-                        <tbody>
-                            <tr>
-                              <td>
-                                <!-- titulo datos cli -->
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <!-- tipo trabajo-->
-                              </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <!--proyecto solot-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <!--fecha ingreso-->
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-                                    <!--fecha agenda-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    <!-- bloque agenda-->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <!--input cliente -->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    <!-- rut cliente-->
-                                </td>
-                            </tr>
-                            <tr>
-                              <td colspan="3">
-                                <!-- nombre cliente-->
-                              </td>
-                              <td>
-                                
-                              </td>
-                              <td>
-                                <!-- fono cliente -->
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <!-- comuna-->
-                              </td>
-                              <td>
-                                
-                              </td>
-                              <td>
-
-                              </td>
-                              <td>
-                                
-                              </td>
-                              <td>
-                                
-                              </td>
-                            </tr>                            
-                            <tr>
-                                <td colspan="5">
-                                    <!-- direccion -->
-                                </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <!-- titulo plan-->
-                              </td>
-                            </tr>                         
-                            <tr>                          
-                              <td colspan="3">
-                                <!-- lista planes-->
-                              </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <!--punto red adicional-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                  <!--lineas-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                  <!--extensiones--> 
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <!--deco inicial-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    <!--deco adicional-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <!--plan pack tv-->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <!--combo central tf-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                  <!-- ctf lienas-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                  <!-- ctf anexos-->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <!-- fecha cierre-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    <!-- canal de ventas-->
-                                </td>
-                                <td>
-                                  
-                                </td>
-                                <td>
-                                    <!--estados de cierre-->
-                                </td>
-                            </tr>
-                            <tr>
-                              <td colspan="5">
-                                <!-- observaiones-->
-                              </td>
-                            </tr> 
-                            </tbody>                     
-                        </table>
-
-                        <!-- FORMULARIO INGRESO DECOS ADICIONALES -->
-                        <div class="modal fade" id="myModalDeco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                              <div class="modal-content">
-                                  <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
-                                      <h4 class="modal-title" id="myModalLabel">Decos Adicionales</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                    <h5 class="text-center">Seleccione los decos adicionales y su cantidad</h5>
-                                    <table class="table table-striped">
-                                      <thead>
-                                        <th>Tipo Deco</th>
-                                        <th>Cantidad</th>
-                                      </thead>
-                                      <tbody>
-                                        <tr>
-                                          <td>
-                                            <input id="chksd" type="checkbox" name="decos[]" value="chksd" />
-                                            <label for="chksd">DTA SD</label>                                          
-                                          </td>
-                                          <td>
-                                            <input id="txtChksd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <<td>
-                                            <input id="chkhd" type="checkbox" name="decos[]" value="chkhd" />
-                                            <label for="chkhd">DTA HD</label>                                          
-                                          </td>
-                                          <td>
-                                            <input id="txtChkhd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>
-                                            <input id="chktvr" type="checkbox" name="decos[]" value="chktvr" />
-                                            <label for="chktvr">HD TVR</label>                                          
-                                          </td>
-                                          <td>
-                                            <input id="txtChktvr" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td>
-                                            <input id="chkstn" type="checkbox" name="decos[]" value="chkstn" />
-                                            <label for="chkstn">Standard</label>                                          
-                                          </td>
-                                          <td>
-                                            <input id="txtChkstn" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
-                                          </td>
-                                        </tr>
-                                      </tbody>                                      
-                                    </table>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
-
-                        <br>
-
-                        <?php if($titulo == "Modificacion Datos"){ ?>
-                          <label>Detalle Observaciones</label>
-                          <table id="ordenesDet" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
-                            <thead>
-                              <tr>
-                                <th>Fecha Ingreso</th>
-                                <th>Usuario</th>
-                                <th>Estado</th>
-                                <th>Observacion</th>                                
-                              </tr>
-                            </thead>                              
-                            <tbody>
-                              <?php 
-                                if(json_decode($data_folio_det)){
-                                  foreach (json_decode($data_folio_det) as $value) {
-                                    # code...
-                                    echo '<tr>';
-                                    echo '<td>'.$value->fecha_registro.'</td>';
-                                    echo '<td>'.$value->user_ingresa.'</td>';
-                                    echo '<td>'.$value->estado.'</td>';
-                                    echo '<td>'.$value->observacion.'</td>';
-                                    echo '</tr>';
-                                  }
-                                }
-                              ?>
-                            </tbody>
-                          </table>
-                        <?php } ?>
+                        <select name="in_bloque_agenda" id="in_bloque_agenda" class="form-control selectpicker show-tick"></select>
+                    </div>
+                  </div>                            
                 </div>
 
-                <?php if($this->session->userdata("TIPOUSUARIO") == 1){ ?>
-                  <button type="button" onclick="volverAdmin()" class="btn btn-default">Volver</button>
-                <?php }else{ ?>
-                  <button type="button" onclick="volverAliado()" class="btn btn-default">Volver</button>
-                <?php } ?>
+                <div class="col-xs-12">
+                  <div class="col-xs-8">
+                    <div class="form-group has-feedback">
+                        <label for="in_cliente">Cliente*</label>
+                        <?php echo form_input($in_cliente); ?>
+
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <label for="in_rut">Rut*</label>
+
+                          <?php echo form_input($in_rut); ?>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-8">
+                    <div class="form-group has-feedback">
+                        <label for="in_nombre">Nombre*</label>                                
+                        <?php echo form_input($in_nombre); ?>
+
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_fono">Fono Cliente*</label>                                
+                        <?php echo form_input($in_fono); ?>
+
+                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="form-group col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_comuna">Comuna*</label>
+
+                        <select name="in_comuna" id="in_comuna" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="form-group col-xs-8">
+                    <div class="form-group has-feedback">
+                        <label for="in_direccion">Direccion*</label>                                
+                        <?php echo form_input($in_direccion); ?>
+
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <h2 class="page-header">
+                        <i class="fa fa-phone"></i> Datos Plan
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-8">
+                    <div class="form-group has-feedback">
+                        <label for="in_plan_net">Plan*</label>
+
+                        <select name="in_plan_net" id="in_plan_net" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>                              
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_plan_net_adic">Puntos Red Adicional*</label>                                
+                        <?php echo form_input($in_plan_net_adic); ?>
+
+                        <span class="glyphicon glyphicon-globe form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_plan_fono_adic">Lineas*</label>                                
+                        <?php echo form_input($in_plan_fono_adic); ?>
+
+                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                  </div>
+                  
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="in_plan_fono_adict">Extensiones*</label>                                
+                        <?php echo form_input($in_plan_fono_adict); ?>
+
+                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_deco_basico">Deco Inicial*</label>
+
+                      <select name="in_deco_basico" id="in_deco_basico" class="form-control selectpicker show-tick"></select>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                        <label for="btnAgregaDeco">Deco Adicional*</label>
+
+                        <div class="btn-group">
+                          <button type="button" id="btnAgregaDeco" class="btn btn-block btn-success" data-toggle="modal" data-target="#myModalDeco"><span class="fa fa-plus-square-o"></span> Agregar</button>
+                        </div>                                
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-8">
+                    <div class="form-group has-feedback">
+                        <label for="in_plan_tv_pack">Plan Adicional TV / Plan TV Pack*</label>                                
+                        <?php echo form_input($in_plan_tv_pack); ?>
+
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_central_tf">Central TF*</label>
+
+                      <select name="in_central_tf" id="in_central_tf" class="form-control selectpicker show-tick"></select>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_central_tfl">Central TF Lineas*</label>
+                      <?php echo form_input($in_central_tfl); ?>
+
+                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_central_tfa">Central TF Anexos*</label>
+                      <?php echo form_input($in_central_tfa); ?>
+
+                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_fecha_operacion">Fecha Cierre*</label>                              
+                      <?php echo form_input($in_fecha_operacion); ?>
+
+                      <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_vende">Canal de Ventas*</label>                              
+                      <?php echo form_input($in_vende); ?>
+
+                      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_estado">Estado*</label>
+
+                      <select name="in_estado" id="in_estado" class="form-control selectpicker show-tick"></select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <label for="indet_observacion">Observacion*</label>                          
+                  <?php echo form_textarea($indet_observacion); ?>                          
+                </div>
+
+                <!-- FORMULARIO INGRESO DECOS ADICIONALES -->
+                <div class="modal fade" id="myModalDeco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                              <h4 class="modal-title" id="myModalLabel">Decos Adicionales</h4>
+                          </div>
+                          <div class="modal-body">
+                            <h5 class="text-center">Seleccione los decos adicionales y su cantidad</h5>
+                            <table class="table table-striped">
+                              <thead>
+                                <th>Tipo Deco</th>
+                                <th>Cantidad</th>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <input id="chksd" type="checkbox" name="decos[]" value="chksd" />
+                                    <label for="chksd">DTA SD</label>                                          
+                                  </td>
+                                  <td>
+                                    <input id="txtChksd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <<td>
+                                    <input id="chkhd" type="checkbox" name="decos[]" value="chkhd" />
+                                    <label for="chkhd">DTA HD</label>                                          
+                                  </td>
+                                  <td>
+                                    <input id="txtChkhd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <input id="chktvr" type="checkbox" name="decos[]" value="chktvr" />
+                                    <label for="chktvr">HD TVR</label>                                          
+                                  </td>
+                                  <td>
+                                    <input id="txtChktvr" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <input id="chkstn" type="checkbox" name="decos[]" value="chkstn" />
+                                    <label for="chkstn">Standard</label>                                          
+                                  </td>
+                                  <td>
+                                    <input id="txtChkstn" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                  </td>
+                                </tr>
+                              </tbody>                                      
+                            </table>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <br>
+                </div>
                 
+                <div class="col-xs-12">
+                  <?php if($titulo == "Modificacion Datos"){ ?>
+                    <label>Detalle Observaciones</label>
+                    <table id="ordenesDet" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
+                      <thead>
+                        <tr>
+                          <th>Fecha Ingreso</th>
+                          <th>Usuario</th>
+                          <th>Estado</th>
+                          <th>Observacion</th>                                
+                        </tr>
+                      </thead>                              
+                      <tbody>
+                        <?php 
+                          if(json_decode($data_folio_det)){
+                            foreach (json_decode($data_folio_det) as $value) {
+                              # code...
+                              echo '<tr>';
+                              echo '<td>'.$value->fecha_registro.'</td>';
+                              echo '<td>'.$value->user_ingresa.'</td>';
+                              echo '<td>'.$value->estado.'</td>';
+                              echo '<td>'.$value->observacion.'</td>';
+                              echo '</tr>';
+                            }
+                          }
+                        ?>
+                      </tbody>
+                    </table>
+                  <?php } ?>
+                </div>
+                
+                <div class="col-xs-12">
+                  <br><br>
+                </div>
 
-                <?php if($titulo == "Modificacion Datos" && @$data_folio->in_estado_admin != 1){ ?>
+                <div class="col-xs-12">                
+                  <?php if($this->session->userdata("TIPOUSUARIO") == 1){ ?>
+                    <button type="button" id="btnAtras" onclick="volverAdmin()" class="btn btn-default">Volver</button>
+                  <?php }else{ ?>
+                    <button type="button" id="btnAtras" onclick="volverAliado()" class="btn btn-default">Volver</button>
+                  <?php } ?>                  
+                  <!-- -->
+                  <!-- -->
+                  <!-- -->
+                  <?php if($titulo == "Modificacion Datos" && @$data_folio->in_estado_admin != 1){ ?>
 
-                  <button type="submit" class="btn btn-primary" id="btnUpdFolio">
-                    <span class="glyphicon glyphicon-refresh"></span>
-                    Actualizar Registro
-                  </button>
+                    <button type="submit" class="btn btn-primary" id="btnUpdFolio">
+                      <span class="glyphicon glyphicon-refresh"></span>
+                      Actualizar Registro
+                    </button>
 
-                <?php }elseif(@$data_folio->in_estado_admin == 1 && $titulo == "Modificacion Datos") { ?>
+                  <?php }elseif(@$data_folio->in_estado_admin == 1 && $titulo == "Modificacion Datos") { ?>
 
-                  <button class="btn btn-primary" disabled>
-                    <span class="glyphicon glyphicon-refresh"></span>
-                    Actualizar Registro
-                  </button>
+                    <button class="btn btn-primary" disabled>
+                      <span class="glyphicon glyphicon-refresh"></span>
+                      Actualizar Registro
+                    </button>
 
-                <?php }else{?>
+                  <?php }else{?>
 
-                  <button type="submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                    Guardar Registro
-                  </button>
+                    <button type="submit" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-floppy-disk"></span>
+                      Guardar Registro
+                    </button>
 
-                <?php }?>    
+                  <?php }?>
+                </div>
 
               </div>
-          
+            </div>
+          </div>
+        </div>          
+
       </div>
+          
+    </div>
 
     </div><!-- /.box-body -->
 
