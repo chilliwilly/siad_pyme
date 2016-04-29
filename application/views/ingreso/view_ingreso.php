@@ -7,14 +7,19 @@
 <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->session->userdata('TIPOUSUARIO'); ?>">
 <!--<input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">-->
 
-<script type="text/javascript">
+<script type="text/javascript">  
   var baseurl = "<?php echo base_url(); ?>";
+  var v_deco_sd = "0";
+  var v_deco_hd = "0";
+  var v_deco_tvr = "0";
+  var v_deco_stnd = "0"; 
   var num_trabajo = 0;
   var num_comuna = 0;
   var num_estado = 0;
   var num_bloque = 0;
   var num_plan = "0";
   var num_deco = 0;
+  var num_ctf = 0;
   var numtrab = document.getElementById("id_trabajo").value;
   numtrab = parseInt(numtrab.length);
 
@@ -25,6 +30,7 @@
     num_bloque = 0;
     num_plan = "0";
     num_deco = 0;
+    num_ctf = 0;
   }else{
     num_trabajo = document.getElementById("id_trabajo").value;
     num_comuna = document.getElementById("id_comuna").value;
@@ -32,6 +38,10 @@
     num_bloque = document.getElementById("id_bloque").value;
     num_plan = document.getElementById("id_plan").value;
     num_deco = document.getElementById("id_deco").value;
+    v_deco_sd = "<?php echo @$data_folio_deco->decoa_sd; ?>";
+    v_deco_hd = "<?php echo @$data_folio_deco->decoa_hd; ?>";
+    v_deco_tvr = "<?php echo @$data_folio_deco->decoa_tvr; ?>";
+    v_deco_stnd = "<?php echo @$data_folio_deco->decoa_stnd; ?>";
   }
 
   function volverAdmin(){
@@ -157,12 +167,12 @@
   $in_plan_net_adic = array(
   'name'        => 'in_plan_net_adic',
   'id'          => 'in_plan_net_adic',
-  'size'        => 100,
-  'maxlength'   => 100,
+  'size'        => 50,
+  'maxlength'   => 5,
   'value'       => set_value('codigo',@$data_folio->in_plan_net_adic),
-  'type'        => 'text',
+  'type'        => 'number',
   'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan internet adic',
+  'placeholder' => 'Ingrese plan internet adic',  
   //'onkeypress'  => 'return letras(event)',
   );
 
@@ -170,12 +180,12 @@
   $in_plan_fono_adic = array(
   'name'        => 'in_plan_fono_adic',
   'id'          => 'in_plan_fono_adic',
-  'size'        => 100,
-  'maxlength'   => 100,
+  'size'        => 30,
+  'maxlength'   => 5,
   'value'       => set_value('codigo',@$data_folio->in_plan_fono_adicu),
-  'type'        => 'text',
+  'type'        => 'number',
   'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan fono 1',
+  'placeholder' => 'Ingrese lineas',
   //'onkeypress'  => 'return letras(event)',
   );
 
@@ -183,12 +193,12 @@
   $in_plan_fono_adict = array(
   'name'        => 'in_plan_fono_adict',
   'id'          => 'in_plan_fono_adict',
-  'size'        => 100,
-  'maxlength'   => 100,
+  'size'        => 50,
+  'maxlength'   => 5,
   'value'       => set_value('codigo',@$data_folio->in_plan_fono_adicd),
-  'type'        => 'text',
+  'type'        => 'number',
   'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan fono 2',
+  'placeholder' => 'Ingrese extensiones',
   //'onkeypress'  => 'return letras(event)',
   );
 
@@ -231,30 +241,20 @@
   //'onkeypress'  => 'return letras(event)',
   );
 
-  //in_central_tf
-  $in_central_tf = array(
-  'name'        => 'in_central_tf',
-  'id'          => 'in_central_tf',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_central_tf),
-  'type'        => 'text',
+  $in_central_tfl = array(
+  'name'        => 'in_central_tfl',
+  'id'          => 'in_central_tfl',
+  'value'       => set_value('codigo',@$data_folio->in_plan_pack),
+  'type'        => 'number',
   'class'       => 'form-control',
-  'placeholder' => 'Ingrese central tf',
-  //'onkeypress'  => 'return letras(event)',
   );
 
-  //in_lineas_asignadas
-  $in_lineas_asignadas = array(
-  'name'        => 'in_lineas_asignadas',
-  'id'          => 'in_lineas_asignadas',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_lineas_asignadas),
-  'type'        => 'text',
+  $in_central_tfa = array(
+  'name'        => 'in_central_tfa',
+  'id'          => 'in_central_tfa',
+  'value'       => set_value('codigo',@$data_folio->in_plan_pack),
+  'type'        => 'number',
   'class'       => 'form-control',
-  'placeholder' => 'Ingrese lineas asignadas',
-  //'onkeypress'  => 'return letras(event)',
   );
 
   //in_fecha_operacion
@@ -274,7 +274,7 @@
   $in_vende = array(
   'name'        => 'in_vende',
   'id'          => 'in_vende',
-  'size'        => 100,
+  'size'        => 50,
   'maxlength'   => 200,
   'value'       => set_value('codigo',@$data_folio->in_vende),
   'type'        => 'text',
@@ -295,7 +295,7 @@
   'class'       => 'form-control',
   'placeholder' => 'Ingrese observacion',
   //'onkeypress'  => 'return letras(event)',
-  );
+  ); 
 
 ?>
 
@@ -306,6 +306,8 @@
 <script src="<?php echo base_url()?>js/bootstrap-select.min.js"></script>
 <script src="<?php echo base_url()?>lib/sweet-alert.js"></script>
 <script src="<?php echo base_url();?>js/jsLoadSelectIngreso.js"></script>
+<script src="<?php echo base_url();?>js/jsDistribucionPlan.js"></script>
+<script src="<?php echo base_url();?>js/jsDistribucionDecoAdic.js"></script>
 <script src="<?php echo base_url();?>js/JsonIngresos.js"></script>
 <!-- Main content --><form name="formularioData" id="formularioData" role="form">  
 <section class="content">
@@ -324,7 +326,7 @@
                 <div class="box box-primary">
                     <label><?php echo $titulo; ?></label>
                         <input type="hidden" name="id_update" id="id_update" value="<?php echo $data_flag; ?>">
-                        <table>
+                        <table style="width: 100%; display: table; border-collapse: collapse;">
                             <tr>
                               <td>
                                 <div class="row">
@@ -340,8 +342,6 @@
                               <td>
                                 <div class="form-group has-feedback">
                                     <label for="in_proyecto">Tipo Trabajo*</label>
-                                    <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
-                                        oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
                                     <select name="in_tipo_trabajo" id="in_tipo_trabajo" class="form-control selectpicker show-tick" data-size="10"></select>
                                 </div>
                               </td>
@@ -350,57 +350,52 @@
                                 <td>
                                     <div class="form-group has-feedback">
                                         <label for="in_proyecto">Proyecto/Solot*</label>
-                                        <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
-                                            oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
                                         <?php echo form_input($in_proyecto); ?>
 
                                         <span class="glyphicon glyphicon-file form-control-feedback"></span>
                                     </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    
                                 </td>
                                 <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="form-group has-feedback">
                                         <label for="in_ingreso">Fecha Ingreso*</label>
-                                        <!--<input type="text" id="txtApPat" name="txtApPat" placeholder="Ingrese apellido paterno" required="required" class="form-control" 
-                                            oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar apellido paterno de la persona" style="width:300px;">-->
+
                                         <?php echo form_input($in_ingreso); ?>
 
                                         <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
                                     </div>
                                 </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td>
+
+                                </td>
                                 <td>
                                     <div class="form-group has-feedback">
-                                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>
-                                        <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control" 
-                                            oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar materno paterno de la persona" style="width:300px;">-->
+                                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>                                        
                                         <?php echo form_input($in_entrega); ?>
 
                                         <span class="glyphicon glyphicon-calendar form-control-feedback"></span>                                        
                                     </div>
                                 </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td>
+                                  
+                                </td>
                                 <td>
                                     <div class="form-group has-feedback">
-                                        <label for="in_bloque_agenda">Bloque Agenda*</label><!-- ex in_sga -->
-                                        <!--<input type="text" id="txtNombreD" name="txtNombreD" placeholder="Ingrese segundo nombre" required="required" class="form-control" 
-                                            oninvalid="this.setCustomValidity('Campo segundo nombre obligatorio')" title="Debe ingresar segundo nombre de la persona">-->
-                                        <!--<?php form_input($in_sga); ?>-->
+                                        <label for="in_bloque_agenda">Bloque Agenda*</label>
 
-                                        <!--<span class="glyphicon glyphicon-calendar form-control-feedback"></span>-->
                                         <select name="in_bloque_agenda" id="in_bloque_agenda" class="form-control selectpicker show-tick"></select>
                                     </div>
                                 </td>
@@ -409,54 +404,22 @@
                                 <td colspan="3">
                                     <div class="form-group has-feedback">
                                         <label for="in_cliente">Cliente*</label>
-                                        <!--<input type="text" id="txtRut" name="txtRut" placeholder="RUT 12345678-9" required="required" class="form-control"
-                                            oninvalid="this.setCustomValidity('Campo Rut Obligatorio')" title="Debe ingresar rut de la persona" maxlength="10" style="width:180px; text-align:center;">-->
                                         <?php echo form_input($in_cliente); ?>
 
                                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                     </div>
                                 </td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td>
+                                  
+                                </td>
                                 <td>
                                     <div class="form-group">
                                         <label for="in_rut">Rut*</label>
-                                        <!--<div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>-->
-                                            <!--<input type="text" id="txtFechIn" name="txtFechIn" required="required" class="form-control"
-                                                oninvalid="this.setCustomValidity('Campo Fecha Ingreso Obligatorio')" title="Debe ingresar fecha ingreso de la persona" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>-->
+
                                             <?php echo form_input($in_rut); ?>
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-group has-feedback">
-                                    <label for="in_comuna">Comuna*</label>
-                                    <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                    <select name="in_comuna" id="in_comuna" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>                                      
-
-                                </div>
-                              </td>
-                              <td>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              </td>
-                              <td>
-                                <!--<div class="form-group has-feedback">
-                                    <label for="in_region">Region*</label>
-                                    
-                                    <select name="in_region" id="in_region" class="form-control"></select>
-                                    
-                                </div>-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              </td>
-                              <td>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              </td>
-                              <td>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              </td>
                             </tr>
                             <tr>
                               <td colspan="3">
@@ -469,7 +432,7 @@
                                 </div>
                               </td>
                               <td>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                
                               </td>
                               <td>
                                 <div class="form-group has-feedback">
@@ -481,6 +444,28 @@
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <div class="form-group has-feedback">
+                                    <label for="in_comuna">Comuna*</label>
+
+                                    <select name="in_comuna" id="in_comuna" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>                                      
+
+                                </div>
+                              </td>
+                              <td>
+                                
+                              </td>
+                              <td>
+
+                              </td>
+                              <td>
+                                
+                              </td>
+                              <td>
+                                
+                              </td>
+                            </tr>                            
                             <tr>
                                 <td colspan="5">
                                     <div class="form-group has-feedback">
@@ -507,8 +492,7 @@
                               <td colspan="3">
                                 <div class="form-group has-feedback">
                                     <label for="in_plan_net">Plan*</label>
-                                    <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                    <!--<?php echo form_input($in_plan_net); ?>-->
+
                                     <select name="in_plan_net" id="in_plan_net" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
                                     <!--<span class="glyphicon glyphicon-globe form-control-feedback"></span>-->
                                 </div>
@@ -517,7 +501,7 @@
                             <tr>
                                 <td>
                                     <div class="form-group has-feedback">
-                                        <label for="in_plan_net_adic">Plan Internet Adicional*</label>
+                                        <label for="in_plan_net_adic">Puntos Red Adicional*</label>
                                         <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                                         <?php echo form_input($in_plan_net_adic); ?>
 
@@ -525,7 +509,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
                                     
@@ -534,7 +518,7 @@
                             <tr>
                                 <td>
                                   <div class="form-group has-feedback">
-                                      <label for="in_plan_fono_adic">Adicional Telefonia 1*</label>
+                                      <label for="in_plan_fono_adic">Lineas*</label>
                                       <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                                       <?php echo form_input($in_plan_fono_adic); ?>
 
@@ -542,11 +526,11 @@
                                   </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
                                   <div class="form-group has-feedback">
-                                      <label for="in_plan_fono_adict">Adicional Telefonia 2*</label>
+                                      <label for="in_plan_fono_adict">Extensiones*</label>
                                       <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                                       <?php echo form_input($in_plan_fono_adict); ?>
 
@@ -554,7 +538,7 @@
                                   </div>  
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
                                     
@@ -562,54 +546,21 @@
                             </tr>
                             <tr>
                                 <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_plan_tv_adic">Adicional TV 1*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <?php echo form_input($in_plan_tv_adic); ?>
-
-                                      <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
-                                  </div>
-                                </td>
-                                <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </td>
-                                <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_plan_tv_adict">Adicional TV 2*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <?php echo form_input($in_plan_tv_adict); ?>
-
-                                      <span class="glyphicon glyphicon-eye-open form-control-feedback"></span>
-                                  </div>
-                                </td>
-                                <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </td>
-                                <td>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
                                     <div class="form-group has-feedback">
                                         <label for="in_deco_basico">Deco Inicial*</label>
-                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                        <!--<?php echo form_input($in_deco_basico); ?>-->
+
                                         <select name="in_deco_basico" id="in_deco_basico" class="form-control selectpicker show-tick"></select>
 
                                         <!--<span class="glyphicon glyphicon-hdd form-control-feedback"></span>-->
                                     </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
                                     <div class="form-group has-feedback">
-                                        <label for="in_deco_hd_basico">Deco Adicional*</label>
-                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                        <!--<?php echo form_input($in_deco_hd_basico); ?>-->
+                                        <label for="btnAgregaDeco">Deco Adicional*</label>
 
-                                        <!--<span class="glyphicon glyphicon-hdd form-control-feedback"></span>-->
                                         <div class="btn-group">
                                           <button type="button" id="btnAgregaDeco" class="btn btn-block btn-success" data-toggle="modal" data-target="#myModalDeco"><span class="fa fa-plus-square-o"></span> Agregar</button>
                                         </div>
@@ -617,7 +568,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
 
@@ -635,26 +586,34 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="3">
+                                <td>
                                     <div class="form-group has-feedback">
                                         <label for="in_central_tf">Central TF*</label>
                                         <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                        <?php echo form_input($in_central_tf); ?>
-
-                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                        <select name="in_central_tf" id="in_central_tf" class="form-control selectpicker show-tick"></select>
                                     </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
-                                    <div class="form-group has-feedback">
-                                        <label for="in_lineas_asignadas">Fonos TF*</label>
-                                        <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                        <?php echo form_input($in_lineas_asignadas); ?>
+                                  <div class="form-group has-feedback">
+                                      <label for="in_central_tfl">Central TF Lineas*</label>
+                                      <?php echo form_input($in_central_tfl); ?>
 
-                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                    </div>
+                                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                                  </div>
+                                </td>
+                                <td>
+                                  
+                                </td>
+                                <td>
+                                  <div class="form-group has-feedback">
+                                      <label for="in_central_tfa">Central TF Anexos*</label>
+                                      <?php echo form_input($in_central_tfa); ?>
+
+                                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                                  </div>
                                 </td>
                             </tr>
 
@@ -669,7 +628,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
                                     <div class="form-group has-feedback">
@@ -681,15 +640,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  
                                 </td>
                                 <td>
                                     <div class="form-group has-feedback">
                                         <label for="in_estado">Estado*</label>
                                         <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                                         <select name="in_estado" id="in_estado" class="form-control selectpicker show-tick"></select>
-                                        <!--<?php echo form_dropdown('in_estado', $in_estado, set_value('in_estado', @$data_folio_det->in_estado),'class="form-control" id="in_estado"'); ?>-->
-
                                     </div>
                                 </td>
                             </tr>
@@ -713,7 +670,7 @@
                                       <h4 class="modal-title" id="myModalLabel">Decos Adicionales</h4>
                                   </div>
                                   <div class="modal-body">
-                                    <h5 class="text-center">Seleccione los decos adicionales y su cantidad.</h5>
+                                    <h5 class="text-center">Seleccione los decos adicionales y su cantidad</h5>
                                     <table class="table table-striped">
                                       <thead>
                                         <th>Tipo Deco</th>
@@ -878,16 +835,54 @@
       $("#in_bloque_agenda").prop('disabled',true);
     }
 
-    if($("#id_update").val()==0){
-      //alert("cosa");
-      var now = new Date();
-      var day = ("0" + now.getDate()).slice(-2);
-      var month = ("0" + (now.getMonth() + 1)).slice(-2);
-      var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    //alert("cosa");
+    //fecha de ingreso del registro
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day);
+    $("#in_ingreso").prop('disabled',true); 
+    $('#in_ingreso').val(today);
+    //-----------------------------
 
-      $("#in_ingreso").prop('disabled',true); 
-      $('#in_ingreso').val(today);
+    if($("#id_update").val()==0){      
       $("#btnVerAgendas").css("visibility","hidden");
+      $("#in_plan_fono_adic").prop('disabled','disabled');
+      $("#in_plan_fono_adict").prop('disabled','disabled');
+      $("#btnAgregaDeco").prop('disabled','disabled');
+      $("#in_plan_net_adic").prop('disabled','disabled');
+      $("#in_plan_tv_pack").prop('disabled','disabled');
+      $("#in_deco_basico").prop('disabled','disabled');
+      $("#in_central_tfl").prop('disabled','disabled');
+      $("#in_central_tfa").prop('disabled','disabled');
+      $("#in_central_tf").prop('disabled','disabled');
+      $("#in_deco_basico").selectpicker('refresh');
+      $("#in_central_tf").selectpicker('refresh');
+    }else{
+      $("#txtChksd").val(v_deco_sd);
+      $("#txtChkhd").val(v_deco_hd);
+      $("#txtChktvr").val(v_deco_tvr);
+      $("#txtChkstn").val(v_deco_stnd);
+
+      if($("#txtChksd").val()>0){
+        $("#chksd").prop('checked',true);
+        $("#txtChksd").prop('disabled',false);
+      }
+
+      if($("#txtChkhd").val()>0){
+        $("#chkhd").prop('checked',true);
+        $("#txtChkhd").prop('disabled',false);
+      }
+
+      if($("#txtChktvr").val()>0){
+        $("#chktvr").prop('checked',true);
+        $("#txtChktvr").prop('disabled',false);
+      }
+
+      if($("#txtChkstn").val()>0){
+        $("#chkstn").prop('checked',true);
+        $("#txtChkstn").prop('disabled',false);
+      }
     }
   });
 
@@ -898,42 +893,5 @@
     }else{
       $("#btnUpdFolio").prop('disabled',false);
     }
-  });
-
-  $("#chksd").on('click',function(){
-    if($(this).is(":checked")){      
-      $("#txtChksd").prop('disabled',false);
-      return;
-    }
-    $("#txtChksd").prop('disabled',true);
-    $("#txtChksd").val("0");
-  });
-
-  $("#chkhd").on('click',function(){
-    if($(this).is(":checked")){      
-      $("#txtChkhd").prop('disabled',false);
-      return;
-    }
-    $("#txtChkhd").prop('disabled',true);
-    $("#txtChkhd").val("0");
-  });
-
-  $("#chktvr").on('click',function(){
-    if($(this).is(":checked")){      
-      $("#txtChktvr").prop('disabled',false);
-      return;
-    }
-    $("#txtChktvr").prop('disabled',true);
-    $("#txtChktvr").val("0");
-  });
-
-  $("#chkstn").on('click',function(){
-    if($(this).is(":checked")){      
-      $("#txtChkstn").prop('disabled',false);
-      return;
-    }
-    $("#txtChkstn").prop('disabled',true);
-    $("#txtChkstn").val("0");
-  });
-
+  });   
 </script>
