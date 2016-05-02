@@ -22,23 +22,67 @@ class Orden extends CI_Controller {
 
 	    foreach ($ordenes as $value) {
 	    	# code...
-	    	$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->in_comuna);
-	    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($value->in_tipo_trabajo);
+	    	$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->id_comuna);
+	    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($value->tt_id);
 	    	$NomEstadoOrden = $this->Orden_model->GetNombreEstadoOrden($value->in_estado);
-	    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($value->in_comuna);
+	    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($value->id_comuna);
 
 	    	$RegistroOrden[] = array(
 	    		'folio'         => $value->in_proyecto,
 	    		'fecha_ingreso'	=> $value->in_ingreso,
 	    		'cliente'	    => $value->in_cliente,
 	    		'fono_cli'	    => $value->in_fono,
-	    		'reg_comu'	    => sprintf("%02d",$value->in_region).' - '.$NomComuna->descripcion,
+	    		'reg_comu'	    => sprintf("%02d",$value->id_region).' - '.$NomComuna->descripcion,
 	    		'aliado'        => $NomAliado->aliado_nombre,
 	    		'tipo_trabajo'	=> $NomTipoTrabajo->tt_nombre,
 	    		'estado'        => $NomEstadoOrden->est_descripcion,
 	    		'estado_adm'    => $value->in_estado_admin,
 	    		'fecha_agenda'  => $value->fecha_agenda
 	    	);
+	    }
+
+	    $data['regordenes'] = json_encode($RegistroOrden);
+
+	    $this->load->view('ordenes/view_ordenes', $data);
+	    $this->load->view('view_footer');
+	}
+
+	//RETORNA LA LISTA DE TRABAJOS DE ACUERDO A LA EMPRESA DEL USUARIO LOGEADO A EXCEPCION DE LOS ADMIN
+	public function aliado(){
+		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	    $this->Seguridad_model->SessionActivo($url);
+	    /**/
+	    $this->load->view('constant');
+	    $this->load->view('view_header');
+
+	    $siad_aliadoid = $this->session->userdata('ALIADORUT');
+	    $ordenes = $this->Orden_model->ListarOrdenesAdmin();
+	    $NomEmpresa = $this->Orden_model->GetNombreAliadoById($siad_aliadoid);
+
+	    $RegistroOrden = array();
+
+	    foreach ($ordenes as $value) {
+	    	# code...
+	    	$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->id_comuna);
+	    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($value->tt_id);
+	    	$NomEstadoOrden = $this->Orden_model->GetNombreEstadoOrden($value->in_estado);
+	    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($value->id_comuna);	    	
+
+	    	//filtro si es fastech o sharftein
+	    	if($NomAliado == $NomEmpresa){
+	    		$RegistroOrden[] = array(
+		    		'folio'         => $value->in_proyecto,
+		    		'fecha_ingreso'	=> $value->in_ingreso,
+		    		'cliente'	    => $value->in_cliente,
+		    		'fono_cli'	    => $value->in_fono,
+		    		'reg_comu'	    => sprintf("%02d",$value->id_region).' - '.$NomComuna->descripcion,
+		    		'aliado'        => $NomAliado->aliado_nombre,
+		    		'tipo_trabajo'	=> $NomTipoTrabajo->tt_nombre,
+		    		'estado'        => $NomEstadoOrden->est_descripcion,
+		    		'estado_adm'    => $value->in_estado_admin,
+		    		'fecha_agenda'  => $value->fecha_agenda
+		    	);
+	    	}	    	
 	    }
 
 	    $data['regordenes'] = json_encode($RegistroOrden);
@@ -59,54 +103,12 @@ class Orden extends CI_Controller {
 		$data['data_flag'] = "1";//para saber si es para update
 		//echo json_encode($data);
 		$data['data_folio_det'] = json_encode($this->getOrdenDetalleFolio($nrofolio));
+		$data["data_folio_deco"] = $this->Orden_model->GetOrdenByFolioDeco($nrofolio);
 
-		//echo json_encode($data["data_folio"]);
+		//echo json_encode($data["data_folio_deco"]);
 		$this->load->view('ingreso/view_ingreso',$data);
 		$this->load->view('view_footer');
-	}
-
-	//RETORNA LA LISTA DE TRABAJOS DE ACUERDO A LA EMPRESA DEL USUARIO LOGEADO A EXCEPCION DE LOS ADMIN
-	public function aliado(){
-		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-	    $this->Seguridad_model->SessionActivo($url);
-	    /**/
-	    $this->load->view('constant');
-	    $this->load->view('view_header');
-
-	    $siad_aliadoid = $this->session->userdata('ALIADORUT');
-	    $ordenes = $this->Orden_model->ListarOrdenesAdmin();
-	    $NomEmpresa = $this->Orden_model->GetNombreAliadoById($siad_aliadoid);
-
-	    $RegistroOrden = array();
-
-	    foreach ($ordenes as $value) {
-	    	# code...
-	    	$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->in_comuna);
-	    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($value->in_tipo_trabajo);
-	    	$NomEstadoOrden = $this->Orden_model->GetNombreEstadoOrden($value->in_estado);
-	    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($value->in_comuna);	    	
-
-	    	if($NomAliado == $NomEmpresa){
-	    		$RegistroOrden[] = array(
-		    		'folio'         => $value->in_proyecto,
-		    		'fecha_ingreso'	=> $value->in_ingreso,
-		    		'cliente'	    => $value->in_cliente,
-		    		'fono_cli'	    => $value->in_fono,
-		    		'reg_comu'	    => sprintf("%02d",$value->in_region).' - '.$NomComuna->descripcion,
-		    		'aliado'        => $NomAliado->aliado_nombre,
-		    		'tipo_trabajo'	=> $NomTipoTrabajo->tt_nombre,
-		    		'estado'        => $NomEstadoOrden->est_descripcion,
-		    		'estado_adm'    => $value->in_estado_admin,
-		    		'fecha_agenda'  => $value->fecha_agenda
-		    	);
-	    	}	    	
-	    }
-
-	    $data['regordenes'] = json_encode($RegistroOrden);
-
-	    $this->load->view('ordenes/view_ordenes', $data);
-	    $this->load->view('view_footer');
-	}
+	}	
 
 	public function plataforma(){
 		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -122,10 +124,10 @@ class Orden extends CI_Controller {
 	    foreach ($ordenes as $value) {
 	    	# code...
 	    	if($value->in_tipo_trabajo == 2){
-	    		$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->in_comuna);
+	    		$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->id_comuna);
 		    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($value->in_tipo_trabajo);
 		    	$NomEstadoOrden = $this->Orden_model->GetNombreEstadoOrden($value->in_estado);
-		    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($value->in_comuna);
+		    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($value->id_comuna);
 
 		    	$RegistroOrden[] = array(
 		    		'folio'         => $value->in_proyecto,
@@ -154,40 +156,41 @@ class Orden extends CI_Controller {
 	    $folio = base64_decode($this->input->post('n_folio'));
 
 	    $orden = $this->Orden_model->GetOrdenByFolio($folio);
-	    $NomAliado = $this->Orden_model->GetNombreAliadoByComuna($orden->in_comuna);
-    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($orden->in_tipo_trabajo);
+	    $NomAliado = $this->Orden_model->GetNombreAliadoByComuna($orden->id_comuna);
+    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($orden->tt_id);
     	//$NomEstadoOrden = $this->Orden_model->GetNombreEstadoOrden($orden->in_estado);
-    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($orden->in_comuna);
-    	$Bloque = $this->Orden_model->GetBloqueByIdBloque($orden->reagenda_bloque);
+    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($orden->id_comuna);
+    	//$Bloque = $this->Orden_model->GetBloqueByIdBloque($orden->reagenda_bloque);
+    	$NomPlan = $this->Orden_model->GetPlanByIdPlan($orden->deco_id);
+    	
+    	if($orden->reagenda_bloque==null || $orden->reagenda_bloque=="" ){
+    		$descrip_bloque = "";
+    	}else{
+    		$Bloque = $this->Orden_model->GetBloqueByIdBloque($orden->reagenda_bloque);
+    		$descrip_bloque = $Bloque->bloque_descripcion;
+    	}
 
     	$RegistroOrden = array();
     	$RegistroOrden[] = array(
     		'p_in_proyecto'         => $orden->in_proyecto,
-			//'p_in_sga'              => $orden->in_sga,
 			'p_in_ingreso'          => $orden->in_ingreso,
 			'p_in_entrega'          => $orden->reagenda_fecha,
-			'p_in_bloque'           => $Bloque->bloque_descripcion,
+			'p_in_bloque'           => $descrip_bloque,
 			'p_in_cliente'          => $orden->in_cliente,
 			'p_in_rut'              => substr_replace($orden->in_rut,"-",-1,0),
-			'p_in_direccion'        => $orden->in_direccion,			
-			'p_in_comuna'           => sprintf("%02d",$orden->in_region).' - '.$NomComuna->descripcion,//$orden->in_comuna,
+			'p_in_direccion'        => $orden->in_direccion,
+			'p_id_comuna'           => sprintf("%02d",$orden->id_region).' - '.$NomComuna->descripcion,//$orden->id_comuna,
 			'p_in_nombre'           => $orden->in_nombre,
 			'p_in_fono'             => $orden->in_fono,
-			'p_in_plan_net'         => $orden->in_plan_net,
 			'p_in_plan_net_adic'    => $orden->in_plan_net_adic,
-			'p_in_plan_fono'        => $orden->in_plan_fono,
-			'p_in_plan_fono_adic'   => $orden->in_plan_fono_adic,
-			'p_in_plan_fono_adict'  => $orden->in_plan_fono_adict,
-			'p_in_plan_tv'          => $orden->in_plan_tv,
-			'p_in_deco_basico'      => $orden->in_deco_basico,
-			'p_in_plan_tv_adic'     => $orden->in_plan_tv_adic,
-			'p_in_plan_tv_adict'    => $orden->in_plan_tv_adict,
-			'p_in_deco_hd_basico'   => $orden->in_deco_hd_basico,
-			'p_in_deco_hd_full'     => $orden->in_deco_hd_full,
-			'p_in_plan_tv_pack'     => $orden->in_plan_tv_pack,
+			'p_in_plan_fono_adicu'  => $orden->in_plan_fono_adicu,
+			'p_in_plan_fono_adicd'  => $orden->in_plan_fono_adicd,
+			'p_in_plan_tv_adicu'    => $orden->in_plan_tv_adicu,
+			'p_in_plan_tv_adicd'    => $orden->in_plan_tv_adicd,
+			'p_in_plan_tv_pack'     => $orden->in_plan_pack,
 			'p_in_central_tf'       => $orden->in_central_tf,
 			'p_in_lineas_asignadas' => $orden->in_lineas_asignadas,
-			'p_in_fecha_operacion'  => $orden->in_fecha_operacion,
+			'p_in_fecha_cierre'     => $orden->in_fecha_cierre,
 			'p_in_vende'            => $orden->in_vende,
 			'p_in_tipo_trabajo'     => $NomTipoTrabajo->tt_nombre
     	);		
