@@ -13,8 +13,10 @@
   <link rel="stylesheet" href="<?php echo base_url()?>lib/sweet-alert.css"/>
   <!-- Latest compiled and minified JavaScript -->
   <script src="<?php echo base_url()?>js/bootstrap-select.min.js"></script>
-  <script src="<?php echo base_url()?>lib/sweet-alert.js"></script>
-  <script type="text/javascript" src="<?php echo base_url();?>js/JsOrdenPreview.js"></script>
+  <script src="<?php echo base_url()?>lib/sweet-alert.js"></script>  
+  <script type="text/javascript" src="<?php echo base_url();?>js/JsOrdenPreview.js"></script>  
+  <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.multiselect.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.dataTables.columnFilter.js"></script>
   <!-- Main content -->
   <section class="content">
     <!-- Default box -->
@@ -37,31 +39,90 @@
           </tr>
         </table>
         <br>
-        <div style="height: 6em; width: 12em; overflow: auto;">
-          <div style="width: 12em; float: left;">
-            <input id="cheese" type="checkbox" name="ingredients[]" value="Cheese" />
-            <label for="cheese">Cheese</label>
-            <input type="text" value="" size="10px">
-          </div>
-          <br />
-          <div style="width: 12em; float: left;">
-            <input id="olives" type="checkbox" name="ingredients[]" value="Olives" />
-            <label for="olives">Olives</label>
-            <input type="text" value="" size="10px">
-          </div>
-          <br />          
-          <div style="width: 12em; float: left;">
-            <input id="pepperoni" type="checkbox" name="ingredients[]" value="Pepperoni" />
-            <label for="pepperoni">Pepperoni</label>
-            <input type="text" value="" size="10px">
-          </div>
-          <br />
-          <div style="width: 12em; float: left;">            
-            <input id="anchovies" type="checkbox" name="ingredients[]" value="Anchovies" />
-            <label for="anchovies">Anchovies</label>
-            <input type="text" value="" size="10px">
+        <div class="row">
+        <!-- col-xs-12 style="float: none; display: block; margin-left: auto; margin-right: auto;"-->
+          <div class="col-xs-6">
+            <div class="col-xs-3">
+              <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-search"></span> Filtrar Tabla</button>  
+            </div>
+            <div class="col-xs-3">
+              <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-export"></span> Exportar</button>  
+            </div>
           </div>
         </div>
+        <div id="modalFiltro" class="collapse">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Fecha Ingreso*</label>
+                    <p id="filtroFolio"></p>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Fecha*</label>
+                    <p id="filtroFecha"></p>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Ingreso*</label>
+                    <p id="filtroAgenda"></p>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">*</label>
+                    <p id="filtroCliente"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Fecha Ingreso*</label>
+                    <p id="filtroComuna"></p>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Fecha*</label>
+                    <p id="filtroAliado"></p>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Ingreso*</label>
+                    <p id="filtroTrabajo"></p>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">*</label>
+                    <p id="filtroEstado"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Fecha Ingreso*</label>
+                    <p id="filtroAdmin"></p>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group has-feedback">
+                    <label for="in_ingreso">Fecha*</label>
+                    <p id="filtroBoton"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
         <table id="ordenes" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
           <thead>
             <tr>
@@ -69,7 +130,6 @@
               <th>Fecha Ingreso</th>
               <th>Fecha Agenda</th>
               <th>Cliente</th>
-              <!--<th>Fono</th>-->
               <th>Region-Comuna</th>
               <th>Aliado</th>
               <th>Tipo Trabajo</th>
@@ -78,6 +138,20 @@
               <th></th>
             </tr>
           </thead>
+          <tfoot>
+            <tr>
+              <th>Folio</th>
+              <th>Fecha Ingreso</th>
+              <th>Fecha Agenda</th>
+              <th>Cliente</th>              
+              <th>Region-Comuna</th>
+              <th>Aliado</th>
+              <th>Tipo Trabajo</th>
+              <th>Estado</th>
+              <th>Estado Admin</th>
+              <th></th>
+            </tr>
+          </tfoot>
           <tbody>
             <?php 
               if(json_decode($regordenes)){
@@ -103,7 +177,7 @@
                     $f_color = 'danger';
                   }elseif($f_agenda > date('Y-m-j')){
                     $f_color = 'info';
-                  }elseif($f_agenda == 'Sin Agenda'){
+                  }elseif($f_agenda == 'Sin Agenda' || $f_agenda == null || $f_agenda == ""){
                     $f_color = 'warning';
                   }
 
@@ -146,7 +220,7 @@
                 }
               }
             ?>
-          </tbody>
+          </tbody>                  
         </table>       
 
         <!--</div>-->
@@ -297,33 +371,19 @@
                           <tr>
                               <td>
                                   <div class="form-group has-feedback">
-                                      <label for="in_plan_net">Plan Internet*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <input type="text" id="txt_plan_net" class="form-control" readonly>
-                                  </div>
-                              </td>
-                              <td>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              </td>
-                              <td>
-                                  <div class="form-group has-feedback">
                                       <label for="in_plan_net_adic">Plan Internet Adicional*</label>
                                       <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                                       <input type="text" id="txt_plan_net_adic" class="form-control" readonly>
                                   </div>
                               </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_plan_fono">Plan Telefonia*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <input type="text" id="txt_plan_fono" class="form-control" readonly>
-                                  </div>
-                              </td>
                               <td>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </td>
+                              <td>
+                                  
+                              </td>
+                          </tr>
+                          <tr>
                               <td>
                                   <div class="form-group has-feedback">
                                       <label for="in_plan_fono_adic">Adicional Telefonia 1*</label>
@@ -341,18 +401,14 @@
                                       <input type="text" id="txt_plan_fono_adict" class="form-control" readonly>
                                   </div>
                               </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_plan_tv">Plan TV*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <input type="text" id="txt_plan_tv" class="form-control" readonly>
-                                  </div>
-                              </td>
                               <td>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </td>
+                              <td>
+                                  
+                              </td>
+                          </tr>
+                          <tr>
                               <td>
                                   <div class="form-group has-feedback">
                                       <label for="in_plan_tv_adic">Adicional TV 1*</label>
@@ -370,11 +426,17 @@
                                       <input type="text" id="txt_plan_tv_adict" class="form-control" readonly>
                                   </div>
                               </td>
+                              <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </td>
+                              <td>
+                                  
+                              </td>
                           </tr>
                           <tr>
                               <td>
                                   <div class="form-group has-feedback">
-                                      <label for="in_deco_basico">Deco Basico*</label>
+                                      <label for="in_deco_basico">Deco Inicial*</label>
                                       <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                                       <input type="text" id="txt_deco_basico" class="form-control" readonly>
                                   </div>
@@ -384,7 +446,7 @@
                               </td>
                               <td>
                                   <div class="form-group has-feedback">
-                                      <label for="in_deco_hd_basico">Deco Basico HD*</label>
+                                      <label for="in_deco_hd_basico">Deco Adicional*</label>
                                       <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                                       <input type="text" id="txt_deco_hd_basico" class="form-control" readonly>
                                   </div>
@@ -393,11 +455,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </td>
                               <td>
-                                  <div class="form-group has-feedback">
-                                      <label for="in_deco_hd_full">Deco Full HD*</label>
-                                      <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
-                                      <input type="text" id="txt_deco_hd_full" class="form-control" readonly>
-                                  </div>
+                              
                               </td>
                           </tr>
                           <tr>
@@ -518,8 +576,8 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $('#ordenes').dataTable({
-          "scrollX": true,
-          "searching": false,
+          "scrollX": false,
+          "searching": true,
           "bSort": false,
           "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"//C:\wamp\www\siad_pyme\plugins\datatables\i18n
@@ -534,19 +592,43 @@
               "data": "",
               "defaultContent": ""
             }            
-          ]
-          /*"columns": [
-                      { "width": "1%" },
-                      { "width": "2%" },
-                      null,
-                      { "width": "12%" },
-                      { "width": "15%" },
-                      { "width": "5%" },
-                      { "width": "11%" },
-                      { "width": "5%" },
-                      { "width": "7%" }
-                     ]*/
+          ]/*,
+          "aoColumns": [
+            { "sWidth": "50px" },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+          ]*/
+      }).columnFilter({
+          //sPlaceHolder: "head:before",  
+          aoColumns: [{type: "select", sSelector: "#filtroFolio",},
+                      {sSelector: "#filtroFecha"},
+                      {sSelector: "#filtroAgenda"},
+                      {sSelector: "#filtroCliente"},
+                      {sSelector: "#filtroComuna"},
+                      {sSelector: "#filtroAliado"},
+                      {sSelector: "#filtroTrabajo"},
+                      {type: "select", sSelector: "#filtroEstado"},
+                      {type: "select", sSelector: "#filtroAdmin"},
+                      null]
       });
+
+      //$("#ordenes").dataTable({});
+
+      /*$("table#ordenes tfoot tr th#cssFolio").find("select").multiselect({
+        selectedList: 1,
+        multiple: true,
+        minWidth: "100",
+        height: "auto"
+      });*/
+
+      //$("#ui-datepicker-div").datepicker({ dateFormat: 'yy-mm-dd' }).val();
     });
 
   </script>
