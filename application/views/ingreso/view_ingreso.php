@@ -50,7 +50,7 @@
 
   function volverAliado(){
     window.location="<?php echo base_url()?>orden/aliado";
-  }
+  }  
 </script>
 
 <?php
@@ -137,6 +137,19 @@
   //'onkeypress'  => 'return letras(event)',
   );
 
+  //in_direccion_nueva
+  $in_direccion_nueva = array(
+  'name'        => 'in_direccion_nueva',
+  'id'          => 'in_direccion_nueva',
+  'size'        => 100,
+  'maxlength'   => 200,
+  'value'       => set_value('codigo',@$data_folio->in_direccion_t),
+  'type'        => 'text',
+  'class'       => 'form-control',
+  'placeholder' => 'Ingrese direccion',
+  //'onkeypress'  => 'return letras(event)',
+  );
+
   //in_nombre
   $in_nombre = array(
   'name'        => 'in_nombre',
@@ -199,32 +212,6 @@
   'type'        => 'number',
   'class'       => 'form-control',
   'placeholder' => 'Ingrese extensiones',
-  //'onkeypress'  => 'return letras(event)',
-  );
-
-  //in_plan_tv_adic
-  $in_plan_tv_adic = array(
-  'name'        => 'in_plan_tv_adic',
-  'id'          => 'in_plan_tv_adic',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_tv_adicu),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan tv adic',
-  //'onkeypress'  => 'return letras(event)',
-  );
-
-  //in_plan_tv_adict
-  $in_plan_tv_adict = array(
-  'name'        => 'in_plan_tv_adict',
-  'id'          => 'in_plan_tv_adict',
-  'size'        => 100,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_plan_tv_adicd),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan tv adic 2',
   //'onkeypress'  => 'return letras(event)',
   );
 
@@ -429,6 +416,17 @@
                     <div class="form-group has-feedback">
                         <label for="in_direccion">Direccion*</label>                                
                         <?php echo form_input($in_direccion); ?>
+
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12" id="divTraslado">
+                  <div class="form-group col-xs-8">
+                    <div class="form-group has-feedback">
+                        <label for="in_direccion_nueva">Nueva Direccion*</label>                                
+                        <?php echo form_input($in_direccion_nueva); ?>
 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
@@ -811,6 +809,8 @@
         $("#txtChkstn").prop('disabled',false);
       }
     }
+
+    $("#divTraslado").css('visibility','hidden');
   });
 
   $("#in_estado").on('change',function(){
@@ -820,5 +820,13 @@
     }else{
       $("#btnUpdFolio").prop('disabled',false);
     }
-  });   
+  });
+
+  $("#in_tipo_trabajo").on('change',function(){
+    if($("#in_tipo_trabajo").val()==4){
+      $("#divTraslado").css('visibility','visible');
+    }else{
+      $("#divTraslado").css('visibility','hidden');
+    }
+  });
 </script>
