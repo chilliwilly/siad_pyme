@@ -31,152 +31,139 @@
     
     <script src="<?php echo base_url()?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
-    <script src="<?php echo base_url()?>plugins/jQueryUI/jQuery-ui.min.js"></script>
+    <script src="<?php echo base_url()?>plugins/jQueryUI/jquery-ui.min.js"></script>
 
-    <script src="<?php echo base_url()?>js/jquery.ajaxfileupload.js"></script>
+    <script src="<?php echo base_url()?>js/jquery.ajaxfileupload.js"></script>    
   </head>
-  <!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT hold-transition layout-boxed-->
-  <body class="skin-red fixed sidebar-mini">
-    <!-- Site wrapper -->
+  <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+  <body class="hold-transition skin-red-light layout-top-nav">
     <div class="wrapper">
 
       <header class="main-header">
-        <!-- Logo -->
-        <a href="../../index2.html" class="logo">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>Claro</b></span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>SIAD PYME</b></span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top" role="navigation">
-          <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Minimizar Menu</span>
-          </a>
+        <nav class="navbar navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="#" class="navbar-brand"><b>SIAD PYME</b></a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                <i class="fa fa-bars"></i>
+              </button>
+            </div>
 
-          <!-- Navbar Right Menu -->
-          <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-              <!-- User Account: style can be found in dropdown.less -->
-              <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="<?php echo base_url();?>img/Claro.png" class="user-image" alt="User Image">
-                  <span class="hidden-xs"><?php echo 'Conectado como: '.$this->session->userdata('USRNAME'); ?></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- User image -->
-                  <li class="user-header">
-                    <img src="<?php echo base_url();?>img/Claro.png" class="img-circle" alt="User Image">
-                    <p>
-                      <?php 
-                        echo $this->session->userdata('NOMBRE').' '.$this->session->userdata('APELLIDOS');                                       
-                      ?>
-                      <small><?php echo $this->session->userdata('ALIADONOMBRE'); ?></small>
-                      <small><?php echo 'Rol: '.$this->session->userdata('USRROLNOM'); ?></small>
-                    </p>
-                  </li>
-                  <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-6 text-center">
-                      <a href="#">Contraseña</a>
-                    </div>
-                    <div class="col-xs-6 text-center">
-                      <a href="#">Cuenta</a>
-                    </div>
-                    <!--<div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>-->
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
-                    </div>
-                    <div class="pull-right">
-                      <a href="<?php echo base_url();?>login/CerrarSesion" class="btn btn-default btn-flat">Cerrar Sesion</a>
-                    </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+              <ul class="nav navbar-nav">
+                <?php 
+                  $contador  = 0;
+                  $LineaTemp = 0;
+                  $IdMenu    = 0;
+                  session_start();
+                  $ArrayMenu = $_SESSION['Menu'];              
+
+                  foreach ($ArrayMenu as $key => $value) {
+                  # code...
+                    $linea    = $value->menu_grupo;
+                    $url      = $value->menu_url;
+                    $IdMenu   = $value->menu_id;
+                    $cierre   = $value->menu_cierre;
+
+                    if($linea==0){
+                      $LineaTemp = $value->menu_id;
+                      //echo '<li>';
+                      echo '<li class="dropdown"><a href="'.base_url().$url.'" class="dropdown-toggle" data-toggle="dropdown">'.$value->menu_nombre.'<span class="caret"></span></a>';//</li>';
+                      //echo '<div>';
+                      //echo '</li>';
+                      echo '<ul class="dropdown-menu" role="menu">';
+                      foreach ($ArrayMenu as $key => $valued) {
+                        # code...
+                        if($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') == 3 && $valued->menu_id == 3){
+                          //MUESTRA EL SUBMENU ORDENES PARA EL ALIADO
+                          echo '<li><a href="'.base_url().$valued->menu_url.'/aliado">'.$valued->menu_nombre.'</a></li>';
+                        }elseif ($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') == 4 && $valued->menu_id == 3) {
+                          //MUESTRA EL SUBMENU ORDENES PARA PLATAFORMA T2
+                          echo '<li><a href="'.base_url().$valued->menu_url.'/plataforma">'.$valued->menu_nombre.'</a></li>';
+                        }elseif ($valued->menu_grupo == $LineaTemp && $valued->menu_id != 3) {
+                          //MUESTRA EL RESTO DE SUBMENU PARA <>Admin EXCLUYENDO LISTAR ORDENES
+                          echo '<li><a href="'.base_url().$valued->menu_url.'">'.$valued->menu_nombre.'</a></li>';
+                        }elseif ($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') != 3) {
+                          //MUESTRA SUBMENU PARA ADMIN
+                          echo '<li><a href="'.base_url().$valued->menu_url.'">'.$valued->menu_nombre.'</a></li>';
+                        }
+                      }             
+                    }
+
+                    // if($linea == $LineaTemp){
+                    //   echo '<li><a href="'.base_url().$url.'"><i class="fa fa-book"></i>'.$value->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
+                    // }
+
+                    if($linea == 0){//($cierre == 1){//($url == "usuarios" or $url == "ventas" or $url == "ordencompra" or $url == "reportes"){
+                      echo '</ul>';
+                      echo '</li>'; 
+                    }
+                  }
+                ?>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+            <!-- Navbar Right Menu -->
+              <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                  <!-- Messages: style can be found in dropdown.less-->
+                  
+                  <!-- /.messages-menu -->
+
+                  <!-- Notifications Menu -->
+
+                  <!-- Tasks Menu -->
+
+                  <!-- User Account Menu -->
+                  <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <!-- The user image in the navbar-->
+                      <img src="<?php echo base_url();?>img/Claro.png" class="user-image" alt="User Image">
+                      <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                      <span class="hidden-xs"><?php echo 'Conectado como: '.$this->session->userdata('USRNAME'); ?></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <!-- The user image in the menu -->
+                      <li class="user-header">
+                        <img src="<?php echo base_url();?>img/Claro.png" class="img-circle" alt="User Image">
+                        <p>
+                          <?php 
+                            echo $this->session->userdata('NOMBRE').' '.$this->session->userdata('APELLIDOS');                                       
+                          ?>
+                          <small><?php echo $this->session->userdata('ALIADONOMBRE'); ?></small>
+                          <small><?php echo 'Rol: '.$this->session->userdata('USRROLNOM'); ?></small>
+                        </p>
+                      </li>
+                      <!-- Menu Body -->
+                      <li class="user-body">
+                        <div class="col-xs-6 text-center">
+                          <a href="#">Contraseña</a>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                          <a href="#">Cuenta</a>
+                        </div>
+                        <!--<div class="col-xs-4 text-center">
+                          <a href="#">Friends</a>
+                        </div>-->
+                      </li>
+                      <!-- Menu Footer-->
+                      <li class="user-footer">
+                        <div class="pull-left">
+                          <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
+                        </div>
+                        <div class="pull-right">
+                          <a href="<?php echo base_url();?>login/CerrarSesion" class="btn btn-default btn-flat">Cerrar Sesion</a>
+                        </div>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
-              </li>
-            </ul>
-          </div>
-
+              </div><!-- /.navbar-custom-menu -->
+          </div><!-- /.container-fluid -->
         </nav>
       </header>
-
-      <!-- =============================================== -->
-
-      <!-- Left side column. contains the sidebar -->
-      <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-          <!-- Sidebar user panel -->
-
-          <!-- search form -->
-
-          <!-- /.search form -->
-          <!-- sidebar menu: : style can be found in sidebar.less -->
-          <ul class="sidebar-menu">
-            <li class="header">MENU</li>            
-            <?php 
-              $contador  = 0;
-              $LineaTemp = 0;
-              $IdMenu    = 0;
-              session_start();
-              $ArrayMenu = $_SESSION['Menu'];              
-
-              foreach ($ArrayMenu as $key => $value) {
-              # code...
-                $linea    = $value->menu_grupo;
-                $url      = $value->menu_url;
-                $IdMenu   = $value->menu_id;
-                $cierre   = $value->menu_cierre;
-
-                if($linea==0){
-                  $LineaTemp = $value->menu_id;
-                  //echo '<li>';
-                  echo '<li class="treeview"><a href="'.base_url().$url.'"><i class="fa fa-book"></i><span>'.$value->menu_nombre.'</span><i class="fa fa-angle-right pull-right"></i></a>';//</li>';
-                  //echo '<div>';
-                  //echo '</li>';
-                  echo '<ul class="treeview-menu">';
-                  foreach ($ArrayMenu as $key => $valued) {
-                    # code...
-                    if($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') == 3 && $valued->menu_id == 3){
-                      //MUESTRA EL SUBMENU ORDENES PARA EL ALIADO
-                      echo '<li><a href="'.base_url().$valued->menu_url.'/aliado"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
-                    }elseif ($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') == 4 && $valued->menu_id == 3) {
-                      //MUESTRA EL SUBMENU ORDENES PARA PLATAFORMA T2
-                      echo '<li><a href="'.base_url().$valued->menu_url.'/plataforma"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
-                    }elseif ($valued->menu_grupo == $LineaTemp && $valued->menu_id != 3) {
-                      //MUESTRA EL RESTO DE SUBMENU PARA <>Admin EXCLUYENDO LISTAR ORDENES
-                      echo '<li><a href="'.base_url().$valued->menu_url.'"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
-                    }elseif ($valued->menu_grupo == $LineaTemp && $this->session->userdata('TIPOUSUARIO') != 3) {
-                      //MUESTRA SUBMENU PARA ADMIN
-                      echo '<li><a href="'.base_url().$valued->menu_url.'"><i class="fa fa-book"></i>'.$valued->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
-                    }
-                  }             
-                }
-
-                // if($linea == $LineaTemp){
-                //   echo '<li><a href="'.base_url().$url.'"><i class="fa fa-book"></i>'.$value->menu_nombre.'<i class="fa fa-angle-right pull-right"></i></a></li>';
-                // }
-
-                if($linea == 0){//($cierre == 1){//($url == "usuarios" or $url == "ventas" or $url == "ordencompra" or $url == "reportes"){
-                  echo '</ul>';
-                  echo '</li>'; 
-                }
-              }
-            ?>
-          </ul>
-        </section>
-        <!-- /.sidebar -->
-      </aside>
-  <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <!--<h1>
-      Inicio
-      <small>Blank example to the boxed layout</small>
-    </h1>-->
-  </section>   
+      <!-- Full Width Column -->
+      <div class="content-wrapper">
+        <div class="container">
+          <!-- Content Header (Page header) -->
