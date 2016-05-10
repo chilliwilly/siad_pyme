@@ -244,19 +244,6 @@
   'class'       => 'form-control',
   );
 
-  //in_fecha_operacion
-  $in_fecha_operacion = array(
-  'name'        => 'in_fecha_operacion',
-  'id'          => 'in_fecha_operacion',
-  //'size'        => 100,
-  //'maxlength'   => 200,
-  'value'       => set_value('codigo',@$data_folio->in_fecha_operacion),
-  'type'        => 'date',
-  'class'       => 'form-control',
-  //'placeholder' => 'Ingrese nombre',
-  //'onkeypress'  => 'return letras(event)',
-  );
-
   //in_vende
   $in_vende = array(
   'name'        => 'in_vende',
@@ -349,7 +336,7 @@
                   </div>
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></label>                                        
+                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModalAgenda"><span class="glyphicon glyphicon-eye-open"></span></button></label>                                        
                         <?php echo form_input($in_entrega); ?>
 
                         <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
@@ -543,14 +530,6 @@
                 <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                      <label for="in_fecha_operacion">Fecha Cierre*</label>                              
-                      <?php echo form_input($in_fecha_operacion); ?>
-
-                      <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-                    </div>
-                  </div>
-                  <div class="col-xs-4">
-                    <div class="form-group has-feedback">
                       <label for="in_vende">Canal de Ventas*</label>                              
                       <?php echo form_input($in_vende); ?>
 
@@ -629,6 +608,43 @@
                       </div>
                   </div>
                 </div>
+                
+                <!-- FORMULARIO LISTADO AGENDA FOLIO -->
+                <div class="modal fade" id="myModalAgenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                              <h4 class="modal-title" id="myModalLabel">Agendamientos Realizados</h4>
+                          </div>
+                          <div class="modal-body">
+                            <h5 class="text-center">Listado de agendamientos realizados para esta orden, ordenada desde el agendamiento mas reciente al mas antiguo.</h5>
+                            <table class="table table-striped">
+                              <thead>
+                                <th>Fecha Reagenda</th>
+                                <th>Bloque</th>
+                                <th>Usuario Modificacion</th>
+                                <th>Fecha Modificacion</th>
+                              </thead>
+                              <tbody>
+                                <?php
+                                  if(json_decode($data_folio_agenda)){
+                                    foreach (json_decode($data_folio_agenda) as $agenda) {
+                                      echo '<tr>';
+                                      echo '<td>'.$agenda->reagenda_fecha.'</td>';
+                                      echo '<td>'.$agenda->bloque_descripcion.'</td>';
+                                      echo '<td>'.$agenda->reagenda_modificacion.'</td>';
+                                      echo '<td>'.$agenda->reagenda_usr_registro.'</td>';
+                                      echo '</tr>';
+                                    }
+                                  }                                  
+                                ?>
+                              </tbody>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+                </div>
 
                 <div class="col-xs-12">
                   <br>
@@ -647,7 +663,7 @@
                         </tr>
                       </thead>                              
                       <tbody>
-                        <?php 
+                        <?php                          
                           if(json_decode($data_folio_det)){
                             foreach (json_decode($data_folio_det) as $value) {
                               # code...
@@ -658,7 +674,7 @@
                               echo '<td>'.$value->observacion.'</td>';
                               echo '</tr>';
                             }
-                          }
+                          }                                                    
                         ?>
                       </tbody>
                     </table>
@@ -680,7 +696,7 @@
                   <!-- -->
                   <?php if($titulo == "Modificacion Datos" && @$data_folio->in_estado_admin != 1){ ?>
 
-                    <button type="submit" class="btn btn-primary" id="btnUpdFolio">
+                    <button type="submit" class="btn btn-primary"$data_flag id="btnUpdFolio">
                       <span class="glyphicon glyphicon-refresh"></span>
                       Actualizar Registro
                     </button>
@@ -783,6 +799,7 @@
       $("#in_central_tf").prop('disabled','disabled');
       $("#in_deco_basico").selectpicker('refresh');
       $("#in_central_tf").selectpicker('refresh');
+      $("#in_estado").val("9");
     }else{
       $("#txtChksd").val(v_deco_sd);
       $("#txtChkhd").val(v_deco_hd);
