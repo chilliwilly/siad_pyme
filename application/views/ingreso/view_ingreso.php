@@ -4,6 +4,9 @@
 <input type="hidden" name="id_admin" id="id_admin" value="<?php echo @$data_folio->in_estado_admin; ?>">
 <input type="hidden" name="id_plan" id="id_plan" value="<?php echo @$data_folio->plan_id; ?>">
 <input type="hidden" name="id_deco" id="id_deco" value="<?php echo @$data_folio->deco_id; ?>">
+<input type="hidden" name="id_central" id="id_central" value="<?php echo @$data_folio_central->ctf_id; ?>">
+<input type="hidden" name="id_tiporep" id="id_tiporep" value="<?php echo @$data_folio->rt_id; ?>">
+<input type="hidden" name="id_codirep" id="id_codirep" value="<?php echo @$data_folio->vt_codigo; ?>">
 <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->session->userdata('TIPOUSUARIO'); ?>">
 <!--<input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">-->
 
@@ -15,11 +18,14 @@
   var v_deco_stnd = "0"; 
   var num_trabajo = 0;
   var num_comuna = 0;
-  var num_estado = 0;
+  var num_estado = 9;
   var num_bloque = 0;
   var num_plan = "0";
   var num_deco = 0;
   var num_ctf = 0;
+  var num_tiporep = 0;
+  var num_codrep = "0";
+  var num_central = 0;
   var numtrab = document.getElementById("id_trabajo").value;
   numtrab = parseInt(numtrab.length);
 
@@ -31,13 +37,19 @@
     num_plan = "0";
     num_deco = 0;
     num_ctf = 0;
+    num_tiporep = 0;
+    num_codrep = "0";
+    num_central = 0;
   }else{
     num_trabajo = document.getElementById("id_trabajo").value;
     num_comuna = document.getElementById("id_comuna").value;
-    //num_estado = document.getElementById("id_estado").value;
+    num_estado = 0;
     num_bloque = document.getElementById("id_bloque").value;
     num_plan = document.getElementById("id_plan").value;
     num_deco = document.getElementById("id_deco").value;
+    num_tiporep = document.getElementById("id_tiporep").value;
+    num_codrep = document.getElementById("id_codirep").value;
+    num_central = document.getElementById("id_central").value;//"<?php echo @$data_folio_central->ctf_id; ?>";
     v_deco_sd = "<?php echo @$data_folio_deco->decoa_sd; ?>";
     v_deco_hd = "<?php echo @$data_folio_deco->decoa_hd; ?>";
     v_deco_tvr = "<?php echo @$data_folio_deco->decoa_tvr; ?>";
@@ -231,7 +243,7 @@
   $in_central_tfl = array(
   'name'        => 'in_central_tfl',
   'id'          => 'in_central_tfl',
-  'value'       => set_value('codigo',@$data_folio->in_plan_pack),
+  'value'       => set_value('codigo',@$data_folio_central->dqty_linea),
   'type'        => 'number',
   'class'       => 'form-control',
   );
@@ -239,7 +251,7 @@
   $in_central_tfa = array(
   'name'        => 'in_central_tfa',
   'id'          => 'in_central_tfa',
-  'value'       => set_value('codigo',@$data_folio->in_plan_pack),
+  'value'       => set_value('codigo',@$data_folio_central->dqty_anexo),
   'type'        => 'number',
   'class'       => 'form-control',
   );
@@ -322,6 +334,22 @@
                       <span class="glyphicon glyphicon-file form-control-feedback"></span>
                     </div>
                   </div>
+
+                  <div class="form-group col-xs-4" style="display: none;" id="divtiporep">
+                    <div class="form-group has-feedback">
+                        <label for="in_tiporep">Tipo Reparacion*</label>
+
+                        <select name="in_tiporep" id="in_tiporep" class="form-control selectpicker show-tick" data-size="10"></select>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-xs-4" style="display: none;" id="divcodrep">
+                    <div class="form-group has-feedback">
+                        <label for="in_codrep">Codigo Reparacion*</label>
+
+                        <select name="in_codrep" id="in_codrep" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
+                    </div>
+                  </div>
                 </div>                        
             
                 <div class="col-xs-12">  
@@ -382,8 +410,11 @@
                     <div class="form-group has-feedback">
                         <label for="in_fono">Fono Cliente*</label>                                
                         <?php echo form_input($in_fono); ?>
-
+<div class="btn-group">
+  <button type="button" id="btnAddFono" class="btn btn-block btn-success" data-toggle="modal" data-target="#myModalFono"><span class="fa fa-plus-square-o"></span> Agregar</button>
+</div>
                         <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+
                     </div>
                   </div>
                 </div>
@@ -419,7 +450,8 @@
                     </div>
                   </div>
                 </div>
-
+<!--<button type="button" data-toggle="collapse" data-target="#modalFiltro" id="btnCollapse" style="display: none;"></button>-->
+<div id="modalFiltro" style="display: none;">
                 <div class="col-xs-12">
                   <div class="row">
                     <div class="col-xs-12">
@@ -530,12 +562,34 @@
                 <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
+                      <label for="in_central_tf">Lineas Previas*</label>
+                      <?php echo form_input($in_central_tfl); ?>
+
+                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_central_tfl">Anexos Previos*</label>
+                      <?php echo form_input($in_central_tfl); ?>
+
+                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
                       <label for="in_vende">Canal de Ventas*</label>                              
                       <?php echo form_input($in_vende); ?>
 
                       <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
-                  </div>
+                  </div>                  
+                </div>
+</div>
+                <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
                       <label for="in_estado">Estado*</label>
@@ -646,10 +700,58 @@
                     </div>
                 </div>
 
+                <!-- FORMULARIO LISTADO FONO -->
+                <div class="modal fade" id="myModalFono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                              <h4 class="modal-title" id="myModalLabel">Fonos Contacto Cliente</h4>
+                          </div>
+                          <div class="modal-body">
+                            <h5 class="text-center">Ingrese los fonos de contacto del cliente que se esta ingresando.</h5>
+                            <br>
+                            <div class="col-xs-12">
+                              <div class="col-xs-5">
+                                <div class="form-group has-feedback">
+                                  <label for="txtFono">Nro Telefonico</label>
+                                  <input type="text" id="txtFono" name="txtFono" class="form-control" placeholder="Ingrese Nro Telefonico">                                  
+                                </div>
+                              </div>
+                              <div class="col-xs-3">
+                                                                
+                              </div>
+                            </div>
+                            
+                            <br>
+
+                            <div class="col-xs-12">
+                              <div class="col-xs-3">
+                                <div class="form-group has-feedback">
+                                  <label for="btnFonoA"></label>
+                                  <div class="btn-group">
+                                    <button type="button" id="btnFonoA" class="btn btn-block btn-success"><span class="fa fa-plus-square-o"></span> Agregar</button>
+                                  </div>                                  
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <table id="tblFonoCli" class="table table-striped">
+                              <thead>
+                                <th>Fono</th>
+                                <th>Accion</th>
+                              </thead>
+                            </table>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
                 <div class="col-xs-12">
                   <br>
                 </div>
                 
+                <!-- MODIFICACION DE DATOS -->
                 <div class="col-xs-12">
                   <?php if($titulo == "Modificacion Datos"){ ?>
                     <label>Detalle Observaciones</label>
@@ -798,9 +900,10 @@
       $("#in_central_tfa").prop('disabled','disabled');
       $("#in_central_tf").prop('disabled','disabled');
       $("#in_deco_basico").selectpicker('refresh');
-      $("#in_central_tf").selectpicker('refresh');
-      $("#in_estado").val("9");
+      $("#in_central_tf").selectpicker('refresh');      
     }else{
+      $("#in_proyecto").prop('disabled',true);
+
       $("#txtChksd").val(v_deco_sd);
       $("#txtChkhd").val(v_deco_hd);
       $("#txtChktvr").val(v_deco_tvr);
@@ -825,9 +928,58 @@
         $("#chkstn").prop('checked',true);
         $("#txtChkstn").prop('disabled',false);
       }
+      //alert($("#id_trabajo").val());
+      if($("#in_tipo_trabajo").val()==2 || $("#id_trabajo").val()==2){
+        $("#divtiporep").css('display','block');
+        $("#divcodrep").css('display','block');
+        $("#modalFiltro").css('display','none');
+      }else{
+        $("#modalFiltro").css('display','block');
+      }
     }
 
-    $("#divTraslado").css('visibility','hidden');
+    $("#divTraslado").css('display','none');
+
+    var t = $('#tblFonoCli').DataTable();
+    //var colNum = 1;
+    $("#btnFonoA").on('click',function(){
+      t.row.add([
+        //colNum,
+        $("#txtFono").val(),
+        "<a class='delete'>Delete</a>"
+      ]).draw(false);
+      //colNum++;
+      $("#txtFono").val("");
+    });
+
+    /*$('#tblFonoCli').on('click', 'a.delete', function (e) {
+        e.preventDefault();
+     
+        var nRow = $(this).parents('tr')[0];
+        //alert($(this).parent().parent().children().index($(this).parent()));
+        t.fnDeleteRow(nRow);
+    });*/
+
+    /*$('#tblFonoCli tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            t.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
+ 
+    $('#btnFonoD').click( function () {
+        t.row('.selected').remove().draw( false );
+    } );*/
+
+    $('#tblFonoCli tbody').on( 'click', 'a.delete', function () {
+        t
+        .row($(this).parents('tr'))
+        .remove()
+        .draw();
+    } );
   });
 
   $("#in_estado").on('change',function(){
@@ -841,9 +993,67 @@
 
   $("#in_tipo_trabajo").on('change',function(){
     if($("#in_tipo_trabajo").val()==4){
-      $("#divTraslado").css('visibility','visible');
+      $("#divTraslado").css('display','block');
     }else{
-      $("#divTraslado").css('visibility','hidden');
+      $("#divTraslado").css('display','none');
     }
+
+    showCboReparacion();
   });
+
+  var delay = (function(){
+  var timer = 0;
+    return function(callback, ms){
+      clearTimeout (timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
+
+  //obtengo las cantidades de lineas y anexos de acuerdo al plan
+  $("#in_central_tf").on('change',function(){
+    var n_plan = $("#in_central_tf :selected").text().match(/\d+/g)[0];
+    var n_line_min = $("#in_central_tf :selected").text().match(/\d+/g)[1];
+    var n_line_max = $("#in_central_tf :selected").text().match(/\d+/g)[2];
+    var n_anex_min = $("#in_central_tf :selected").text().match(/\d+/g)[3];
+    var n_anex_max = $("#in_central_tf :selected").text().match(/\d+/g)[4];
+
+    $("#in_central_tfl").attr({"min":n_line_min,"max":n_line_max});
+    $("#in_central_tfa").attr({"min":n_anex_min,"max":n_anex_max});
+  });
+  //in_entrega in_bloque_agenda
+  $("#in_entrega").on('change',function(){
+    $("#in_estado").val("10");
+    $("#in_estado").selectpicker('refresh');
+  });
+
+  $("#in_bloque_agenda").on('change',function(){
+    $("#in_estado").val("10");
+    $("#in_estado").selectpicker('refresh');
+  });
+  //alerta en caso de que lineas o anexos sean menor o mayor al combo
+  /*$("#in_central_tfl").keyup(function(){
+    if(this.value < n_line_min || this.value > n_line_max){
+      $("#in_central_tfl").val("");
+      alert("La cantidad de lineas no puede ser menor a " + n_line_min + " o mayor a " + n_line_max);      
+      return;
+    }  
+  });
+
+  $("#in_central_tfa").keyup(function(){
+    delay(function(){
+      if(this.value < n_anex_min || this.value > n_anex_max){
+        $("#in_central_tfa").val("");
+        alert("La cantidad de anexos no puede ser menor a " + n_anex_min + " o mayor a " + n_anex_max);
+        return;
+      }
+    }, 1000 );      
+  });*/
+
+  /*var arr = [];
+  var i = 1;
+  $("#btnAddFono").on('click',function(){
+    arr.push(i);
+    i++;
+    alert(arr);
+  });*/
 </script>
