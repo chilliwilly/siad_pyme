@@ -22,9 +22,9 @@ class Ingreso_model extends CI_Model {
 	}
 
 	public function SaveIngreso($arrayIngreso){
-          $this->db->trans_start();
+          //$this->db->trans_start();
           $this->db->insert('tbl_sp_ingreso', $arrayIngreso);
-          $this->db->trans_complete();
+          //$this->db->trans_complete();
 	}
 
      //update de datos sga que noexistian previamente
@@ -35,22 +35,39 @@ class Ingreso_model extends CI_Model {
           $this->db->trans_complete();
      }
 
-     public function SaveIngresoDetalle($arrayIngresoDetalle){
+     public function UpdateDetalleDeco($arrayIngresoDetalleDeco, $folio){
           $this->db->trans_start();
-          $this->db->insert('tbl_sp_detalle', $arrayIngresoDetalle);
+          $this->db->where('in_proyecto', $folio);
+          $this->db->update('tbl_sp_deco_adicional', $arrayIngresoDetalleDeco); 
           $this->db->trans_complete();
+     }
+
+     public function SaveIngresoDetalle($arrayIngresoDetalle){
+          //$this->db->trans_start();
+          $this->db->insert('tbl_sp_detalle', $arrayIngresoDetalle);
+          //$this->db->trans_complete();
      }
 
      public function SaveIngresoAgenda($arrayIngresoAgenda){
-          $this->db->trans_start();
+          //$this->db->trans_start();
           $this->db->insert('tbl_sp_reagenda', $arrayIngresoAgenda);
-          $this->db->trans_complete();
+          //$this->db->trans_complete();
      }
 
      public function SaveIngresoDecoAdic($arrayIngresoDecoAdic){
-          $this->db->trans_start();
+          //$this->db->trans_start();
           $this->db->insert('tbl_sp_deco_adicional', $arrayIngresoDecoAdic);
-          $this->db->trans_complete();
+          //$this->db->trans_complete();
+     }
+
+     public function SaveIngresoCentral($arrayIngresoCentral){
+          //$this->db->trans_start();
+          $this->db->insert('tbl_sp_detalle_central', $arrayIngresoCentral);
+          //$this->db->trans_complete();    
+     }
+
+     public function SaveIngresoFono($arrayIngresoFono){
+          $this->db->insert('tbl_sp_fono_orden', $arrayIngresoFono);
      }
 
      public function LeftIngresoSga(){
