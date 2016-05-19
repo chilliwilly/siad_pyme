@@ -78,6 +78,7 @@ class Ingreso extends CI_Controller {
         $this->Seguridad_model->SessionActivo($url);
 
 		$InsRegistro = json_decode($this->input->post('InsRegistro'));
+		$InsFono = json_decode($this->input->post('InsFono'));
 
 		/*Array de response*/
 		 $response = array (
@@ -152,7 +153,7 @@ class Ingreso extends CI_Controller {
 					$agendaFolio = $this->Orden_model->GetAgendaByFolio($InsRegistro->p_proyecto);
 					foreach ($agendaFolio as $value) {
 						# valido que al actualizar no ingrese un nuevo registro de agenda en caso de que bloque y fecha sean iguales
-						if(($value->reagenda_fecha != $InsRegistro->p_entrega) && ($value->reagenda_bloque != $InsRegistro->p_bloque)){
+						if(($value->reagenda_fecha != $InsRegistro->p_entrega) || ($value->reagenda_bloque != $InsRegistro->p_bloque)){
 							$GuardaRegistroAgenda = array(
 								'in_proyecto'           => $InsRegistro->p_proyecto,
 								'reagenda_fecha'        => $InsRegistro->p_entrega,
@@ -274,6 +275,18 @@ class Ingreso extends CI_Controller {
 						);
 
 						$this->Ingreso_model->SaveIngresoCentral($GuardaRegistroCentral);
+					}
+
+					if(!is_null($InsFono)){
+						foreach ($InsFono as $value) {
+							# code...
+							$GuardaFono = array(
+								'in_proyecto' => $InsRegistro->p_proyecto,
+								'fo_telefono' => $value->p_fono
+							);
+
+							$this->Ingreso_model->SaveIngresoFono($GuardaFono);
+						}
 					}			
 
 					$this->Ingreso_model->SaveIngreso($GuardaRegistro);
@@ -285,5 +298,34 @@ class Ingreso extends CI_Controller {
 				}
 			}			
 		}
+	}
+
+	public function GuardarFonoTest(){
+		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];        
+        $this->Seguridad_model->SessionActivo($url);
+
+		$InsFono = json_decode($this->input->post('InsFono'));
+
+		/*Array de response*/
+		 $response = array (
+				"estatus"   => false,
+				"campo"     => "",
+	            "error_msg" => ""
+	    );
+
+		foreach ($InsFono as $value) {
+			# code...
+			$GuardaFono = array(
+				'in_proyecto' => $value->p_proyecto,
+				'fo_telefono' => $value->p_fono
+			);
+
+			$this->Ingreso_model->SaveIngresoFono($GuardaFono);
+		}
+
+		$response["campo"] = "";
+		$response["error_msg"] = "";
+
+		echo json_encode($response);
 	}
 }
