@@ -3,7 +3,7 @@
       <footer class="main-footer">
         <div class="container">
           <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0
+            <b>Version</b> 1.5
           </div>
           <strong>Claro - Despacho Nacional</a>.</strong> 2015-2016
         </div><!-- /.container -->
