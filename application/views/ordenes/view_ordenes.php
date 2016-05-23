@@ -6,17 +6,19 @@
 
   <script type="text/javascript">
     var baseurl = "<?php echo base_url(); ?>";
-  </script> 
-  
+  </script>
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap-select.min.css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>lib/sweet-alert.css"/>
+  <!--<link rel="stylesheet" href="<?php echo base_url()?>plugins/yadcf/jquery.dataTables.yadcf.css"/>-->
   <!-- Latest compiled and minified JavaScript -->
   <script src="<?php echo base_url()?>js/bootstrap-select.min.js"></script>
-  <script src="<?php echo base_url()?>lib/sweet-alert.js"></script>  
-  <script type="text/javascript" src="<?php echo base_url();?>js/JsOrdenPreview.js"></script>  
+  <script src="<?php echo base_url()?>lib/sweet-alert.js"></script>
+  <script type="text/javascript" src="<?php echo base_url();?>js/JsOrdenPreview.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.multiselect.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.dataTables.columnFilter.js"></script>
+  <!--<script type="text/javascript" src="<?php echo base_url(); ?>plugins/yadcf/jquery.dataTables.yadcf.js"></script>-->
   <!-- Main content -->
   <section class="content">
     <!-- Default box -->
@@ -32,7 +34,7 @@
           <tr>
             <td colspan="3" style="text-align: center;">Leyenda Iconos</td>
           </tr>
-          <tr>            
+          <tr>
             <td>Preview Orden <button type="button" title="Ver Orden" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;</td>
             <td>Cerrar Orden <button type="button" title="Ver Orden" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;</td>
             <td>Editar Orden <button type="button" title="Ver Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button>&nbsp;</td>
@@ -43,10 +45,10 @@
         <!-- col-xs-12 style="float: none; display: block; margin-left: auto; margin-right: auto;"-->
           <div class="col-xs-6">
             <div class="col-xs-3">
-              <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-search"></span> Filtrar Tabla</button>  
+              <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-search"></span> Filtrar Tabla</button>
             </div>
             <div class="col-xs-3">
-              <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-export"></span> Exportar</button>  
+              <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-export"></span> Exportar</button>
             </div>
           </div>
         </div>
@@ -55,25 +57,25 @@
             <div class="col-xs-12">
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Fecha Ingreso*</label>
+                    <label for="in_ingreso">Folio</label>
                     <p id="filtroFolio"></p>
                 </div>
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Fecha*</label>
+                    <label for="in_ingreso">Fecha Ingreso</label>
                     <p id="filtroFecha"></p>
                 </div>
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Ingreso*</label>
+                    <label for="in_ingreso">Fecha Agenda</label>
                     <p id="filtroAgenda"></p>
                 </div>
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">*</label>
+                    <label for="in_ingreso">Cliente</label>
                     <p id="filtroCliente"></p>
                 </div>
               </div>
@@ -82,25 +84,25 @@
             <div class="col-xs-12">
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Fecha Ingreso*</label>
+                    <label for="in_ingreso">Comuna</label>
                     <p id="filtroComuna"></p>
                 </div>
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Fecha*</label>
+                    <label for="in_ingreso">Aliado Responsable</label>
                     <p id="filtroAliado"></p>
                 </div>
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Ingreso*</label>
+                    <label for="in_ingreso">Tipo Trabajo</label>
                     <p id="filtroTrabajo"></p>
                 </div>
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">*</label>
+                    <label for="in_ingreso">Estado</label>
                     <p id="filtroEstado"></p>
                 </div>
               </div>
@@ -109,13 +111,13 @@
             <div class="col-xs-12">
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Fecha Ingreso*</label>
+                    <label for="in_ingreso">Estado Admin</label>
                     <p id="filtroAdmin"></p>
                 </div>
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Fecha*</label>
+                    <label for="in_ingreso"></label>
                     <p id="filtroBoton"></p>
                 </div>
               </div>
@@ -129,12 +131,13 @@
               <th>Folio</th>
               <th>Fecha Ingreso</th>
               <th>Fecha Agenda</th>
+              <th></th>
               <th>Cliente</th>
               <th>Region-Comuna</th>
               <th>Aliado</th>
               <th>Tipo Trabajo</th>
               <th>Estado</th>
-              <th>Estado Admin</th>
+              <th>Estado Despacho</th>
               <th></th>
             </tr>
           </thead>
@@ -143,17 +146,18 @@
               <th>Folio</th>
               <th>Fecha Ingreso</th>
               <th>Fecha Agenda</th>
-              <th>Cliente</th>              
+              <th></th>
+              <th>Cliente</th>
               <th>Region-Comuna</th>
               <th>Aliado</th>
               <th>Tipo Trabajo</th>
               <th>Estado</th>
-              <th>Estado Admin</th>
+              <th>Estado Despacho</th>
               <th></th>
             </tr>
           </tfoot>
           <tbody>
-            <?php 
+            <?php
               if(json_decode($regordenes)){
                 foreach (json_decode($regordenes) as $orden) {
                   # code...
@@ -171,21 +175,22 @@
                     $f_agenda = $orden->fecha_agenda;
                   }
 
-                  if($f_agenda == date('Y-m-j')){
+                  if($f_agenda == date('Y-m-d')){
                     $f_color = 'success';
-                  }elseif($f_agenda < date('Y-m-j')){
+                  }elseif($f_agenda < date('Y-m-d')){
                     $f_color = 'danger';
-                  }elseif($f_agenda > date('Y-m-j')){
-                    $f_color = 'info';
-                  }elseif($f_agenda == 'Sin Agenda' || $f_agenda == null || $f_agenda == ""){
+                  }elseif($f_agenda > date('Y-m-d') && !($f_agenda == 'Sin Agenda' || $f_agenda == null || $f_agenda == "")){
                     $f_color = 'warning';
+                  }elseif($f_agenda == 'Sin Agenda' || $f_agenda == null || $f_agenda == ""){
+                    $f_color = 'info';
                   }
 
                   // style="background-color: '.$f_color.';"
                   echo '<tr>';
                   echo '<td>'.$orden->folio.'</td>';
                   echo '<td>'.$orden->fecha_ingreso.'</td>';
-                  echo '<td><button type="button" class="btn btn-block btn-'.$f_color.' btn-xs"><span class="fa fa-clock-o"></span> '.$f_agenda.'</button></td>';
+                  echo '<td>'.$f_agenda.'</td>';
+                  echo '<td><button type="button" class="btn btn-block btn-'.$f_color.' btn-xs"><span class="fa fa-clock-o"></span></button></td>';
                   echo '<td>'.$orden->cliente.'</td>';
                   //echo '<td>'.$orden->fono_cli.'</td>';
                   echo '<td>'.$orden->reg_comu.'</td>';
@@ -197,31 +202,31 @@
                   if($this->session->userdata('TIPOUSUARIO') == 1 || $this->session->userdata('TIPOUSUARIO') == 2){
                     $p_row = '<a href="orden/editarIngreso/'.$nrofolio.'"><button type="button" title="Editar Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button></a>';
                   }else{
-                    $p_row = '<a href="editarIngreso/'.$nrofolio.'"><button type="button" title="Editar Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button></a>'; 
+                    $p_row = '<a href="editarIngreso/'.$nrofolio.'"><button type="button" title="Editar Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button></a>';
                   }
 
                   if($this->session->userdata('TIPOUSUARIO')==1 || $this->session->userdata('TIPOUSUARIO')==2){
                     if($orden->estado_adm==1){
                       $p_adm = '<button type="button" title="Cerrar Orden" class="btn btn-warning btn-xs" id="btnPreview" disabled><span class="glyphicon glyphicon-ok"></span></button>&nbsp;';
                     }else{
-                      $p_adm = '<button type="button" title="Cerrar Orden" class="btn btn-warning btn-xs" id="btnPreview" onclick="setFolio('."'".$nrofolio."'".');cerrarOrden();"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;';  
+                      $p_adm = '<button type="button" title="Cerrar Orden" class="btn btn-warning btn-xs" id="btnPreview" onclick="setFolio('."'".$nrofolio."'".');cerrarOrden();"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;';
                     }
-                    
+
                   }else{
                     $p_adm = null;
                   }
 
-                  echo '<td>'.                          
+                  echo '<td>'.
                         '<button type="button" title="Ver Orden" class="btn btn-info btn-xs" id="btnPreview" onclick="verPreview('."'".$nrofolio."'".')" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;'.
                         $p_adm.
-                        $p_row.                          
+                        $p_row.
                         '</td>';
                   echo '</tr>';
                 }
               }
             ?>
-          </tbody>                  
-        </table>       
+          </tbody>
+        </table>
 
         <!--</div>-->
         <!--INICIO MOSTRAR DATA BOTON VER-->
@@ -239,7 +244,7 @@
                             <td>
                               <div class="form-group has-feedback">
                                   <label for="in_tipo_trabajo">Tipo Trabajo*</label>
-                                  <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
+                                  <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control"
                                       oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
                                   <input type="text" id="txt_tipo_trabajo" class="form-control" readonly>
 
@@ -250,7 +255,7 @@
                               <td>
                                   <div class="form-group has-feedback">
                                       <label for="in_proyecto">Proyecto*</label>
-                                      <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control" 
+                                      <!--<input type="text" id="txtNombreU" name="txtNombreU" placeholder="Ingrese primer nombre" required="required" class="form-control"
                                           oninvalid="this.setCustomValidity('Campo primer nombre obligatorio')" title="Debe ingresar primer nombre de la persona">-->
                                       <input type="text" id="txt_proyecto" class="form-control" readonly>
                                   </div>
@@ -272,7 +277,7 @@
                               <td>
                                   <div class="form-group has-feedback">
                                       <label for="in_ingreso">Fecha Ingreso*</label>
-                                      <!--<input type="text" id="txtApPat" name="txtApPat" placeholder="Ingrese apellido paterno" required="required" class="form-control" 
+                                      <!--<input type="text" id="txtApPat" name="txtApPat" placeholder="Ingrese apellido paterno" required="required" class="form-control"
                                           oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar apellido paterno de la persona" style="width:300px;">-->
                                       <input type="text" id="txt_ingreso" class="form-control" readonly>
                                   </div>
@@ -281,7 +286,7 @@
                               <td>
                                   <div class="form-group has-feedback">
                                       <label for="in_entrega">Fecha Agenda*</label>
-                                      <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control" 
+                                      <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control"
                                           oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar materno paterno de la persona" style="width:300px;">-->
                                       <input type="text" id="txt_entrega" class="form-control" readonly>
                                   </div>
@@ -290,7 +295,7 @@
                               <td>
                                   <div class="form-group has-feedback">
                                       <label for="in_bloque_agenda">Bloque Agenda*</label>
-                                      <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control" 
+                                      <!--<input type="text" id="txtApMat" name="txtApMat" placeholder="Ingrese apellido materno" required="required" class="form-control"
                                           oninvalid="this.setCustomValidity('Campo Apellido Obligatorio')" title="Debe ingresar materno paterno de la persona" style="width:300px;">-->
                                       <input type="text" id="txt_bloque_agenda" class="form-control" readonly>
                                   </div>
@@ -309,7 +314,7 @@
                               <td>
                                   <div class="form-group">
                                     <label for="in_rut">Rut*</label>
-                                      <input type="text" id="txt_rut" class="form-control" readonly>                                    
+                                      <input type="text" id="txt_rut" class="form-control" readonly>
                                     </div>
                                   </div>
                               </td>
@@ -328,9 +333,9 @@
                             <td>
                               <!--<div class="form-group has-feedback">
                                   <label for="in_region">Region*</label>
-                                  
+
                                   <select name="in_region" id="in_region" class="form-control"></select>
-                                  
+
                               </div>-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
                             <td>
@@ -380,7 +385,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </td>
                               <td>
-                                  
+
                               </td>
                           </tr>
                           <tr>
@@ -405,7 +410,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </td>
                               <td>
-                                  
+
                               </td>
                           </tr>
                           <tr>
@@ -430,7 +435,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </td>
                               <td>
-                                  
+
                               </td>
                           </tr>
                           <tr>
@@ -455,7 +460,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </td>
                               <td>
-                              
+
                               </td>
                           </tr>
                           <tr>
@@ -522,12 +527,12 @@
                               <!--<input type="email" id="txtMail" name="txtMail" placeholder="ingrese@mail.com" required="required" class="form-control" placeholder="Ingrese Email">-->
                               <textarea rows="3" id="txt_observacion" class="form-control" readonly></textarea>
                             </td>
-                          </tr>                      
+                          </tr>
                         </table>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                        
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -575,6 +580,9 @@
   <!-- Modal -->
   <script type="text/javascript">
     $(document).ready(function(){
+      $.datepicker.regional[""].dateFormat = 'yy-mm-dd';
+      $.datepicker.setDefaults($.datepicker.regional['']);
+
       $('#ordenes').dataTable({
           "scrollX": false,
           "searching": true,
@@ -586,12 +594,12 @@
             { "width": "1%", "targets": 0 },
             { "width": "2%", "targets": 1 },
             { "width": "2%", "targets": 2 },
-            { "width": "3%", "targets": 8 },
-            { "width": "10%", "targets": 9 },
+            { "width": "3%", "targets": 9 },
+            { "width": "10%", "targets": 10 },
             {
               "data": "",
               "defaultContent": ""
-            }            
+            }
           ]/*,
           "aoColumns": [
             { "sWidth": "50px" },
@@ -606,7 +614,21 @@
               null
           ]*/
       }).columnFilter({
-          //sPlaceHolder: "head:before",  
+          sPlaceHolder: "head:before",
+          aoColumns: [{type: "select", sSelector: "#filtroFolio",},
+                      {type: "date-range", sRangeFormat: "Desde {from} hasta {to}", sSelector: "#filtroFecha"},
+                      {type: "date-range", sRangeFormat: "Desde {from} hasta {to}", sSelector: "#filtroAgenda"},
+                      {sSelector: "#filtroCliente"},
+                      {type: "select", sSelector: "#filtroComuna"},
+                      {type: "select", sSelector: "#filtroAliado"},
+                      {type: "select", sSelector: "#filtroTrabajo"},
+                      {type: "select", sSelector: "#filtroEstado"},
+                      {type: "select", sSelector: "#filtroAdmin"},
+                      null]
+      });
+
+      /*.columnFilter({
+          //sPlaceHolder: "head:before",
           aoColumns: [{type: "select", sSelector: "#filtroFolio",},
                       {sSelector: "#filtroFecha"},
                       {sSelector: "#filtroAgenda"},
@@ -617,7 +639,7 @@
                       {type: "select", sSelector: "#filtroEstado"},
                       {type: "select", sSelector: "#filtroAdmin"},
                       null]
-      });
+      });*/
 
       //$("#ordenes").dataTable({});
 
