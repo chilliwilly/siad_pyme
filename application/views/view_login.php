@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>css/Tablas.css">
     <!--<script type="text/javascript" src="<?php echo base_url()?>js/jquery.min.js"></script>-->
     <!--<script type="text/javascript" src="<?php echo base_url()?>bootstrap/bootstrap.min.js"></script>-->
-    
+
 
     <!-- INI AGREGADOS -->
 
@@ -23,9 +23,9 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="<?php echo base_url();?>bootstrap/css/bootstrap.min.css"/>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?php echo base_url();?>css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url()?>css/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="<?php echo base_url();?>css/ionicons.min.css"/>
+    <link rel="stylesheet" href="<?php echo base_url()?>bootstrap/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url();?>dist/css/AdminLTE.min.css"/>
     <!-- iCheck -->
@@ -51,7 +51,7 @@
                 <img src="<?php echo base_url();?>img/Claro.png" width="20%" height="20%"/><br /><b>SIAD PYME</b>
             </div>
             <!-- /.login-logo -->
-            <div class="login-box-body">                
+            <div class="login-box-body">
                 <p class="login-box-msg">Ingrese Datos Para Iniciar Sesion</p>
                 <form id="loginform" name="loginform" role="form">
                     <input type="hidden" value="0" id="validausuario" name="validausuario">
@@ -83,21 +83,21 @@
                 <!--<a href="modaltest.aspx#myModal" class="btn btn-primary"> Open Modal </a><br />-->
                 <a href="#">Olvido Contraseña?</a>
                 <br/><br/>
-                <div id="mensaje"></div>                          
+                <div id="mensaje"></div>
             </div>
             <!-- /.login-box-body -->
         </div><!-- /.login-box -->
 
         <!-- jQuery 2.1.4 -->
-        <script src="<?php echo base_url()?>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+        <script src="<?php echo base_url()?>/plugins/jQuery/jquery-2.2.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
         <script src="<?php echo base_url()?>/bootstrap/js/bootstrap.min.js"></script>
         <!-- iCheck -->
         <script src="<?php echo base_url()?>/plugins/iCheck/icheck.min.js"></script>
 
         <script type="text/javascript" src="<?php echo base_url();?>js/JsValidacion.js"></script>
-        <script type="text/javascript" src="<?php echo base_url()?>js/JsonLogin.js"></script>        
-        
+        <script type="text/javascript" src="<?php echo base_url()?>js/JsonLogin.js"></script>
+
         <script>
           $(function () {
             $('input').iCheck({
