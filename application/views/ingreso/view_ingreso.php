@@ -1,4 +1,4 @@
-<input type="hidden" name="id_trabajo" id="id_trabajo" value="<?php echo @$data_folio->tt_id; ?>"> 
+<input type="hidden" name="id_trabajo" id="id_trabajo" value="<?php echo @$data_folio->tt_id; ?>">
 <input type="hidden" name="id_comuna" id="id_comuna" value="<?php echo @$data_folio->id_comuna; ?>">
 <input type="hidden" name="id_bloque" id="id_bloque" value="<?php echo @$data_folio->reagenda_bloque; ?>">
 <input type="hidden" name="id_admin" id="id_admin" value="<?php echo @$data_folio->in_estado_admin; ?>">
@@ -10,12 +10,12 @@
 <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->session->userdata('TIPOUSUARIO'); ?>">
 <!--<input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">-->
 
-<script type="text/javascript">  
+<script type="text/javascript">
   var baseurl = "<?php echo base_url(); ?>";
   var v_deco_sd = "0";
   var v_deco_hd = "0";
   var v_deco_tvr = "0";
-  var v_deco_stnd = "0"; 
+  var v_deco_stnd = "0";
   var num_trabajo = 0;
   var num_comuna = 0;
   var num_estado = 9;
@@ -62,7 +62,7 @@
 
   function volverAliado(){
     window.location="<?php echo base_url()?>orden/aliado";
-  }  
+  }
 </script>
 
 <?php
@@ -76,7 +76,7 @@
   }else{
     $nproy = "";
   }
-  
+
   $in_proyecto = array(
   'name'        => 'in_proyecto',
   'id'          => 'in_proyecto',
@@ -175,19 +175,6 @@
   //'onkeypress'  => 'return letras(event)',
   );
 
-  //in_fono
-  $in_fono = array(
-  'name'        => 'in_fono',
-  'id'          => 'in_fono',
-  'size'        => 10,
-  'maxlength'   => 100,
-  'value'       => set_value('codigo',@$data_folio->in_fono),
-  'type'        => 'text',
-  'class'       => 'form-control',
-  'placeholder' => 'Ingrese telefonos',
-  //'onkeypress'  => 'return letras(event)',
-  );
-
   //in_plan_net_adic
   $in_plan_net_adic = array(
   'name'        => 'in_plan_net_adic',
@@ -197,7 +184,7 @@
   'value'       => set_value('codigo',@$data_folio->in_plan_net_adic),
   'type'        => 'number',
   'class'       => 'form-control',
-  'placeholder' => 'Ingrese plan internet adic',  
+  'placeholder' => 'Ingrese plan internet adic',
   //'onkeypress'  => 'return letras(event)',
   );
 
@@ -281,7 +268,7 @@
   'class'       => 'form-control',
   'placeholder' => 'Ingrese observacion',
   //'onkeypress'  => 'return letras(event)',
-  ); 
+  );
 
 ?>
 
@@ -295,19 +282,19 @@
 <script src="<?php echo base_url();?>js/jsDistribucionPlan.js"></script>
 <script src="<?php echo base_url();?>js/jsDistribucionDecoAdic.js"></script>
 <script src="<?php echo base_url();?>js/JsonIngresos.js"></script>
-<!-- Main content --><form name="formularioData" id="formularioData" role="form">  
+<!-- Main content --><form name="formularioData" id="formularioData" role="form">
 <section class="content">
   <!-- Default box -->
   <div class="box">
     <div class="box-header with-border">
 
       <h3 class="box-title"></h3>
-      
+
     </div>
     <div class="box-body">
       <div id="mensaje"></div>
-      <div class="row">          
-              
+      <div class="row">
+
         <div class="col-md-10 col-md-offset-1">
           <div class="box box-primary">
             <label><?php echo $titulo; ?></label>
@@ -350,9 +337,9 @@
                         <select name="in_codrep" id="in_codrep" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
                     </div>
                   </div>
-                </div>                        
-            
-                <div class="col-xs-12">  
+                </div>
+
+                <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
                         <label for="in_ingreso">Fecha Ingreso*</label>
@@ -364,7 +351,7 @@
                   </div>
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModalAgenda"><span class="glyphicon glyphicon-eye-open"></span></button></label>                                        
+                        <label for="in_entrega">Fecha Agenda* <button type="button" id="btnVerAgendas" title="Ver Agendamientos Anteriores" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModalAgenda"><span class="glyphicon glyphicon-eye-open"></span></button></label>
                         <?php echo form_input($in_entrega); ?>
 
                         <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
@@ -376,7 +363,7 @@
 
                         <select name="in_bloque_agenda" id="in_bloque_agenda" class="form-control selectpicker show-tick"></select>
                     </div>
-                  </div>                            
+                  </div>
                 </div>
 
                 <div class="col-xs-12">
@@ -400,7 +387,7 @@
                 <div class="col-xs-12">
                   <div class="col-xs-8">
                     <div class="form-group has-feedback">
-                        <label for="in_nombre">Nombre*</label>                                
+                        <label for="in_nombre">Nombre*</label>
                         <?php echo form_input($in_nombre); ?>
 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -408,12 +395,12 @@
                   </div>
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                        <label for="in_fono">Fono Cliente*</label>                                
-                        <?php echo form_input($in_fono); ?>
-<div class="btn-group">
-  <button type="button" id="btnAddFono" class="btn btn-block btn-success" data-toggle="modal" data-target="#myModalFono"><span class="fa fa-plus-square-o"></span> Agregar</button>
-</div>
-                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                        <!-- <php echo form_input($in_fono); ?> -->
+                        <div class="btn-group">
+                          <label for="btnAddFono">Fono Cliente*</label>
+                          <button type="button" id="btnAddFono" class="btn btn-block btn-success" style="width: 70%;" data-toggle="modal" data-target="#myModalFono"><span class="fa fa-plus-square-o"></span> Agregar Fono</button>
+                        </div>
+                        <!-- <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span> -->
 
                     </div>
                   </div>
@@ -432,7 +419,7 @@
                 <div class="col-xs-12">
                   <div class="form-group col-xs-8">
                     <div class="form-group has-feedback">
-                        <label for="in_direccion">Direccion*</label>                                
+                        <label for="in_direccion">Direccion*</label>
                         <?php echo form_input($in_direccion); ?>
 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -443,7 +430,7 @@
                 <div class="col-xs-12" id="divTraslado">
                   <div class="form-group col-xs-8">
                     <div class="form-group has-feedback">
-                        <label for="in_direccion_nueva">Nueva Direccion*</label>                                
+                        <label for="in_direccion_nueva">Nueva Direccion*</label>
                         <?php echo form_input($in_direccion_nueva); ?>
 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -467,7 +454,7 @@
                     <div class="form-group has-feedback">
                         <label for="in_plan_net">Plan*</label>
 
-                        <select name="in_plan_net" id="in_plan_net" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>                              
+                        <select name="in_plan_net" id="in_plan_net" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
                     </div>
                   </div>
                 </div>
@@ -475,7 +462,7 @@
                 <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                        <label for="in_plan_net_adic">Puntos Red Adicional*</label>                                
+                        <label for="in_plan_net_adic">Puntos Red Adicional*</label>
                         <?php echo form_input($in_plan_net_adic); ?>
 
                         <span class="glyphicon glyphicon-globe form-control-feedback"></span>
@@ -486,16 +473,16 @@
                 <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                        <label for="in_plan_fono_adic">Lineas*</label>                                
+                        <label for="in_plan_fono_adic">Lineas*</label>
                         <?php echo form_input($in_plan_fono_adic); ?>
 
                         <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
                     </div>
                   </div>
-                  
+
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                        <label for="in_plan_fono_adict">Extensiones*</label>                                
+                        <label for="in_plan_fono_adict">Extensiones*</label>
                         <?php echo form_input($in_plan_fono_adict); ?>
 
                         <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
@@ -513,11 +500,10 @@
                   </div>
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                        <label for="btnAgregaDeco">Deco Adicional*</label>
-
                         <div class="btn-group">
-                          <button type="button" id="btnAgregaDeco" class="btn btn-block btn-success" data-toggle="modal" data-target="#myModalDeco"><span class="fa fa-plus-square-o"></span> Agregar</button>
-                        </div>                                
+                          <label for="btnAgregaDeco">Deco Adicional*</label>
+                          <button type="button" id="btnAgregaDeco" class="btn btn-block btn-success" style="width: 70%;" data-toggle="modal" data-target="#myModalDeco"><span class="fa fa-plus-square-o"></span> Agregar</button>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -525,7 +511,7 @@
                 <div class="col-xs-12">
                   <div class="col-xs-8">
                     <div class="form-group has-feedback">
-                        <label for="in_plan_tv_pack">Plan Adicional TV / Plan TV Pack*</label>                                
+                        <label for="in_plan_tv_pack">Plan Adicional TV / Plan TV Pack*</label>
                         <?php echo form_input($in_plan_tv_pack); ?>
 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -561,6 +547,8 @@
 
                 <div class="col-xs-12">
                   <div class="col-xs-4">
+                  </div>
+                  <div class="col-xs-4">
                     <div class="form-group has-feedback">
                       <label for="in_central_tf">Lineas Previas*</label>
                       <?php echo form_input($in_central_tfl); ?>
@@ -581,12 +569,12 @@
                 <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                      <label for="in_vende">Canal de Ventas*</label>                              
+                      <label for="in_vende">Canal de Ventas*</label>
                       <?php echo form_input($in_vende); ?>
 
                       <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
-                  </div>                  
+                  </div>
                 </div>
 </div>
                 <div class="col-xs-12">
@@ -600,8 +588,8 @@
                 </div>
 
                 <div class="col-xs-12">
-                  <label for="indet_observacion">Observacion*</label>                          
-                  <?php echo form_textarea($indet_observacion); ?>                          
+                  <label for="indet_observacion">Observacion*</label>
+                  <?php echo form_textarea($indet_observacion); ?>
                 </div>
 
                 <!-- FORMULARIO INGRESO DECOS ADICIONALES -->
@@ -623,7 +611,7 @@
                                 <tr>
                                   <td>
                                     <input id="chksd" type="checkbox" name="decos[]" value="chksd" />
-                                    <label for="chksd">DTA SD</label>                                          
+                                    <label for="chksd">DTA SD</label>
                                   </td>
                                   <td>
                                     <input id="txtChksd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
@@ -632,7 +620,7 @@
                                 <tr>
                                   <<td>
                                     <input id="chkhd" type="checkbox" name="decos[]" value="chkhd" />
-                                    <label for="chkhd">DTA HD</label>                                          
+                                    <label for="chkhd">DTA HD</label>
                                   </td>
                                   <td>
                                     <input id="txtChkhd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
@@ -641,7 +629,7 @@
                                 <tr>
                                   <td>
                                     <input id="chktvr" type="checkbox" name="decos[]" value="chktvr" />
-                                    <label for="chktvr">HD TVR</label>                                          
+                                    <label for="chktvr">HD TVR</label>
                                   </td>
                                   <td>
                                     <input id="txtChktvr" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
@@ -650,19 +638,19 @@
                                 <tr>
                                   <td>
                                     <input id="chkstn" type="checkbox" name="decos[]" value="chkstn" />
-                                    <label for="chkstn">Standard</label>                                          
+                                    <label for="chkstn">Standard</label>
                                   </td>
                                   <td>
                                     <input id="txtChkstn" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
                                   </td>
                                 </tr>
-                              </tbody>                                      
+                              </tbody>
                             </table>
                           </div>
                       </div>
                   </div>
                 </div>
-                
+
                 <!-- FORMULARIO LISTADO AGENDA FOLIO -->
                 <div class="modal fade" id="myModalAgenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -691,7 +679,7 @@
                                       echo '<td>'.$agenda->reagenda_usr_registro.'</td>';
                                       echo '</tr>';
                                     }
-                                  }                                  
+                                  }
                                 ?>
                               </tbody>
                             </table>
@@ -715,14 +703,14 @@
                               <div class="col-xs-5">
                                 <div class="form-group has-feedback">
                                   <label for="txtFono">Nro Telefonico</label>
-                                  <input type="text" id="txtFono" name="txtFono" class="form-control" placeholder="Ingrese Nro Telefonico">                                  
+                                  <input type="text" id="txtFono" name="txtFono" class="form-control" placeholder="Ingrese Nro Telefonico">
                                 </div>
                               </div>
                               <div class="col-xs-3">
-                                                                
+
                               </div>
                             </div>
-                            
+
                             <br>
 
                             <div class="col-xs-12">
@@ -731,15 +719,15 @@
                                   <label for="btnFonoA"></label>
                                   <div class="btn-group">
                                     <button type="button" id="btnFonoA" class="btn btn-block btn-success"><span class="fa fa-plus-square-o"></span> Agregar</button>
-                                  </div>                                  
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            
+
                             <table id="tblFonoCli" class="table table-striped">
                               <thead>
                                 <th>Fono</th>
-                                <th>Accion</th>
+                                <th>Borrar</th>
                               </thead>
                             </table>
                           </div>
@@ -750,7 +738,7 @@
                 <div class="col-xs-12">
                   <br>
                 </div>
-                
+
                 <!-- MODIFICACION DE DATOS -->
                 <div class="col-xs-12">
                   <?php if($titulo == "Modificacion Datos"){ ?>
@@ -761,11 +749,11 @@
                           <th>Fecha Ingreso</th>
                           <th>Usuario</th>
                           <th>Estado</th>
-                          <th>Observacion</th>                                
+                          <th>Observacion</th>
                         </tr>
-                      </thead>                              
+                      </thead>
                       <tbody>
-                        <?php                          
+                        <?php
                           if(json_decode($data_folio_det)){
                             foreach (json_decode($data_folio_det) as $value) {
                               # code...
@@ -776,23 +764,42 @@
                               echo '<td>'.$value->observacion.'</td>';
                               echo '</tr>';
                             }
-                          }                                                    
+                          }
                         ?>
                       </tbody>
                     </table>
                   <?php } ?>
                 </div>
-                
+
+                <!-- ADJUNTAR DATOS SCHARFSTEIN -->
+                <?php if($this->session->userdata("ALIADORUT") == 81) { ?>
+                  <div class="col-xs-12">
+                    <label>Adjuntar Archivos</label>
+                    <table id="ordenesDet" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
+                      <thead>
+                        <tr>
+                          <th>Fecha Ingreso</th>
+                          <th>Usuario</th>
+                          <th>Estado</th>
+                          <th>Observacion</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                <? } ?>
+
                 <div class="col-xs-12">
                   <br><br>
                 </div>
 
-                <div class="col-xs-12">                
+                <div class="col-xs-12">
                   <?php if($this->session->userdata("TIPOUSUARIO") == 1){ ?>
                     <button type="button" id="btnAtras" onclick="volverAdmin()" class="btn btn-default">Volver</button>
                   <?php }else{ ?>
                     <button type="button" id="btnAtras" onclick="volverAliado()" class="btn btn-default">Volver</button>
-                  <?php } ?>                  
+                  <?php } ?>
                   <!-- -->
                   <!-- -->
                   <!-- -->
@@ -823,10 +830,10 @@
               </div>
             </div>
           </div>
-        </div>          
+        </div>
 
       </div>
-          
+
     </div>
 
     </div><!-- /.box-body -->
@@ -843,7 +850,7 @@
 <script src="<?php echo base_url(); ?>plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
 <script src="<?php echo base_url(); ?>plugins/input-mask/jquery.inputmask.extensions.js"></script>
 
-<script type="text/javascript">    
+<script type="text/javascript">
 
   $(document).ready(function(){
     //Titulo Pagina
@@ -884,11 +891,11 @@
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day);
-    $("#in_ingreso").prop('disabled',true); 
+    $("#in_ingreso").prop('disabled',true);
     $('#in_ingreso').val(today);
     //-----------------------------
 
-    if($("#id_update").val()==0){      
+    if($("#id_update").val()==0){
       $("#btnVerAgendas").css("visibility","hidden");
       $("#in_plan_fono_adic").prop('disabled','disabled');
       $("#in_plan_fono_adict").prop('disabled','disabled');
@@ -900,7 +907,7 @@
       $("#in_central_tfa").prop('disabled','disabled');
       $("#in_central_tf").prop('disabled','disabled');
       $("#in_deco_basico").selectpicker('refresh');
-      $("#in_central_tf").selectpicker('refresh');      
+      $("#in_central_tf").selectpicker('refresh');
     }else{
       $("#in_proyecto").prop('disabled',true);
 
@@ -936,6 +943,9 @@
       }else{
         $("#modalFiltro").css('display','block');
       }
+
+      $("#btnAddFono").html("<span class='fa fa-eye'></span> Ver Fono");
+      $("#btnAgregaDeco").html("<span class='fa fa-eye'></span> Ver Decos Adic.");
     }
 
     $("#divTraslado").css('display','none');
@@ -946,15 +956,16 @@
       t.row.add([
         //colNum,
         $("#txtFono").val(),
-        "<a class='delete'>Delete</a>"
+        "<a class='delete'>Borrar</a>"
       ]).draw(false);
       //colNum++;
       $("#txtFono").val("");
+      $("#txtFono").focus();
     });
 
     /*$('#tblFonoCli').on('click', 'a.delete', function (e) {
         e.preventDefault();
-     
+
         var nRow = $(this).parents('tr')[0];
         //alert($(this).parent().parent().children().index($(this).parent()));
         t.fnDeleteRow(nRow);
@@ -969,7 +980,7 @@
             $(this).addClass('selected');
         }
     } );
- 
+
     $('#btnFonoD').click( function () {
         t.row('.selected').remove().draw( false );
     } );*/
@@ -1034,9 +1045,9 @@
   /*$("#in_central_tfl").keyup(function(){
     if(this.value < n_line_min || this.value > n_line_max){
       $("#in_central_tfl").val("");
-      alert("La cantidad de lineas no puede ser menor a " + n_line_min + " o mayor a " + n_line_max);      
+      alert("La cantidad de lineas no puede ser menor a " + n_line_min + " o mayor a " + n_line_max);
       return;
-    }  
+    }
   });
 
   $("#in_central_tfa").keyup(function(){
@@ -1046,7 +1057,7 @@
         alert("La cantidad de anexos no puede ser menor a " + n_anex_min + " o mayor a " + n_anex_max);
         return;
       }
-    }, 1000 );      
+    }, 1000 );
   });*/
 
   /*var arr = [];
@@ -1055,5 +1066,20 @@
     arr.push(i);
     i++;
     alert(arr);
+  });*/
+  /*
+  $("#btnFonoM").on('click',function(){
+    var tfono = document.getElementById('tblFonoCli');
+    var trow = tfono.rows.length;
+    for(i = 1; i < trow; i++){
+      var tcell = tfono.rows.item(i).cells;
+      var tcol = tcell.length;
+
+      //for(j = 0; j < tcol; j++){
+        alert(tcell.item(0).innerHTML);
+      //}
+      //alert(tcell.length);
+    }
+    //alert(tfono.rows.length);
   });*/
 </script>
