@@ -230,7 +230,8 @@ class Ingreso extends CI_Controller {
 						'id_comuna'           => $InsRegistro->p_comuna,
 						'id_region'           => $RegionComuna[0],
 						'rt_id'               => $InsRegistro->p_rep_tipo,
-						'vt_codigo'           => $InsRegistro->p_rep_codi
+						'vt_codigo'           => $InsRegistro->p_rep_codi,
+						'tfa_id'              => $InsRegistro->p_tipo_falla
 						//'plan_id'             => $InsRegistro->plan_id,
 						//'deco_id'             => $InsRegistro->deco_id
 					);
