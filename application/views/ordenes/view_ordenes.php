@@ -16,7 +16,7 @@
   <script src="<?php echo base_url()?>js/bootstrap-select.min.js"></script>
   <script src="<?php echo base_url()?>lib/sweet-alert.js"></script>
   <script type="text/javascript" src="<?php echo base_url();?>js/JsOrdenPreview.js"></script>
-  <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.multiselect.js"></script>
+  <!--  <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.multiselect.js"></script>-->
   <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.dataTables.columnFilter.js"></script>
   <!--<script type="text/javascript" src="<?php echo base_url(); ?>plugins/yadcf/jquery.dataTables.yadcf.js"></script>-->
   <!-- Main content -->
@@ -36,7 +36,9 @@
           </tr>
           <tr>
             <td>Preview Orden <button type="button" title="Ver Orden" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;</td>
-            <td>Cerrar Orden <button type="button" title="Ver Orden" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;</td>
+            <?php if($this->session->userdata('TIPOUSUARIO') == 1 || $this->session->userdata('TIPOUSUARIO') == 2){ ?>
+              <td>Cerrar Orden <button type="button" title="Ver Orden" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;</td>
+            <?php } ?>
             <td>Editar Orden <button type="button" title="Ver Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button>&nbsp;</td>
           </tr>
         </table>
@@ -52,6 +54,7 @@
             </div>
           </div>
         </div>
+        <!-- FILTRO DATATABLE ORDENES -->
         <div id="modalFiltro" class="collapse">
           <div class="row">
             <div class="col-xs-12">
@@ -125,6 +128,7 @@
           </div>
         </div>
         <br>
+        <!-- DATATABLE CON ORDENES -->
         <table id="ordenes" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
           <thead>
             <tr>
