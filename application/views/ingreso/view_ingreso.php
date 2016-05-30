@@ -26,6 +26,7 @@
   var num_tiporep = 0;
   var num_codrep = "0";
   var num_central = 0;
+  var num_falla = 0;
   var numtrab = document.getElementById("id_trabajo").value;
   numtrab = parseInt(numtrab.length);
 
@@ -40,6 +41,7 @@
     num_tiporep = 0;
     num_codrep = "0";
     num_central = 0;
+    num_fall = 0;
   }else{
     num_trabajo = document.getElementById("id_trabajo").value;
     num_comuna = document.getElementById("id_comuna").value;
@@ -330,11 +332,11 @@
                     </div>
                   </div>
 
-                  <div class="form-group col-xs-4" style="display: none;" id="divcodrep">
+                  <div class="form-group col-xs-4" style="display: none;" id="divcodfalla">
                     <div class="form-group has-feedback">
-                        <label for="in_codrep">Codigo Reparacion*</label>
+                        <label for="in_falla">Tipo Falla*</label>
 
-                        <select name="in_codrep" id="in_codrep" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
+                        <select name="in_falla" id="in_falla" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
                     </div>
                   </div>
                 </div>
@@ -585,6 +587,14 @@
                       <select name="in_estado" id="in_estado" class="form-control selectpicker show-tick"></select>
                     </div>
                   </div>
+
+                  <div class="form-group col-xs-4" style="display: none;" id="divcodrep">
+                    <div class="form-group has-feedback">
+                        <label for="in_codrep">Codigo Reparacion*</label>
+
+                        <select name="in_codrep" id="in_codrep" class="form-control selectpicker show-tick" data-live-search="true" data-size="10"></select>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="col-xs-12">
@@ -654,38 +664,38 @@
                 <!-- FORMULARIO LISTADO AGENDA FOLIO -->
                 <div class="modal fade" id="myModalAgenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
-                              <h4 class="modal-title" id="myModalLabel">Agendamientos Realizados</h4>
-                          </div>
-                          <div class="modal-body">
-                            <h5 class="text-center">Listado de agendamientos realizados para esta orden, ordenada desde el agendamiento mas reciente al mas antiguo.</h5>
-                            <table class="table table-striped">
-                              <thead>
-                                <th>Fecha Reagenda</th>
-                                <th>Bloque</th>
-                                <th>Usuario Modificacion</th>
-                                <th>Fecha Modificacion</th>
-                              </thead>
-                              <tbody>
-                                <?php
-                                  if(json_decode($data_folio_agenda)){
-                                    foreach (json_decode($data_folio_agenda) as $agenda) {
-                                      echo '<tr>';
-                                      echo '<td>'.$agenda->reagenda_fecha.'</td>';
-                                      echo '<td>'.$agenda->bloque_descripcion.'</td>';
-                                      echo '<td>'.$agenda->reagenda_modificacion.'</td>';
-                                      echo '<td>'.$agenda->reagenda_usr_registro.'</td>';
-                                      echo '</tr>';
-                                    }
-                                  }
-                                ?>
-                              </tbody>
-                            </table>
-                          </div>
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Agendamientos Realizados</h4>
+                      </div>
+                      <div class="modal-body">
+                        <h5 class="text-center">Listado de agendamientos realizados para esta orden, ordenada desde el agendamiento mas reciente al mas antiguo.</h5>
+                        <table class="table table-striped">
+                          <thead>
+                            <th>Fecha Reagenda</th>
+                            <th>Bloque</th>
+                            <th>Usuario Modificacion</th>
+                            <th>Fecha Modificacion</th>
+                          </thead>
+                          <tbody>
+                            <?php
+                              if(json_decode($data_folio_agenda)){
+                                foreach (json_decode($data_folio_agenda) as $agenda) {
+                                  echo '<tr>';
+                                  echo '<td>'.$agenda->reagenda_fecha.'</td>';
+                                  echo '<td>'.$agenda->bloque_descripcion.'</td>';
+                                  echo '<td>'.$agenda->reagenda_modificacion.'</td>';
+                                  echo '<td>'.$agenda->reagenda_usr_registro.'</td>';
+                                  echo '</tr>';
+                                }
+                              }
+                            ?>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
+                  </div>
                 </div>
 
                 <!-- FORMULARIO LISTADO FONO -->
@@ -772,7 +782,7 @@
                 </div>
 
                 <!-- ADJUNTAR DATOS SCHARFSTEIN -->
-                <?php if($this->session->userdata("ALIADORUT") == 81) { ?>
+                <?php if(($this->session->userdata("ALIADORUT") == 81) || ($this->session->userdata("ALIADORUT") == 0)) { ?>
                   <div class="col-xs-12">
                     <label>Adjuntar Archivos</label>
                     <table id="ordenesDet" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
@@ -780,15 +790,15 @@
                         <tr>
                           <th>Fecha Ingreso</th>
                           <th>Usuario</th>
-                          <th>Estado</th>
-                          <th>Observacion</th>
+                          <th>Nombre Archivo</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
                       </tbody>
                     </table>
                   </div>
-                <? } ?>
+                <?php } ?>
 
                 <div class="col-xs-12">
                   <br><br>
@@ -936,9 +946,10 @@
         $("#txtChkstn").prop('disabled',false);
       }
       //alert($("#id_trabajo").val());
-      if($("#in_tipo_trabajo").val()==2 || $("#id_trabajo").val()==2){
+      if($("#in_tipo_trabajo").val()==2 && $("#id_trabajo").val()==2){
         $("#divtiporep").css('display','block');
         $("#divcodrep").css('display','block');
+        $("#divcodfalla").css('display','block');
         $("#modalFiltro").css('display','none');
       }else{
         $("#modalFiltro").css('display','block');
@@ -1041,45 +1052,4 @@
     $("#in_estado").val("10");
     $("#in_estado").selectpicker('refresh');
   });
-  //alerta en caso de que lineas o anexos sean menor o mayor al combo
-  /*$("#in_central_tfl").keyup(function(){
-    if(this.value < n_line_min || this.value > n_line_max){
-      $("#in_central_tfl").val("");
-      alert("La cantidad de lineas no puede ser menor a " + n_line_min + " o mayor a " + n_line_max);
-      return;
-    }
-  });
-
-  $("#in_central_tfa").keyup(function(){
-    delay(function(){
-      if(this.value < n_anex_min || this.value > n_anex_max){
-        $("#in_central_tfa").val("");
-        alert("La cantidad de anexos no puede ser menor a " + n_anex_min + " o mayor a " + n_anex_max);
-        return;
-      }
-    }, 1000 );
-  });*/
-
-  /*var arr = [];
-  var i = 1;
-  $("#btnAddFono").on('click',function(){
-    arr.push(i);
-    i++;
-    alert(arr);
-  });*/
-  /*
-  $("#btnFonoM").on('click',function(){
-    var tfono = document.getElementById('tblFonoCli');
-    var trow = tfono.rows.length;
-    for(i = 1; i < trow; i++){
-      var tcell = tfono.rows.item(i).cells;
-      var tcol = tcell.length;
-
-      //for(j = 0; j < tcol; j++){
-        alert(tcell.item(0).innerHTML);
-      //}
-      //alert(tcell.length);
-    }
-    //alert(tfono.rows.length);
-  });*/
 </script>
