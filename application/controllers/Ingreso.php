@@ -50,7 +50,7 @@ class Ingreso extends CI_Controller {
 
 	public function decos(){
 		$deco = $this->Regcomu_model->GetListaDecos();
-		echo json_encode($deco);	
+		echo json_encode($deco);
 	}
 
 	public function planes(){
@@ -73,8 +73,13 @@ class Ingreso extends CI_Controller {
 		echo json_encode($cierres);
 	}
 
+	public function tipofallas(){
+		$fallas = $this->Regcomu_model->GetListaTipoFalla();
+		echo json_encode($fallas);
+	}
+
 	public function GuardaRegistro(){
-		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];        
+		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $this->Seguridad_model->SessionActivo($url);
 
 		$InsRegistro = json_decode($this->input->post('InsRegistro'));
@@ -89,7 +94,7 @@ class Ingreso extends CI_Controller {
 
 		/*Verificamos si Existe el folio*/
 		$RutSinGuion = str_replace("-", "", $InsRegistro->p_rut);
-		$RegionComuna = explode("-",$InsRegistro->p_region);		
+		$RegionComuna = explode("-",$InsRegistro->p_region);
 
 		$ExisteRegistro = $this->Ingreso_model->ExisteIngreso($InsRegistro->p_proyecto);
 
@@ -111,7 +116,7 @@ class Ingreso extends CI_Controller {
 					'in_rut'              => $RutSinGuion,
 					'in_direccion'        => $InsRegistro->p_direccion,
 					'in_nombre'           => $InsRegistro->p_nombre,
-					'in_fono'             => $InsRegistro->p_fono,
+					//'in_fono'             => $InsRegistro->p_fono,
 					'in_plan_net_adic'    => $InsRegistro->p_plan_net_adic,
 					'in_plan_fono_adicu'  => $InsRegistro->p_plan_fono_adicu,
 					'in_plan_fono_adicd'  => $InsRegistro->p_plan_fono_adicd,
@@ -122,14 +127,14 @@ class Ingreso extends CI_Controller {
 					//'in_lineas_asignadas' => $InsRegistro->p_lineas_asignadas,
 					//'in_fecha_cierre'     => $InsRegistro->p_fecha_cierre,
 					'in_vende'            => $InsRegistro->p_vende,
-					'in_hora_ingreso'     => date('H:i:s'),						
-					'tt_id'               => $InsRegistro->tt_id,						
+					'in_hora_ingreso'     => date('H:i:s'),
+					'tt_id'               => $InsRegistro->tt_id,
 					'id_comuna'           => $InsRegistro->p_comuna,
 					'id_region'           => $RegionComuna[0],
 					'plan_id'             => $InsRegistro->plan_id,
 					'deco_id'             => $InsRegistro->deco_id
 				);
-				
+
 				$ActualizaRegistroDetalle = array(
 					'in_proyecto'            => $InsRegistro->p_proyecto,
 					'indet_fecha_registro'   => date('Y-m-j H:i:s'),
@@ -139,7 +144,7 @@ class Ingreso extends CI_Controller {
 					'in_estado'           	 => $InsRegistro->p_estado
 				);
 
-				$ActualizaRegistroDecoAdic = array(				
+				$ActualizaRegistroDecoAdic = array(
 					'decoa_sd'	           => $InsRegistro->deco_sd,
 					'decoa_hd'             => $InsRegistro->deco_hd,
 					'decoa_tvr'            => $InsRegistro->deco_tvr,
@@ -168,16 +173,16 @@ class Ingreso extends CI_Controller {
 						}else{
 							break;
 						}
-					}										
+					}
 				}
 
 				$this->Ingreso_model->UpdateIngreso($ActualizaRegistro, $InsRegistro->p_proyecto);
 				$this->Ingreso_model->SaveIngresoDetalle($ActualizaRegistroDetalle);
 				$this->Ingreso_model->UpdateDetalleDeco($ActualizaRegistroDecoAdic, $InsRegistro->p_proyecto);
-				
+
 				$response["error_msg"]   = "<div class='alert alert-success text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-ok'></span> &nbsp; Informacion Actualizada Correctamente</div>";// form-control-feedback
 				echo json_encode($response);
-			}			
+			}
 		}else{
 			//compruebo que campo observacion no este en blanco
 			if($InsRegistro->p_observacion == null || $InsRegistro->p_observacion == ""){
@@ -206,7 +211,7 @@ class Ingreso extends CI_Controller {
 						'in_cliente'          => $InsRegistro->p_cliente,
 						'in_rut'              => $RutSinGuion,
 						'in_nombre'           => $InsRegistro->p_nombre,
-						'in_fono'             => $InsRegistro->p_fono,
+						//'in_fono'             => $InsRegistro->p_fono,
 						'in_direccion'        => $InsRegistro->p_direccion,
 						'in_direccion_t'      => $InsRegistro->p_direccion_t,
 						'in_plan_net_adic'    => $InsRegistro->p_plan_net_adic,
@@ -214,14 +219,14 @@ class Ingreso extends CI_Controller {
 						'in_plan_fono_ext'    => $InsRegistro->p_plan_fono_adicd,
 						//'in_plan_tv_adicu'    => $InsRegistro->p_plan_tv_adicu,
 						//'in_plan_tv_adicd'    => $InsRegistro->p_plan_tv_adicd,
-						'in_plan_pack'		  => $InsRegistro->p_plan_tv_pack,
+						'in_plan_pack'		    => $InsRegistro->p_plan_tv_pack,
 						//'in_central_tf'       => $InsRegistro->p_central_tf,
 						//'in_lineas_asignadas' => $InsRegistro->p_lineas_asignadas,
 						//'in_fecha_cierre'     => $InsRegistro->p_fecha_cierre,
 						'in_vende'            => $InsRegistro->p_vende,
 						'in_hora_ingreso'     => date('H:i:s'),
 						'plan_id'             => $InsRegistro->plan_id,
-						'tt_id'               => $InsRegistro->tt_id,						
+						'tt_id'               => $InsRegistro->tt_id,
 						'id_comuna'           => $InsRegistro->p_comuna,
 						'id_region'           => $RegionComuna[0],
 						'rt_id'               => $InsRegistro->p_rep_tipo,
@@ -240,7 +245,7 @@ class Ingreso extends CI_Controller {
 					);
 
 					$GuardaRegistroDecoAdic = array(
-						'in_proyecto'          => $InsRegistro->p_proyecto,						
+						'in_proyecto'          => $InsRegistro->p_proyecto,
 						'deco_id'              => $InsRegistro->deco_id,
 						'decoa_sd'	           => $InsRegistro->deco_sd,
 						'decoa_hd'             => $InsRegistro->deco_hd,
@@ -277,7 +282,7 @@ class Ingreso extends CI_Controller {
 						$this->Ingreso_model->SaveIngresoCentral($GuardaRegistroCentral);
 					}
 
-					if(!is_null($InsFono)){
+					if(!empty($InsFono)){
 						foreach ($InsFono as $value) {
 							# code...
 							$GuardaFono = array(
@@ -287,16 +292,16 @@ class Ingreso extends CI_Controller {
 
 							$this->Ingreso_model->SaveIngresoFono($GuardaFono);
 						}
-					}			
+					}
 
 					$this->Ingreso_model->SaveIngreso($GuardaRegistro);
-					$this->Ingreso_model->SaveIngresoDetalle($GuardaRegistroDetalle);				
+					$this->Ingreso_model->SaveIngresoDetalle($GuardaRegistroDetalle);
 					$this->Ingreso_model->SaveIngresoDecoAdic($GuardaRegistroDecoAdic);
 
 					$response["error_msg"]   = "<div class='alert alert-success text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-ok'></span> &nbsp; Informacion Guardada Correctamente</div>";// form-control-feedback
 					echo json_encode($response);
 				}
-			}			
+			}
 		}
 	}
 }
