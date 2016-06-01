@@ -30,19 +30,42 @@
       <div class="box-body">
         <div id="mensaje"></div>
         <!--<div class="box box-primary">-->
-        <table>
-          <tr>
-            <td colspan="3" style="text-align: center;">Leyenda Iconos</td>
-          </tr>
-          <tr>
-            <td>Preview Orden <button type="button" title="Ver Orden" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;</td>
-            <?php if($this->session->userdata('TIPOUSUARIO') == 1 || $this->session->userdata('TIPOUSUARIO') == 2){ ?>
-              <td>Cerrar Orden <button type="button" title="Ver Orden" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;</td>
-            <?php } ?>
-            <td>Editar Orden <button type="button" title="Ver Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button>&nbsp;</td>
-          </tr>
-        </table>
+        <!-- TABLA CON LEYENDAS DE LOS ICONOS -->
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="col-xs-4">
+              <table>
+                <tr>
+                  <td colspan="3" style="text-align: center;">Leyenda Iconos Edicion</td>
+                </tr>
+                <tr>
+                  <td>Preview Orden <button type="button" title="Ver Orden" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;</td>
+                  <?php if($this->session->userdata('TIPOUSUARIO') == 1 || $this->session->userdata('TIPOUSUARIO') == 2){ ?>
+                    <td>Cerrar Orden <button type="button" title="Ver Orden" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;</td>
+                  <?php } ?>
+                  <td>Editar Orden <button type="button" title="Ver Orden" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span></button>&nbsp;</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="col-xs-4">
+              <table>
+                <tr>
+                  <td colspan="4" style="text-align: center;">Leyenda Iconos Agenda</td>
+                </tr>
+                <tr>
+                  <td>Dia <button type="button" class="btn btn-success btn-xs"><span class="fa fa-clock-o"></span></button>&nbsp;</td>
+                  <td>Atrasado <button type="button" class="btn btn-danger btn-xs"><span class="fa fa-clock-o"></span></button>&nbsp;</td>
+                  <td>Futuro <button type="button" class="btn btn-warning btn-xs"><span class="fa fa-clock-o"></span></button>&nbsp;</td>
+                  <td>Sin Agenda <button type="button" class="btn btn-info btn-xs"><span class="fa fa-clock-o"></span></button>&nbsp;</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
         <br>
+
         <div class="row">
         <!-- col-xs-12 style="float: none; display: block; margin-left: auto; margin-right: auto;"-->
           <div class="col-xs-6">
@@ -78,8 +101,8 @@
               </div>
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Cliente</label>
-                    <p id="filtroCliente"></p>
+                    <label for="in_ingreso">Comuna</label>
+                    <p id="filtroComuna"></p>
                 </div>
               </div>
             </div>
@@ -87,8 +110,8 @@
             <div class="col-xs-12">
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Comuna</label>
-                    <p id="filtroComuna"></p>
+                    <label for="in_ingreso">Cliente</label>
+                    <p id="filtroCliente"></p>
                 </div>
               </div>
               <div class="col-xs-3">
@@ -592,8 +615,12 @@
           "searching": true,
           "bSort": false,
           "language": {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"//C:\wamp\www\siad_pyme\plugins\datatables\i18n
+            "url": baseurl.concat("js/i18n/Spanish.json").replace('index.php/','') //"//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"//C:\wamp\www\siad_pyme\plugins\datatables\i18n
           },
+          "dom": 'Bfrtip',
+          "buttons": [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+          ],
           "columnDefs": [
             { "width": "1%", "targets": 0 },
             { "width": "2%", "targets": 1 },
@@ -622,7 +649,8 @@
           aoColumns: [{type: "select", sSelector: "#filtroFolio",},
                       {type: "date-range", sRangeFormat: "Desde {from} hasta {to}", sSelector: "#filtroFecha"},
                       {type: "date-range", sRangeFormat: "Desde {from} hasta {to}", sSelector: "#filtroAgenda"},
-                      {sSelector: "#filtroCliente"},
+                      null,
+                      {type: "select", sSelector: "#filtroCliente"},
                       {type: "select", sSelector: "#filtroComuna"},
                       {type: "select", sSelector: "#filtroAliado"},
                       {type: "select", sSelector: "#filtroTrabajo"},
