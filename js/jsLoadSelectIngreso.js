@@ -208,4 +208,25 @@ $(document).ready(function(){
 	$("#in_falla").change(function(){
 		var tipofalla = $("#in_falla").val();
 	});
+
+	//LOAD COMBO CANAL DE VENTAS
+	var canalv = $("#in_canal_venta");
+	canalv.append("<option value='0'>Cargando Canales...</option>");
+	$.getJSON(baseurl + "Ingreso/canalventas",function(objetosretorna11){
+		canalv.empty();
+		canalv.append("<option value='0'>Elige Canal...</option>");
+		$.each(objetosretorna11, function(i,ObjetoReturn11){
+			var seleccion11 = "";
+			if(num_canal==ObjetoReturn11.tcv_id){
+				seleccion11 = "selected='selected'";
+			}
+			var nuevaFila = "<option value='"+ObjetoReturn11.tcv_id+"' "+seleccion11+">" + ObjetoReturn11.tcv_nombre+"</option>";
+			canalv.append(nuevaFila);
+		});
+		canalv.selectpicker('refresh');
+	});
+
+	$("#in_canal_venta").change(function(){
+		var canalv = $("#in_canal_venta").val();
+	});
 });

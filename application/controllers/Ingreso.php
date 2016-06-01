@@ -78,6 +78,11 @@ class Ingreso extends CI_Controller {
 		echo json_encode($fallas);
 	}
 
+	public function canalventas(){
+		$canales = $this->Regcomu_model->GetListaCanalVenta();
+		echo json_encode($canales);
+	}
+
 	public function GuardaRegistro(){
 		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $this->Seguridad_model->SessionActivo($url);
@@ -126,7 +131,7 @@ class Ingreso extends CI_Controller {
 					//'in_central_tf'       => $InsRegistro->p_central_tf,
 					//'in_lineas_asignadas' => $InsRegistro->p_lineas_asignadas,
 					//'in_fecha_cierre'     => $InsRegistro->p_fecha_cierre,
-					'in_vende'            => $InsRegistro->p_vende,
+					//'in_vende'            => $InsRegistro->p_vende,
 					'in_hora_ingreso'     => date('H:i:s'),
 					'tt_id'               => $InsRegistro->tt_id,
 					'id_comuna'           => $InsRegistro->p_comuna,
@@ -185,17 +190,55 @@ class Ingreso extends CI_Controller {
 			}
 		}else{
 			//compruebo que campo observacion no este en blanco
+			//valida observacion
 			if($InsRegistro->p_observacion == null || $InsRegistro->p_observacion == ""){
 				$response["campo"] = "indet_observacion";
 				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; El campo observacion no puede estar en blanco</div>";
 				echo json_encode($response);
+			//valida estado
 			}elseif($InsRegistro->p_estado == null || $InsRegistro->p_estado == "" || $InsRegistro->p_estado == "0"){
 				$response["campo"] = "in_estado";
 				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar un estado de la orden</div>";
 				echo json_encode($response);
+			//valida solot/proyecto
 			}elseif($InsRegistro->p_proyecto == null || $InsRegistro->p_proyecto == "" || $InsRegistro->p_proyecto == "0"){
 				$response["campo"] = "in_proyecto";
 				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe ingresar un numero de Proyecto/Solot</div>";
+				echo json_encode($response);
+			//valida cliente
+			}elseif($InsRegistro->p_cliente == null || $InsRegistro->p_cliente == ""){
+				$response["campo"] = "in_cliente";
+				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe ingresar cliente, si no tiene el dato ingrese el texto SIN DATOS</div>";
+				echo json_encode($response);
+			//valida rut
+			}elseif($InsRegistro->p_rut == null || $InsRegistro->p_rut == ""){
+				$response["campo"] = "in_rut";
+				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe ingresar rut del cliente</div>";
+				echo json_encode($response);
+			//valida tipo trabajo
+			}elseif($InsRegistro->tt_id == null || $InsRegistro->tt_id == "" || $InsRegistro->tt_id == "0"){
+				$response["campo"] = "in_tipo_trabajo";
+				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar un tipo de trabajo</div>";
+				echo json_encode($response);
+			//valida direccion
+			}elseif($InsRegistro->p_direccion == null || $InsRegistro->p_direccion == ""){
+				$response["campo"] = "in_direccion";
+				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe ingresar direccion</div>";
+				echo json_encode($response);
+			//valida nombre
+			}elseif($InsRegistro->p_nombre == null || $InsRegistro->p_nombre == ""){
+				$response["campo"] = "in_nombre";
+				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe ingresar nombre de cliente</div>";
+				echo json_encode($response);
+			//valida comuna
+			}elseif($InsRegistro->p_comuna == null || $InsRegistro->p_comuna == "" || $InsRegistro->p_comuna == "0"){
+				$response["campo"] = "in_comuna";
+				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar una comuna</div>";
+				echo json_encode($response);
+			//valida canal de ventas
+			}elseif($InsRegistro->p_vende == null || $InsRegistro->p_vende == "" || $InsRegistro->p_vende == "0"){
+				$response["campo"] = "in_canal_venta";
+				$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar un canal de ventas</div>";
 				echo json_encode($response);
 			}else{
 				//compruebo que no exista e inserto
@@ -223,7 +266,7 @@ class Ingreso extends CI_Controller {
 						//'in_central_tf'       => $InsRegistro->p_central_tf,
 						//'in_lineas_asignadas' => $InsRegistro->p_lineas_asignadas,
 						//'in_fecha_cierre'     => $InsRegistro->p_fecha_cierre,
-						'in_vende'            => $InsRegistro->p_vende,
+						//'in_vende'            => $InsRegistro->p_vende,
 						'in_hora_ingreso'     => date('H:i:s'),
 						'plan_id'             => $InsRegistro->plan_id,
 						'tt_id'               => $InsRegistro->tt_id,
@@ -231,7 +274,8 @@ class Ingreso extends CI_Controller {
 						'id_region'           => $RegionComuna[0],
 						'rt_id'               => $InsRegistro->p_rep_tipo,
 						'vt_codigo'           => $InsRegistro->p_rep_codi,
-						'tfa_id'              => $InsRegistro->p_tipo_falla
+						'tfa_id'              => $InsRegistro->p_tipo_falla,
+						'tcv_id'              => $InsRegistro->p_vende
 						//'plan_id'             => $InsRegistro->plan_id,
 						//'deco_id'             => $InsRegistro->deco_id
 					);
@@ -276,6 +320,8 @@ class Ingreso extends CI_Controller {
 							'ctf_id'           =>$InsRegistro->p_central_tf,
 							'dqty_linea'       =>$InsRegistro->p_lineas_asignadas,
 							'dqty_anexo'       =>$InsRegistro->p_lineas_anexos,
+							'dqty_linea_prev'  =>$InsRegistro->p_lin_pre_asignadas,
+							'dqty_anexo_prev'  =>$InsRegistro->p_lin_pre_anexos,
 							'ctf_usr_registro' =>$this->session->userdata('ID'),
 							'ctf_usr_empresa'  =>$this->session->userdata('ALIADORUT')
 						);

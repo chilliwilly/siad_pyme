@@ -101,4 +101,13 @@ class Regcomu_model extends CI_Model {
 			$query = $this->db->get();
 			return $query->result();
 		}
+
+		public function GetListaCanalVenta(){
+			$this->db->select('tcv_id, upper(tcv_nombre) tcv_nombre');
+			$this->db->from('tbl_sp_tipo_canal_venta');
+			$this->db->where('tcv_estado',1);
+			$this->db->order_by('tcv_nombre');
+			$query = $this->db->get();
+			return $query->result();
+		}
 }

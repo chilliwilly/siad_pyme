@@ -8,6 +8,8 @@
 <input type="hidden" name="id_tiporep" id="id_tiporep" value="<?php echo @$data_folio->rt_id; ?>">
 <input type="hidden" name="id_codirep" id="id_codirep" value="<?php echo @$data_folio->vt_codigo; ?>">
 <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->session->userdata('TIPOUSUARIO'); ?>">
+<input type="hidden" name="id_falla" id="id_falla" value="<?php echo @$data_folio->tfa_id; ?>">
+<input type="hidden" name="id_canal" id="id_canal" value="<?php echo @$data_folio->tcv_id; ?>">
 <!--<input type="hidden" name="id_estado" id="id_estado" value="<?php echo @$data_folio_det->in_estado; ?>">-->
 
 <script type="text/javascript">
@@ -27,6 +29,7 @@
   var num_codrep = "0";
   var num_central = 0;
   var num_falla = 0;
+  var num_canal = 0;
   var numtrab = document.getElementById("id_trabajo").value;
   numtrab = parseInt(numtrab.length);
 
@@ -41,7 +44,8 @@
     num_tiporep = 0;
     num_codrep = "0";
     num_central = 0;
-    num_fall = 0;
+    num_falla = 0;
+    num_canal = 0;
   }else{
     num_trabajo = document.getElementById("id_trabajo").value;
     num_comuna = document.getElementById("id_comuna").value;
@@ -52,6 +56,8 @@
     num_tiporep = document.getElementById("id_tiporep").value;
     num_codrep = document.getElementById("id_codirep").value;
     num_central = document.getElementById("id_central").value;//"<?php echo @$data_folio_central->ctf_id; ?>";
+    num_falla = document.getElementById("id_falla").value;
+    num_canal = document.getElementById("id_canal").value;
     v_deco_sd = "<?php echo @$data_folio_deco->decoa_sd; ?>";
     v_deco_hd = "<?php echo @$data_folio_deco->decoa_hd; ?>";
     v_deco_tvr = "<?php echo @$data_folio_deco->decoa_tvr; ?>";
@@ -245,17 +251,20 @@
   'class'       => 'form-control',
   );
 
-  //in_vende
-  $in_vende = array(
-  'name'        => 'in_vende',
-  'id'          => 'in_vende',
-  'size'        => 50,
-  'maxlength'   => 200,
-  'value'       => set_value('codigo',@$data_folio->in_vende),
-  'type'        => 'text',
+  $in_central_tflp = array(
+  'name'        => 'in_central_tflp',
+  'id'          => 'in_central_tflp',
+  'value'       => set_value('codigo',@$data_folio_central->dqty_linea_prev),
+  'type'        => 'number',
   'class'       => 'form-control',
-  'placeholder' => 'Ingrese nombre',
-  //'onkeypress'  => 'return letras(event)',
+  );
+
+  $in_central_tfap = array(
+  'name'        => 'in_central_tfap',
+  'id'          => 'in_central_tfap',
+  'value'       => set_value('codigo',@$data_folio_central->dqty_anexo_prev),
+  'type'        => 'number',
+  'class'       => 'form-control',
   );
 
   //indet_observacion
@@ -529,41 +538,13 @@
                       <select name="in_central_tf" id="in_central_tf" class="form-control selectpicker show-tick"></select>
                     </div>
                   </div>
+
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                      <label for="in_central_tfl">Central TF Lineas*</label>
-                      <?php echo form_input($in_central_tfl); ?>
-
-                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                    </div>
-                  </div>
-                  <div class="col-xs-4">
-                    <div class="form-group has-feedback">
-                      <label for="in_central_tfa">Central TF Anexos*</label>
-                      <?php echo form_input($in_central_tfa); ?>
-
-                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-12">
-                  <div class="col-xs-4">
-                  </div>
-                  <div class="col-xs-4">
-                    <div class="form-group has-feedback">
-                      <label for="in_central_tf">Lineas Previas*</label>
-                      <?php echo form_input($in_central_tfl); ?>
-
-                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                    </div>
-                  </div>
-                  <div class="col-xs-4">
-                    <div class="form-group has-feedback">
-                      <label for="in_central_tfl">Anexos Previos*</label>
-                      <?php echo form_input($in_central_tfl); ?>
-
-                      <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                        <div class="btn-group">
+                          <label for="btnAgregaCentral">Lineas y Anexos*</label>
+                          <button type="button" id="btnAgregaCentral" class="btn btn-block btn-success" style="width: 70%;" data-toggle="modal" data-target="#myModalCentral"><span class="fa fa-plus-square-o"></span> Agregar</button>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -571,10 +552,9 @@
                 <div class="col-xs-12">
                   <div class="col-xs-4">
                     <div class="form-group has-feedback">
-                      <label for="in_vende">Canal de Ventas*</label>
-                      <?php echo form_input($in_vende); ?>
+                      <label for="in_canal_venta">Canal de Ventas*</label>
 
-                      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                      <select name="in_canal_venta" id="in_canal_venta" class="form-control selectpicker show-tick" data-live-search="true" data-size="6"></select>
                     </div>
                   </div>
                 </div>
@@ -603,7 +583,7 @@
                 </div>
 
                 <!-- FORMULARIO INGRESO DECOS ADICIONALES -->
-                <div class="modal fade" id="myModalDeco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModalDeco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                   <div class="modal-dialog">
                       <div class="modal-content">
                           <div class="modal-header">
@@ -662,7 +642,7 @@
                 </div>
 
                 <!-- FORMULARIO LISTADO AGENDA FOLIO -->
-                <div class="modal fade" id="myModalAgenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModalAgenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -699,7 +679,7 @@
                 </div>
 
                 <!-- FORMULARIO LISTADO FONO -->
-                <div class="modal fade" id="myModalFono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModalFono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                   <div class="modal-dialog">
                       <div class="modal-content">
                           <div class="modal-header">
@@ -800,6 +780,58 @@
                   </div>
                 <?php } ?>
 
+                <!-- FORMULARIO DATOS LINEAS ANEXOS CTF -->
+                <div class="modal fade" id="myModalCentral" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Central Telefonica Anexos y Lineas</h4>
+                      </div>
+                      <div class="modal-body">
+                        <h5 class="text-center">Ingrese los anexos y lienas donde corresponda</h5>
+                        <br>
+                        <table class="table table-striped">
+                          <thead>
+                            <th>Lineas</th>
+                            <th>Anexos</th>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                <td>
+                                  <?php echo form_input($in_central_tfl); ?>
+                                </td>
+                                <td>
+                                  <?php echo form_input($in_central_tfa); ?>
+                                </td>
+                              </tr>
+                          </tbody>
+                        </table>
+                        <br>
+                        <table class="table table-striped">
+                          <thead>
+                            <th>Lineas Previos</th>
+                            <th>Anexos Previas</th>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <?php echo form_input($in_central_tflp); ?>
+                              </td>
+                              <td>
+                                <?php echo form_input($in_central_tfap); ?>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="btnCierraCentral">Aceptar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="col-xs-12">
                   <br><br>
                 </div>
@@ -869,7 +901,7 @@
     $("#datemask").inputmask("dd/mm/yyyy", { "placeholder": "dd/mm/yyyy" });
     //Money Euro
     $("[data-mask]").inputmask();
-  //$(window).bind('load',function(){
+    //$(window).bind('load',function(){
     $('#ordenesDet').dataTable({
         "scrollX": true,
         //"searching": false,
@@ -910,6 +942,7 @@
       $("#in_plan_fono_adic").prop('disabled','disabled');
       $("#in_plan_fono_adict").prop('disabled','disabled');
       $("#btnAgregaDeco").prop('disabled','disabled');
+      $("#btnAgregaCentral").prop('disabled','disabled');
       $("#in_plan_net_adic").prop('disabled','disabled');
       $("#in_plan_tv_pack").prop('disabled','disabled');
       $("#in_deco_basico").prop('disabled','disabled');
@@ -918,6 +951,12 @@
       $("#in_central_tf").prop('disabled','disabled');
       $("#in_deco_basico").selectpicker('refresh');
       $("#in_central_tf").selectpicker('refresh');
+      $("#in_rut").val("");
+      //inicializar inputs lineas y anexos para central telefonica
+      $("#in_central_tfl").val(0);
+      $("#in_central_tfa").val(0);
+      $("#in_central_tflp").val(0);
+      $("#in_central_tfap").val(0);
     }else{
       $("#in_proyecto").prop('disabled',true);
 
@@ -946,9 +985,13 @@
         $("#txtChkstn").prop('disabled',false);
       }
       //alert($("#id_trabajo").val());
-      if($("#in_tipo_trabajo").val()==2 && $("#id_trabajo").val()==2){
+      if($("#in_tipo_trabajo").val()==2 || $("#id_trabajo").val()==2){
         $("#divtiporep").css('display','block');
-        $("#divcodrep").css('display','block');
+
+        if($("#id_update").val() != 0){
+					$("#divcodrep").css('display','block');
+				}
+
         $("#divcodfalla").css('display','block');
         $("#modalFiltro").css('display','none');
       }else{
@@ -957,6 +1000,7 @@
 
       $("#btnAddFono").html("<span class='fa fa-eye'></span> Ver Fono");
       $("#btnAgregaDeco").html("<span class='fa fa-eye'></span> Ver Decos Adic.");
+      $("#btnAgregaCentral").html("<span class='fa fa-eye'></span> Ver Lin y Anex.");
     }
 
     $("#divTraslado").css('display','none');
@@ -1032,12 +1076,18 @@
   })();
 
   //obtengo las cantidades de lineas y anexos de acuerdo al plan
+  var n_plan = 0;
+  var n_line_min = 0;
+  var n_line_max = 0;
+  var n_anex_min = 0;
+  var n_anex_max = 0;
+
   $("#in_central_tf").on('change',function(){
-    var n_plan = $("#in_central_tf :selected").text().match(/\d+/g)[0];
-    var n_line_min = $("#in_central_tf :selected").text().match(/\d+/g)[1];
-    var n_line_max = $("#in_central_tf :selected").text().match(/\d+/g)[2];
-    var n_anex_min = $("#in_central_tf :selected").text().match(/\d+/g)[3];
-    var n_anex_max = $("#in_central_tf :selected").text().match(/\d+/g)[4];
+    n_plan = $("#in_central_tf :selected").text().match(/\d+/g)[0];
+    n_line_min = $("#in_central_tf :selected").text().match(/\d+/g)[1];
+    n_line_max = $("#in_central_tf :selected").text().match(/\d+/g)[2];
+    n_anex_min = $("#in_central_tf :selected").text().match(/\d+/g)[3];
+    n_anex_max = $("#in_central_tf :selected").text().match(/\d+/g)[4];
 
     $("#in_central_tfl").attr({"min":n_line_min,"max":n_line_max});
     $("#in_central_tfa").attr({"min":n_anex_min,"max":n_anex_max});
@@ -1051,5 +1101,30 @@
   $("#in_bloque_agenda").on('change',function(){
     $("#in_estado").val("10");
     $("#in_estado").selectpicker('refresh');
+  });
+
+  $("#btnCierraCentral").on('click',function(){
+    //validar inputs de linea
+    var sumLinea = parseInt($("#in_central_tfl").val()) + parseInt($("#in_central_tflp").val());
+    var sumAnexo = parseInt($("#in_central_tfa").val()) + parseInt($("#in_central_tfap").val());
+    var cuenta = 0;
+    alert("sumaLinea "+ sumLinea + " -- sumaAnexo "+sumAnexo);
+    if(n_line_min <= sumLinea && sumLinea <= n_line_max){
+      alert("Debe seleccionar rango de lineas entre " + n_line_min + " como minimo y " + n_line_max + " como maximo.");
+      cuenta++;
+    }else{
+      alert("Valores de lineas ingresadas fuera de rango");
+    }
+
+    if(n_anex_min <= sumAnexo && sumAnexo <= n_anex_max){
+      alert("Debe seleccionar rango de anexos entre " + n_anex_min + " como minimo y " + n_anex_max + " como maximo.");
+      cuenta++;
+    }else{
+      alert("Valores de anexos ingresados fuera de rango");
+    }
+
+    if(cuenta == 2){
+      $("#myModalCentral").modal('hide');
+    }
   });
 </script>
