@@ -11,6 +11,9 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap-select.min.css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>lib/sweet-alert.css"/>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/bs/jszip-2.5.0,dt-1.10.12,b-1.2.1,b-colvis-1.2.1,b-html5-1.2.1/datatables.min.css"/>
+
   <!--<link rel="stylesheet" href="<?php echo base_url()?>plugins/yadcf/jquery.dataTables.yadcf.css"/>-->
   <!-- Latest compiled and minified JavaScript -->
   <script src="<?php echo base_url()?>js/bootstrap-select.min.js"></script>
@@ -18,6 +21,9 @@
   <script type="text/javascript" src="<?php echo base_url();?>js/JsOrdenPreview.js"></script>
   <!--  <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.multiselect.js"></script>-->
   <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sdatatables/jquery.dataTables.columnFilter.js"></script>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/u/bs/jszip-2.5.0,dt-1.10.12,b-1.2.1,b-colvis-1.2.1,b-html5-1.2.1/datatables.min.js"></script>
+
   <!--<script type="text/javascript" src="<?php echo base_url(); ?>plugins/yadcf/jquery.dataTables.yadcf.js"></script>-->
   <!-- Main content -->
   <section class="content">
@@ -72,9 +78,11 @@
             <div class="col-xs-3">
               <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-search"></span> Filtrar Tabla</button>
             </div>
+            <?php if($this->session->userdata("USRNAME") == 'wcontreras'){ ?>
             <div class="col-xs-3">
               <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#modalFiltro"><span class="glyphicon glyphicon-export"></span> Exportar</button>
             </div>
+            <?php } ?>
           </div>
         </div>
         <!-- FILTRO DATATABLE ORDENES -->
@@ -137,7 +145,7 @@
             <div class="col-xs-12">
               <div class="col-xs-3">
                 <div class="form-group has-feedback">
-                    <label for="in_ingreso">Estado Admin</label>
+                    <label for="in_ingreso">Estado Despacho</label>
                     <p id="filtroAdmin"></p>
                 </div>
               </div>
@@ -163,9 +171,22 @@
               <th>Region-Comuna</th>
               <th>Aliado</th>
               <th>Tipo Trabajo</th>
-              <th>Estado</th>
-              <th>Estado Despacho</th>
+              <th>Estado Orden</th>
+              <th>Estado CCOM</th>
               <th></th>
+              <!-- -->
+              <th>Tipo Reparacion</th>
+              <th>Tipo Cierre</th>
+              <th>Tipo Falla</th>
+              <th>Canal Venta</th>
+              <th>Plan Nombre</th>
+              <th>Plan ID</th>
+              <th>Hora Insert</th>
+              <th>Nombre Cliente</th>
+              <th>Rut Cliente</th>
+              <th>Dir Cliente</th>
+              <th>Dir Cliente Traslado</th>
+              <th>Nombre Ingresa</th>
             </tr>
           </thead>
           <tfoot>
@@ -178,9 +199,22 @@
               <th>Region-Comuna</th>
               <th>Aliado</th>
               <th>Tipo Trabajo</th>
-              <th>Estado</th>
-              <th>Estado Despacho</th>
+              <th>Estado Orden</th>
+              <th>Estado CCOM</th>
               <th></th>
+              <!-- -->
+              <th>Tipo Reparacion</th>
+              <th>Tipo Cierre</th>
+              <th>Tipo Falla</th>
+              <th>Canal Venta</th>
+              <th>Plan Nombre</th>
+              <th>Plan ID</th>
+              <th>Hora Insert</th>
+              <th>Nombre Cliente</th>
+              <th>Rut Cliente</th>
+              <th>Dir Cliente</th>
+              <th>Dir Cliente Traslado</th>
+              <th>Nombre Ingresa</th>
             </tr>
           </tfoot>
           <tbody>
@@ -243,11 +277,31 @@
                     $p_adm = null;
                   }
 
+                  if($this->session->userdata("USRNAME") == 'wcontreras'){
+                    $p_view = '<button type="button" title="Ver Orden" class="btn btn-info btn-xs" id="btnPreview" onclick="verPreview('."'".$nrofolio."'".')" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;';
+                  }else{
+                    $p_view = null;
+                  }
+
                   echo '<td>'.
-                        '<button type="button" title="Ver Orden" class="btn btn-info btn-xs" id="btnPreview" onclick="verPreview('."'".$nrofolio."'".')" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;'.
+                        $p_view.
                         $p_adm.
                         $p_row.
                         '</td>';
+                  /*INICIO COLUMNAS OCULTAS PARA SOLO GENERAR EL INFORME*/
+                  echo '<td>'.$orden->nombre_rt.'</td>';//11
+                  echo '<td>'.$orden->nombre_vt.'</td>';//12
+                  echo '<td>'.$orden->nombre_tfa.'</td>';//13
+                  echo '<td>'.$orden->nombre_tcv.'</td>';//14
+                  echo '<td>'.$orden->nombre_plan.'</td>';//15
+                  echo '<td>'.$orden->id_plan.'</td>';//16
+                  echo '<td>'.$orden->hora_ingreso.'</td>';//17
+                  echo '<td>'.$orden->nombre.'</td>';//18
+                  echo '<td>'.$orden->rut.'</td>';//19
+                  echo '<td>'.$orden->dir_cliente.'</td>';//20
+                  echo '<td>'.$orden->dir_t_cliente.'</td>';//21
+                  echo '<td>'.$orden->nom_ingresa.'</td>';//22
+                  /*FIN COLUMNAS OCULTAS PARA SOLO GENERAR EL INFORME*/
                   echo '</tr>';
                 }
               }
@@ -619,7 +673,20 @@
           },
           "dom": 'Bfrtip',
           "buttons": [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            {
+                extend: 'excel',
+                exportOptions: {
+                    columns: [0,1,2,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,21,22]
+                },
+                title: 'Ordenes_Pendientes_'+new Date().toJSON().slice(0,10)+'_'+new Date().toTimeString().slice(0,5)
+            },
+            {
+                extend: 'csv',
+                exportOptions: {
+                    columns: [0,1,2,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,21,22]
+                },
+                title: 'Ordenes_Pendientes_'+new Date().toJSON().slice(0,10)+"_"+new Date().toTimeString().slice(0,5)
+            }
           ],
           "columnDefs": [
             { "width": "1%", "targets": 0 },
@@ -630,6 +697,11 @@
             {
               "data": "",
               "defaultContent": ""
+            },
+            {
+              "targets": [11,12,13,14,15,16,17,18,19,20,21,22],
+              "visible": false,
+              "searchable": false
             }
           ]/*,
           "aoColumns": [
@@ -646,7 +718,7 @@
           ]*/
       }).columnFilter({
           sPlaceHolder: "head:before",
-          aoColumns: [{type: "select", sSelector: "#filtroFolio",},
+          aoColumns: [{sSelector: "#filtroFolio",},
                       {type: "date-range", sRangeFormat: "Desde {from} hasta {to}", sSelector: "#filtroFecha"},
                       {type: "date-range", sRangeFormat: "Desde {from} hasta {to}", sSelector: "#filtroAgenda"},
                       null,

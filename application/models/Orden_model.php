@@ -14,23 +14,18 @@ class Orden_model extends CI_Model {
 						(select reagenda_fecha from tbl_sp_reagenda where reagenda_id = (select max(reagenda_id) from tbl_sp_reagenda where in_proyecto = tbl_sp_ingreso.in_proyecto)) as fecha_agenda,
 						plan_alta,
 						tt_nombre,
-						SIAD.regiones.descripcion as region,
-						SIAD.comunas.descripcion as comuna,
 						rt_descripcion,
 						vt_descripcion,
 						tfa_descripcion,
 						tcv_nombre,
-						est_descripcion
+						(select concat(SIAD.usuarios.nombres,' ',SIAD.usuarios.paterno,' ',SIAD.usuarios.materno) from SIAD.usuarios where SIAD.usuarios.id = indet_usr_registro) as nombre_ingresador
 						from tbl_sp_ingreso left join tbl_sp_detalle on (tbl_sp_ingreso.in_proyecto = tbl_sp_detalle.in_proyecto)
 						left join tbl_sp_planes on (tbl_sp_ingreso.plan_id = tbl_sp_planes.plan_id)
 						left join tbl_sp_tipo_trabajo on (tbl_sp_ingreso.tt_id = tbl_sp_tipo_trabajo.tt_id)
-						left join SIAD.regiones on (SIAD.regiones.id = tbl_sp_ingreso.id_region)
-						left join SIAD.comunas on (SIAD.comunas.id = tbl_sp_ingreso.id_comuna)
 						left join tbl_sp_reparacion_tipo on (tbl_sp_ingreso.rt_id = tbl_sp_reparacion_tipo.rt_id)
 						left join tbl_sp_cierre_vt on (tbl_sp_cierre_vt.vt_id = tbl_sp_ingreso.vt_codigo)
 						left join tbl_sp_tipo_falla on (tbl_sp_tipo_falla.tfa_id = tbl_sp_ingreso.tfa_id)
 						left join tbl_sp_tipo_canal_venta on (tbl_sp_tipo_canal_venta.tcv_id = tbl_sp_ingreso.tcv_id)
-						left join tbl_sp_estados on (tbl_sp_estados.est_id = in_estado)
 						where tbl_sp_detalle.indet_fecha_registro in (select max(indet_fecha_registro) from tbl_sp_detalle where tbl_sp_ingreso.in_proyecto = tbl_sp_detalle.in_proyecto)
 						order by (select reagenda_fecha from tbl_sp_reagenda where reagenda_id = (select max(reagenda_id) from tbl_sp_reagenda where in_proyecto = tbl_sp_ingreso.in_proyecto))";
 	    $query = $this->db->query($sql);
