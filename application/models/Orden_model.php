@@ -33,6 +33,32 @@ class Orden_model extends CI_Model {
 		return $query->result();
 	}
 
+	//lista ordenes liquidadas
+	public function ListarOrdenesAdminLiquida(){
+		$sql = "select tbl_sp_ingreso.*,
+						in_estado,
+						(select reagenda_fecha from tbl_sp_reagenda where reagenda_id = (select max(reagenda_id) from tbl_sp_reagenda where in_proyecto = tbl_sp_ingreso.in_proyecto)) as fecha_agenda,
+						plan_alta,
+						tt_nombre,
+						rt_descripcion,
+						vt_descripcion,
+						tfa_descripcion,
+						tcv_nombre,
+						(select concat(SIAD.usuarios.nombres,' ',SIAD.usuarios.paterno,' ',SIAD.usuarios.materno) from SIAD.usuarios where SIAD.usuarios.id = indet_usr_registro) as nombre_ingresador
+						from tbl_sp_ingreso left join tbl_sp_detalle on (tbl_sp_ingreso.in_proyecto = tbl_sp_detalle.in_proyecto)
+						left join tbl_sp_planes on (tbl_sp_ingreso.plan_id = tbl_sp_planes.plan_id)
+						left join tbl_sp_tipo_trabajo on (tbl_sp_ingreso.tt_id = tbl_sp_tipo_trabajo.tt_id)
+						left join tbl_sp_reparacion_tipo on (tbl_sp_ingreso.rt_id = tbl_sp_reparacion_tipo.rt_id)
+						left join tbl_sp_cierre_vt on (tbl_sp_cierre_vt.vt_id = tbl_sp_ingreso.vt_codigo)
+						left join tbl_sp_tipo_falla on (tbl_sp_tipo_falla.tfa_id = tbl_sp_ingreso.tfa_id)
+						left join tbl_sp_tipo_canal_venta on (tbl_sp_tipo_canal_venta.tcv_id = tbl_sp_ingreso.tcv_id)
+						where tbl_sp_detalle.indet_fecha_registro in (select max(indet_fecha_registro) from tbl_sp_detalle where tbl_sp_ingreso.in_proyecto = tbl_sp_detalle.in_proyecto)
+						order by (select reagenda_fecha from tbl_sp_reagenda where reagenda_id = (select max(reagenda_id) from tbl_sp_reagenda where in_proyecto = tbl_sp_ingreso.in_proyecto))";
+	    $query = $this->db->query($sql);
+
+		return $query->result();
+	}
+
 	public function GetOrdenByFolio($folio){
 		/*$this->db->where('in_proyecto',$folio);
 	 	return $this->db->get('tbl_sp_ingreso')->row();*/
@@ -91,8 +117,13 @@ class Orden_model extends CI_Model {
 	 	return $this->db->get('tbl_sp_detalle_central')->row();
 	}
 
+	public function GetFonoByFolio($folio){
+		$this->db->where('in_proyecto',$folio);
+	 	return $this->db->get('tbl_sp_fono_orden')->result();
+	}
+
 	public function GetNombreAliadoByComuna($comu){
-		$this->db_inf->select('aliado_nombre');
+		$this->db_inf->select('aliado_nombre, tbl_aliado.aliado_id');
       	$this->db_inf->from('tbl_aliado');
       	$this->db_inf->join('tbl_aliado_comuna','tbl_aliado_comuna.aliado_id_pyme = tbl_aliado.aliado_id');
       	$this->db_inf->where('ac_id_comuna',$comu);
@@ -101,7 +132,7 @@ class Orden_model extends CI_Model {
     }
 
     public function GetNombreAliadoById($idaliado){
-    	$this->db->select('inf_despacho_nacional.tbl_aliado.aliado_nombre');
+    	$this->db->select('inf_despacho_nacional.tbl_aliado.aliado_nombre, inf_despacho_nacional.tbl_aliado.aliado_id');
       	$this->db->from('inf_despacho_nacional.tbl_aliado');
       	$this->db->where('inf_despacho_nacional.tbl_aliado.aliado_id in (select siad_pyme.tbl_sp_empresa_aliado.aliado_id from siad_pyme.tbl_sp_empresa_aliado where siad_pyme.tbl_sp_empresa_aliado.empresa_id = '.$idaliado.')');
       	$query = $this->db->get();

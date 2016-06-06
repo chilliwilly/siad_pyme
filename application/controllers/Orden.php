@@ -75,15 +75,16 @@ class Orden extends CI_Controller {
 	    $this->load->view('constant');
 	    $this->load->view('view_header');
 
-	    $siad_aliadoid = $this->session->userdata('ALIADORUT');
+	    $siad_aliadoid = $this->session->userdata('ALIADORUT');//id empresa siad
 	    $ordenes = $this->Orden_model->ListarOrdenesAdmin();
-	    $NomEmpresa = $this->Orden_model->GetNombreAliadoById($siad_aliadoid);
+	    $NomEmpresa = $this->Orden_model->GetNombreAliadoById($siad_aliadoid);//nombre empresa desde inf_despacho_nacional
 
 	    $RegistroOrden = array();
 
 	    foreach ($ordenes as $value) {
 	    	# code...
-	    	$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->id_comuna);
+	    	$NomAliado = $this->Orden_model->GetNombreAliadoByComuna($value->id_comuna);//nombre aliado desde inf_despacho_nacional
+				//algo que traiga el id de inf_despacho_nacional
 	    	$NomTipoTrabajo = $this->Orden_model->GetNombreTipoTrabajo($value->tt_id);
 	    	$NomEstadoOrden = $this->Orden_model->GetNombreEstadoOrden($value->in_estado);
 	    	$NomComuna = $this->Orden_model->GetIdComunaByNomComuna($value->id_comuna);
@@ -97,6 +98,8 @@ class Orden extends CI_Controller {
 				    		'folio'         => $value->in_proyecto,
 				    		'fecha_ingreso'	=> $value->in_ingreso,
 				    		'cliente'	      => $value->in_cliente,
+								'nombre'	      => $value->in_nombre,//listo
+								'rut'	          => $value->in_rut,//listo
 				    		'fono_cli'	    => $value->in_fono,
 				    		'reg_comu'	    => sprintf("%02d",$value->id_region).' - '.$NomComuna->descripcion,
 				    		'aliado'        => $NomAliado->aliado_nombre,
@@ -104,15 +107,16 @@ class Orden extends CI_Controller {
 				    		'estado'        => $NomEstadoOrden->est_descripcion,
 				    		'estado_adm'    => $value->in_estado_admin,
 				    		'fecha_agenda'  => $value->fecha_agenda,
-								'nombre_plan'   => $value->plan_alta,
-								'trabajo_nom'   => $value->tt_nombre,
-								'nom_region'    => $value->region,
-								'nom_comuna'    => $value->comuna,
-								'nombre_rt'     => $value->rt_descripcion,
-								'nombre_vt'     => $value->vt_descripcion,
-								'nombre_tfa'    => $value->tfa_descripcion,
-								'nombre_tcv'    => $value->tcv_nombre,
-								'nombre_est'    => $value->est_descripcion
+								'nom_ingresa'   => $value->nombre_ingresador,//listo
+								'dir_cliente'   => $value->in_direccion,//listo
+								'dir_t_cliente' => $value->in_direccion_t,//listo
+								'hora_ingreso'  => $value->in_hora_ingreso,//listo
+								'nombre_plan'   => $value->plan_alta,//listo
+								'id_plan'       => $value->plan_id,//listo
+								'nombre_rt'     => $value->rt_descripcion,//listo
+								'nombre_vt'     => $value->vt_descripcion,//listo
+								'nombre_tfa'    => $value->tfa_descripcion,//listo
+								'nombre_tcv'    => $value->tcv_nombre//listo
 				    	);
 			    	//}
 			    }
@@ -123,6 +127,8 @@ class Orden extends CI_Controller {
 				    		'folio'         => $value->in_proyecto,
 				    		'fecha_ingreso'	=> $value->in_ingreso,
 				    		'cliente'	      => $value->in_cliente,
+								'nombre'	      => $value->in_nombre,//listo
+								'rut'	          => $value->in_rut,//listo
 				    		'fono_cli'	    => $value->in_fono,
 				    		'reg_comu'	    => sprintf("%02d",$value->id_region).' - '.$NomComuna->descripcion,
 				    		'aliado'        => 'SCHARFSTEIN',//$NomAliado->aliado_nombre,
@@ -130,24 +136,27 @@ class Orden extends CI_Controller {
 				    		'estado'        => $NomEstadoOrden->est_descripcion,
 				    		'estado_adm'    => $value->in_estado_admin,
 				    		'fecha_agenda'  => $value->fecha_agenda,
-								'nombre_plan'   => $value->plan_alta,
-								'trabajo_nom'   => $value->tt_nombre,
-								'nom_region'    => $value->region,
-								'nom_comuna'    => $value->comuna,
-								'nombre_rt'     => $value->rt_descripcion,
-								'nombre_vt'     => $value->vt_descripcion,
-								'nombre_tfa'    => $value->tfa_descripcion,
-								'nombre_tcv'    => $value->tcv_nombre,
-								'nombre_est'    => $value->est_descripcion
+								'nom_ingresa'   => $value->nombre_ingresador,//listo
+								'dir_cliente'   => $value->in_direccion,//listo
+								'dir_t_cliente' => $value->in_direccion_t,//listo
+								'hora_ingreso'  => $value->in_hora_ingreso,//listo
+								'nombre_plan'   => $value->plan_alta,//listo
+								'id_plan'       => $value->plan_id,//listo
+								'nombre_rt'     => $value->rt_descripcion,//listo
+								'nombre_vt'     => $value->vt_descripcion,//listo
+								'nombre_tfa'    => $value->tfa_descripcion,//listo
+								'nombre_tcv'    => $value->tcv_nombre//listo
 				    	);
 			    	//}
 			    }
 	    	}else{
-	    		if($NomAliado == $NomEmpresa){
+	    		if($NomAliado->aliado_id == $NomEmpresa->aliado_id){
 		    		$RegistroOrden[] = array(
 			    		'folio'         => $value->in_proyecto,
 			    		'fecha_ingreso'	=> $value->in_ingreso,
 			    		'cliente'	      => $value->in_cliente,
+							'nombre'	      => $value->in_nombre,//listo
+							'rut'	          => $value->in_rut,//listo
 			    		'fono_cli'	    => $value->in_fono,
 			    		'reg_comu'	    => sprintf("%02d",$value->id_region).' - '.$NomComuna->descripcion,
 			    		'aliado'        => $NomAliado->aliado_nombre,
@@ -155,15 +164,16 @@ class Orden extends CI_Controller {
 			    		'estado'        => $NomEstadoOrden->est_descripcion,
 			    		'estado_adm'    => $value->in_estado_admin,
 			    		'fecha_agenda'  => $value->fecha_agenda,
-							'nombre_plan'   => $value->plan_alta,
-							'trabajo_nom'   => $value->tt_nombre,
-							'nom_region'    => $value->region,
-							'nom_comuna'    => $value->comuna,
-							'nombre_rt'     => $value->rt_descripcion,
-							'nombre_vt'     => $value->vt_descripcion,
-							'nombre_tfa'    => $value->tfa_descripcion,
-							'nombre_tcv'    => $value->tcv_nombre,
-							'nombre_est'    => $value->est_descripcion
+							'nom_ingresa'   => $value->nombre_ingresador,//listo
+							'dir_cliente'   => $value->in_direccion,//listo
+							'dir_t_cliente' => $value->in_direccion_t,//listo
+							'hora_ingreso'  => $value->in_hora_ingreso,//listo
+							'nombre_plan'   => $value->plan_alta,//listo
+							'id_plan'       => $value->plan_id,//listo
+							'nombre_rt'     => $value->rt_descripcion,//listo
+							'nombre_vt'     => $value->vt_descripcion,//listo
+							'nombre_tfa'    => $value->tfa_descripcion,//listo
+							'nombre_tcv'    => $value->tcv_nombre//listo
 			    	);
 		    	}
 	    	}
@@ -190,6 +200,7 @@ class Orden extends CI_Controller {
 		$data["data_folio_deco"] = $this->Orden_model->GetOrdenByFolioDeco($nrofolio);
 		$data['data_folio_agenda'] = json_encode($this->Orden_model->GetAgendaByFolio($nrofolio));
 		$data["data_folio_central"] = $this->Orden_model->GetCentralByFolio($nrofolio);
+		$data['data_folio_fono'] = json_encode($this->Orden_model->GetFonoByFolio($nrofolio));
 
 		//echo json_encode($data["data_folio_central"]);
 		$this->load->view('ingreso/view_ingreso',$data);
