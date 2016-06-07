@@ -20,6 +20,15 @@ $(document).ready(function(){
       $("#in_deco_basico").prop('disabled',true);
       $("#in_plan_tv_pack").prop('disabled',true);
       $("#in_central_tf").prop('disabled',true);
+      $("#btnFonoA").prop('disabled',true);
+      $("#chksd").prop('disabled',true);
+      $("#chkhd").prop('disabled',true);
+      $("#chktvr").prop('disabled',true);
+      $("#chkstn").prop('disabled',true);
+      $("#in_central_tfl").prop('disabled',true);
+      $("#in_central_tfa").prop('disabled',true);
+      $("#in_central_tflp").prop('disabled',true);
+      $("#in_central_tfap").prop('disabled',true);
     }
   }
 });
