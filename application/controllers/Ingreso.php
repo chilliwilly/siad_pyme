@@ -128,7 +128,7 @@ class Ingreso extends CI_Controller {
 					$response["campo"] = "indet_observacion";
 					$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; El campo observacion es muy corto</div>";
 					echo json_encode($response);
-				}elseif($InsRegistro->p_bloque == "0"){
+				}elseif($InsRegistro->p_estado == "10" && $InsRegistro->p_bloque == "0"){
 					$response["campo"] = "in_bloque_agenda";
 					$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar un bloque de agendamiento</div>";
 					echo json_encode($response);
@@ -309,7 +309,7 @@ class Ingreso extends CI_Controller {
 
 							$this->Ingreso_model->SaveIngresoCentral($GuardaRegistroCentral);
 						}
-						
+
 						foreach ($InsFono as $value) {
 							# code...
 							if(strcmp($value->p_fono,'Ningún dato disponible en esta tabla')!=0){
