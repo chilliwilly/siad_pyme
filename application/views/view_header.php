@@ -28,9 +28,11 @@
     <![endif]-->
 
     <!-- jquery-ui css -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>css/jquery-ui.css">    
-    <!-- DataTables -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="<?php echo base_url()?>plugins/jQueryUI/jquery-ui.css">
+    <!-- DataTables
+    <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/datatables/dataTables.bootstrap.css">-->
+    <link rel="stylesheet" href="<?php echo base_url()?>css/datatables.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/bs/jszip-2.5.0,dt-1.10.12,b-1.2.1,b-colvis-1.2.1,b-html5-1.2.1/datatables.min.css"/>-->
 
     <script src="<?php echo base_url()?>plugins/jQuery/jquery-2.2.4.min.js"></script>
 
@@ -60,8 +62,13 @@
                   $LineaTemp = 0;
                   $IdMenu    = 0;
                   session_start();
-                  $ArrayMenu = $_SESSION['Menu'];
+                  //verifico si aun existe la session menu
+                  if (!isset($_SESSION['Menu'])) {
+                    $this->session->sess_destroy();
+                    redirect('index.php/Login');
+                  }
 
+                  $ArrayMenu = $_SESSION['Menu'];
                   foreach ($ArrayMenu as $key => $value) {
                   # code...
                     $linea    = $value->menu_grupo;
