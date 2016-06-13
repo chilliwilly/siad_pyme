@@ -54,7 +54,7 @@ class Orden_model extends CI_Model {
 						left join tbl_sp_tipo_canal_venta on (tbl_sp_tipo_canal_venta.tcv_id = tbl_sp_ingreso.tcv_id)
 						where tbl_sp_detalle.indet_fecha_registro in (select max(indet_fecha_registro) from tbl_sp_detalle where tbl_sp_ingreso.in_proyecto = tbl_sp_detalle.in_proyecto)
 						order by (select reagenda_fecha from tbl_sp_reagenda where reagenda_id = (select max(reagenda_id) from tbl_sp_reagenda where in_proyecto = tbl_sp_ingreso.in_proyecto))";
-	    $query = $this->db->query($sql);
+    $query = $this->db->query($sql);
 
 		return $query->result();
 	}
@@ -133,10 +133,10 @@ class Orden_model extends CI_Model {
 
     public function GetNombreAliadoById($idaliado){
     	$this->db->select('inf_despacho_nacional.tbl_aliado.aliado_nombre, inf_despacho_nacional.tbl_aliado.aliado_id');
-      	$this->db->from('inf_despacho_nacional.tbl_aliado');
-      	$this->db->where('inf_despacho_nacional.tbl_aliado.aliado_id in (select siad_pyme.tbl_sp_empresa_aliado.aliado_id from siad_pyme.tbl_sp_empresa_aliado where siad_pyme.tbl_sp_empresa_aliado.empresa_id = '.$idaliado.')');
-      	$query = $this->db->get();
-      	return $query->row();
+    	$this->db->from('inf_despacho_nacional.tbl_aliado');
+    	$this->db->where('inf_despacho_nacional.tbl_aliado.aliado_id in (select siad_pyme.tbl_sp_empresa_aliado.aliado_id from siad_pyme.tbl_sp_empresa_aliado where siad_pyme.tbl_sp_empresa_aliado.empresa_id = '.$idaliado.')');
+    	$query = $this->db->get();
+    	return $query->row();
     }
 
 	//obtiene comuna de acuerdo al id
@@ -157,7 +157,7 @@ class Orden_model extends CI_Model {
 
 	public function GetOrderByFolioPreview($folio){
 		$sql = "select * from tbl_sp_ingreso where in_proyecto = ?";
-	    $query = $this->db->query($sql,$folio);
+	  $query = $this->db->query($sql,$folio);
 
 		return $query->result();
 	}
@@ -177,6 +177,13 @@ class Orden_model extends CI_Model {
 		return $this->db->get('tbl_sp_planes')->row();
 	}
 
+	public function GetLastEstadoIdDetByFolio($folio){
+		$sql = "select in_estado from tbl_sp_detalle where in_proyecto = ? and indet_id = (select max(indet_id) from tbl_sp_detalle where in_proyecto = ?)";
+		$query = $this->db->query($sql,array($folio,$folio));
+
+		return $query->result();
+	}
+
 	public function UpdateEstadoAdmOrden($folio,$data){
 		$this->db->trans_start();
 		$this->db->set('in_estado_admin',$data);
@@ -184,7 +191,9 @@ class Orden_model extends CI_Model {
 		$this->db->update('tbl_sp_ingreso');
 		$this->db->trans_complete();
 
-		if($this->db->trans_status === false){
+		if($this->db->trans_status() === false){
+			return false;
+		}else{
 			return true;
 		}
 	}
