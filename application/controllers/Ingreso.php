@@ -98,6 +98,7 @@ class Ingreso extends CI_Controller {
 
 			$InsRegistro = json_decode($this->input->post('InsRegistro'));
 			$InsFono = json_decode($this->input->post('InsFono'));
+			$rol_id = $this->session->userdata('TIPOUSUARIO');
 
 			/*Array de response*/
 			 $response = array (
@@ -133,6 +134,39 @@ class Ingreso extends CI_Controller {
 					$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar un bloque de agendamiento</div>";
 					echo json_encode($response);
 				}else{
+					if($rol_id == 1 || $rol_id == 2){
+						$ActualizaRegistro = array(
+		 					'in_entrega'          => $InsRegistro->p_entrega,
+		 					'in_cliente'          => $InsRegistro->p_cliente,
+		 					'in_rut'              => $RutSinGuion,
+		 					'in_direccion'        => $InsRegistro->p_direccion,
+		 					'in_nombre'           => $InsRegistro->p_nombre,
+		 					'in_plan_net_adic'    => $InsRegistro->p_plan_net_adic,
+		 					'in_plan_fono_adicu'  => $InsRegistro->p_plan_fono_adicu,
+		 					'in_plan_fono_adicd'  => $InsRegistro->p_plan_fono_adicd,
+		 					'in_plan_pack'		    => $InsRegistro->p_plan_tv_pack,
+		 					'in_hora_ingreso'     => date('H:i:s'),
+		 					'tt_id'               => $InsRegistro->tt_id,
+		 					'id_comuna'           => $InsRegistro->p_comuna,
+		 					'id_region'           => $RegionComuna[0],
+		 					'plan_id'             => $InsRegistro->plan_id,
+		 					'deco_id'             => $InsRegistro->deco_id
+		 				);
+
+						$ActualizaRegistroDecoAdic = array(
+		 					'decoa_sd'	           => $InsRegistro->deco_sd,
+		 					'decoa_hd'             => $InsRegistro->deco_hd,
+		 					'decoa_tvr'            => $InsRegistro->deco_tvr,
+		 					'decoa_stnd'           => $InsRegistro->deco_std,
+		 					'decoa_usr_registro'   => $this->session->userdata('ID'),
+		 					'decoa_usr_empresa'    => $this->session->userdata('ALIADORUT'),
+		 					'decoa_fecha_registro' => date('Y-m-j H:i:s')
+		 				);
+
+						$this->Ingreso_model->UpdateIngreso($ActualizaRegistro, $InsRegistro->p_proyecto);
+						$this->Ingreso_model->UpdateDetalleDeco($ActualizaRegistroDecoAdic, $InsRegistro->p_proyecto);
+					}
+
 					$ActualizaRegistroDetalle = array(
 						'in_proyecto'            => $InsRegistro->p_proyecto,
 						'indet_fecha_registro'   => date('Y-m-j H:i:s'),
@@ -213,13 +247,18 @@ class Ingreso extends CI_Controller {
 					$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar una comuna</div>";
 					echo json_encode($response);
 				//valida canal de ventas
-				}elseif($InsRegistro->p_vende == null || $InsRegistro->p_vende == "" || $InsRegistro->p_vende == "0"){
+				}elseif(($InsRegistro->p_vende == null || $InsRegistro->p_vende == "" || $InsRegistro->p_vende == "0") && $InsRegistro->tt_id == "1"){
 					$response["campo"] = "in_canal_venta";
 					$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe seleccionar un canal de ventas</div>";
 					echo json_encode($response);
 				}elseif(in_array('Ningún dato disponible en esta tabla',$InsFono)){
 					$response["campo"] = "in_proyecto";
 					$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe al menos ingresar un numero telefonico</div>";
+					echo json_encode($response);
+				//verifico que si al ser instalacion al menos seleccionen un tipo de deco inicial
+				}elseif($InsRegistro->deco_id == "0" && $InsRegistro->tt_id == "1"){
+					$response["campo"] = "in_tipo_trabajo";
+					$response["error_msg"] = "<div class='alert alert-danger text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button><span class='glyphicon glyphicon-remove'></span> &nbsp; Debe al menos seleccionar un deco inicial</div>";
 					echo json_encode($response);
 				}else{
 					//compruebo que no exista e inserto
@@ -277,6 +316,7 @@ class Ingreso extends CI_Controller {
 							'decoa_hd'             => $InsRegistro->deco_hd,
 							'decoa_tvr'            => $InsRegistro->deco_tvr,
 							'decoa_stnd'           => $InsRegistro->deco_std,
+							'decoa_stnd_hd'        => $InsRegistro->deco_std_hd,
 							'decoa_usr_registro'   => $this->session->userdata('ID'),
 							'decoa_usr_empresa'    => $this->session->userdata('ALIADORUT'),
 							'decoa_fecha_registro' => date('Y-m-j H:i:s')

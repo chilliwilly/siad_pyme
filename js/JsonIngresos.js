@@ -23,8 +23,10 @@ $(document).ready(function(){
 			IngresoRegistro.p_central_tf       = $('select#in_central_tf :selected').val();
 			IngresoRegistro.p_lineas_asignadas = $('input#in_central_tfl').val();
 			IngresoRegistro.p_lineas_anexos    = $('input#in_central_tfa').val();
+			IngresoRegistro.p_lin_pre_asignadas = $('input#in_central_tflp').val();
+			IngresoRegistro.p_lin_pre_anexos    = $('input#in_central_tfap').val();
 			//IngresoRegistro.p_fecha_cierre     = $('input#in_fecha_operacion').val();//date in_fecha_operacion
-			IngresoRegistro.p_vende            = $('input#in_vende').val();
+			IngresoRegistro.p_vende            = $('select#in_canal_venta :selected').val();
 			IngresoRegistro.p_estado           = $('select#in_estado').val();
 			IngresoRegistro.p_observacion      = $('textarea#indet_observacion').val();
 			IngresoRegistro.tt_id              = $('select#in_tipo_trabajo').val();
@@ -33,6 +35,7 @@ $(document).ready(function(){
 			IngresoRegistro.deco_hd            = $('input#txtChkhd').val();
 			IngresoRegistro.deco_tvr           = $('input#txtChktvr').val();
 			IngresoRegistro.deco_std           = $('input#txtChkstn').val();
+			IngresoRegistro.deco_std_hd        = $('input#txtChkstnhd').val();
 			IngresoRegistro.p_rep_tipo         = $('select#in_tiporep :selected').val();
 			IngresoRegistro.p_rep_codi         = $('select#in_codrep :selected').val();
 			IngresoRegistro.p_tipo_falla			 = $('select#in_falla :selected').val();

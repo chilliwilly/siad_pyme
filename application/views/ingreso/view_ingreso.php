@@ -18,6 +18,7 @@
   var v_deco_hd = "0";
   var v_deco_tvr = "0";
   var v_deco_stnd = "0";
+  var v_deco_stnd_hd = "0";
   var num_trabajo = 0;
   var num_comuna = 0;
   var num_estado = 9;
@@ -62,14 +63,15 @@
     v_deco_hd = "<?php echo @$data_folio_deco->decoa_hd; ?>";
     v_deco_tvr = "<?php echo @$data_folio_deco->decoa_tvr; ?>";
     v_deco_stnd = "<?php echo @$data_folio_deco->decoa_stnd; ?>";
+    v_deco_stnd_hd = "<?php echo @$data_folio_deco->decoa_stnd_hd; ?>";
   }
 
   function volverAdmin(){
-    window.location="<?php echo base_url()?>orden";
+    window.location=baseurl+"orden";
   }
 
   function volverAliado(){
-    window.location="<?php echo base_url()?>orden/aliado";
+    window.location=baseurl+"orden/aliado";
   }
 </script>
 
@@ -293,6 +295,7 @@
 <script src="<?php echo base_url();?>js/jsDistribucionPlan.js"></script>
 <script src="<?php echo base_url();?>js/jsDistribucionDecoAdic.js"></script>
 <script src="<?php echo base_url();?>js/JsonIngresos.js"></script>
+<script src="<?php echo base_url();?>js/jsBloqueoCampos.js"></script>
 <!-- Main content --><form name="formularioData" id="formularioData" role="form">
 <section class="content">
   <!-- Default box -->
@@ -380,7 +383,7 @@
                 <div class="col-xs-12">
                   <div class="col-xs-8">
                     <div class="form-group has-feedback">
-                        <label for="in_cliente">Cliente*</label>
+                        <label for="in_cliente">Razon Social*</label>
                         <?php echo form_input($in_cliente); ?>
 
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -456,6 +459,16 @@
                       <h2 class="page-header">
                         <i class="fa fa-phone"></i> Datos Plan
                       </h2>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="col-xs-4">
+                    <div class="form-group has-feedback">
+                      <label for="in_canal_venta">Canal de Ventas*</label>
+
+                      <select name="in_canal_venta" id="in_canal_venta" class="form-control selectpicker show-tick" data-live-search="true" data-size="6"></select>
                     </div>
                   </div>
                 </div>
@@ -548,16 +561,6 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="col-xs-12">
-                  <div class="col-xs-4">
-                    <div class="form-group has-feedback">
-                      <label for="in_canal_venta">Canal de Ventas*</label>
-
-                      <select name="in_canal_venta" id="in_canal_venta" class="form-control selectpicker show-tick" data-live-search="true" data-size="6"></select>
-                    </div>
-                  </div>
-                </div>
 </div>
                 <div class="col-xs-12">
                   <div class="col-xs-4">
@@ -632,6 +635,15 @@
                                   </td>
                                   <td>
                                     <input id="txtChkstn" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <input id="chkstnhd" type="checkbox" name="decos[]" value="chkstnhd" />
+                                    <label for="chkstnhd">Standard</label>
+                                  </td>
+                                  <td>
+                                    <input id="txtChkstnhd" type="number" min="0" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="0" style="width: 4em;" disabled="disabled">
                                   </td>
                                 </tr>
                               </tbody>
@@ -714,11 +726,26 @@
                               </div>
                             </div>
 
-                            <table id="tblFonoCli" class="table table-striped">
+                            <table id="tblFonoCli" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
+                              <!-- class="table table-striped" -->
                               <thead>
                                 <th>Fono</th>
                                 <th>Borrar</th>
                               </thead>
+                                <?php
+                                  if($data_flag == 1){
+                                    echo '<tbody>';
+                                    if(json_decode($data_folio_fono)){
+                                      foreach (json_decode($data_folio_fono) as $fono) {
+                                        echo '<tr>';
+                                        echo '<td>'.$fono->fo_telefono.'</td>';
+                                        echo '<td></td>';
+                                        echo '</tr>';
+                                      }
+                                    }
+                                    echo '</tbody>';
+                                  }
+                                ?>
                             </table>
                           </div>
                       </div>
@@ -761,8 +788,8 @@
                   <?php } ?>
                 </div>
 
-                <!-- ADJUNTAR DATOS SCHARFSTEIN -->
-                <?php if(($this->session->userdata("ALIADORUT") == 81) || ($this->session->userdata("ALIADORUT") == 0)) { ?>
+                <!-- ADJUNTAR DATOS SCHARFSTEIN ($this->session->userdata("ALIADORUT") == 81) || ($this->session->userdata("ALIADORUT") == 0)-->
+                <?php if($this->session->userdata("USRNAME") == 'wcontreras') { ?>
                   <div class="col-xs-12">
                     <label>Adjuntar Archivos</label>
                     <table id="ordenesDet" border="0" cellpadding="0" cellspacing="0" width="100%" class="pretty">
@@ -785,7 +812,9 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                          <?php if(@$data_folio_det->in_estado == 1){ ?>
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                          <?php } ?>
                           <h4 class="modal-title" id="myModalLabel">Central Telefonica Anexos y Lineas</h4>
                       </div>
                       <div class="modal-body">
@@ -837,7 +866,7 @@
                 </div>
 
                 <div class="col-xs-12">
-                  <?php if($this->session->userdata("TIPOUSUARIO") == 1){ ?>
+                  <?php if($this->session->userdata("TIPOUSUARIO") == 1 || $this->session->userdata("TIPOUSUARIO") == 2){ ?>
                     <button type="button" id="btnAtras" onclick="volverAdmin()" class="btn btn-default">Volver</button>
                   <?php }else{ ?>
                     <button type="button" id="btnAtras" onclick="volverAliado()" class="btn btn-default">Volver</button>
@@ -909,6 +938,12 @@
         "pageLength": 5,
         "bLengthChange": false
     });
+
+    $('#tblFonoCli').dataTable({
+      "language": {
+        "url": baseurl.concat("js/i18n/Spanish.json").replace('index.php/','') //"//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"//C:\wamp\www\siad_pyme\plugins\datatables\i18n
+      }
+    });
     //var cosa = JSON.stringify($('form').serializeArray());
     var datos = $('#formularioData').serializeArray().reduce(function(obj, item) {
                     obj[item.name] = item.value;
@@ -964,6 +999,7 @@
       $("#txtChkhd").val(v_deco_hd);
       $("#txtChktvr").val(v_deco_tvr);
       $("#txtChkstn").val(v_deco_stnd);
+      $("#txtChkstnhd").val(v_deco_stnd_hd);
 
       if($("#txtChksd").val()>0){
         $("#chksd").prop('checked',true);
@@ -1105,22 +1141,28 @@
 
   $("#btnCierraCentral").on('click',function(){
     //validar inputs de linea
-    var sumLinea = parseInt($("#in_central_tfl").val()) + parseInt($("#in_central_tflp").val());
-    var sumAnexo = parseInt($("#in_central_tfa").val()) + parseInt($("#in_central_tfap").val());
     var cuenta = 0;
-    alert("sumaLinea "+ sumLinea + " -- sumaAnexo "+sumAnexo);
-    if(n_line_min <= sumLinea && sumLinea <= n_line_max){
-      alert("Debe seleccionar rango de lineas entre " + n_line_min + " como minimo y " + n_line_max + " como maximo.");
-      cuenta++;
-    }else{
-      alert("Valores de lineas ingresadas fuera de rango");
-    }
+    if($("#in_canal_venta").val()!=9){
+      var sumLinea = parseInt($("#in_central_tfl").val()) + parseInt($("#in_central_tflp").val());
+      var sumAnexo = parseInt($("#in_central_tfa").val()) + parseInt($("#in_central_tfap").val());
+      //alert("sumaLinea "+ sumLinea + " -- sumaAnexo "+sumAnexo);
+      if(n_line_min <= sumLinea && sumLinea <= n_line_max){
+        //alert("Debe seleccionar rango de lineas entre " + n_line_min + " como minimo y " + n_line_max + " como maximo.");
+        cuenta++;
+      }else{
+        //alert("Valores de lineas ingresadas fuera de rango");
+        alert("Debe seleccionar rango de lineas entre " + n_line_min + " como minimo y " + n_line_max + " como maximo.");
+      }
 
-    if(n_anex_min <= sumAnexo && sumAnexo <= n_anex_max){
-      alert("Debe seleccionar rango de anexos entre " + n_anex_min + " como minimo y " + n_anex_max + " como maximo.");
-      cuenta++;
+      if(n_anex_min <= sumAnexo && sumAnexo <= n_anex_max){
+        //alert("Debe seleccionar rango de anexos entre " + n_anex_min + " como minimo y " + n_anex_max + " como maximo.");
+        cuenta++;
+      }else{
+        //alert("Valores de anexos ingresados fuera de rango");
+        alert("Debe seleccionar rango de anexos entre " + n_anex_min + " como minimo y " + n_anex_max + " como maximo.");
+      }
     }else{
-      alert("Valores de anexos ingresados fuera de rango");
+      cuenta = 2;
     }
 
     if(cuenta == 2){
